@@ -1,0 +1,110 @@
+﻿<Controls:MetroWindow x:Class="PresentationLayer.frmCentralDashboard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        Title="KSManPro" Height="600" Width="800" GlowBrush="Black" ResizeMode="CanResizeWithGrip" WindowTransitionsEnabled="True" WindowStartupLocation="CenterScreen" WindowState="Maximized" Closing="MetroWindow_Closing">
+    <!--Window Bar Features. Do not tamper with-->
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>
+            <Button Content="AppCentral" />
+            <ToggleButton Content="settings" IsChecked="{Binding ElementName=mySettings, Path=IsOpen}" Cursor="Hand" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked"/>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
+    <!--End of Window Top Feature. Do not temper with-->
+
+    <!--Left flyout for settings-->
+    <Controls:MetroWindow.Flyouts>
+        <Controls:FlyoutsControl>
+            <Controls:Flyout x:Name ="mySettings" Header="settings" AnimateOpacity="True"
+                             AnimateOnPositionChange="True"
+                             Background="#91000000" 
+                             Width="200"
+                             IsOpen="False">
+                <StackPanel Orientation="Vertical" Width="Auto">
+                    <Button Content="My Profile"/>
+                    <Button Content="Change Password" Click="btnChangePassword"/>
+                    <Button Content="About KSManPro"/>
+                    <Button Content="Help"/>
+                    <Button Content="Exit"/>
+                </StackPanel>
+            </Controls:Flyout>
+        </Controls:FlyoutsControl>
+    </Controls:MetroWindow.Flyouts>
+    <!--End of Left flyout-->
+
+    <!--Dock Panel For App Central left-->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="536*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="66*"/>
+            <ColumnDefinition Width="66*"/>
+            <ColumnDefinition Width="66*"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="66*"/>
+            <ColumnDefinition Width="66*"/>
+            <ColumnDefinition Width="66*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+
+        <!--Left Pane-->
+        <Border Background="AntiqueWhite"  Width="Auto" Margin="0,0,0,0" Grid.Column="0" Grid.ColumnSpan="3"  Grid.Row="0" Grid.RowSpan="2">
+            <StackPanel Orientation="Vertical" Margin="10 5 10 5">
+                <StackPanel Orientation="Horizontal" >
+                    <Ellipse Width="40" Height="40"
+                   Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                        <!--Employee Image-->
+                    </Ellipse>
+                    <TextBlock Margin="4 0 0 0"
+                   VerticalAlignment="Center"
+                   Name ="txtName" Text="_nameTag" Foreground="Black" FontWeight="Bold" FontSize="15"/>
+                </StackPanel>
+                <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Orientation="Horizontal" Width="Auto" Height="30">
+                    <TextBox Name="txtSearch" Height="25" Width="200" VerticalAlignment="Top" Foreground="Gray" Text="Search"/>
+                    <!--<Label Content="Search" Foreground="White"/>-->
+                </StackPanel>
+                <Button Content="Inventory Management" Name ="invent" Background="AliceBlue" Foreground="Black" Margin="0 5 0 5"/>
+                <Button Content="Reports" Name ="reports" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
+                <Button Content="POS" Name ="pos" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5" Click="btnAdminCentral"/>
+                <Button Content="Admin Panel" Name ="admin" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
+                <Button Content="Employee Management" Name ="empManage" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
+                <Button Content="My Space" Name="scSales" Background="AliceBlue" Foreground="Black" Margin="0 0 0 5"/>
+            </StackPanel>
+        </Border>
+
+        <!--Bottom Status Bar-->
+        <Border VerticalAlignment="Bottom" Background="AntiqueWhite" Width="Auto" Height="Auto" BorderBrush="Blue" Grid.Column="3" Grid.ColumnSpan="9" Grid.Row="1">
+            <StackPanel VerticalAlignment="Bottom" Orientation="Horizontal">
+                <Label Content="Status Message: " Foreground="Black" Name="txtStatusMessage"/>
+                <Button Content="Click Me" Name="tryMe" Height="25" Width="60" Click="tryMe_Click" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+
+
+        <!--Left Corner Stufff-->
+        <Border Background="White"  Width="Auto" Margin="0,10,0,10" Grid.Column="4" Grid.ColumnSpan="3"  Grid.Row="0" BorderBrush="LightBlue" BorderThickness="1" CornerRadius="10" >
+            <StackPanel Orientation="Vertical">
+                <TextBlock  TextAlignment="Center" Foreground="Black" FontWeight="Light" FontSize="15" Margin="6 0 6 0">Tasks</TextBlock>
+            </StackPanel>
+        </Border>
+        
+        <!--Right Corner Stuff-->
+        <Border Background="White"  Width="Auto" Margin="0,10,0,10" Grid.Column="8" Grid.ColumnSpan="3"  Grid.Row="0" BorderBrush="LightBlue" BorderThickness="1" CornerRadius="10" >
+            <StackPanel Orientation="Vertical">
+                <TextBlock  TextAlignment="Center" Foreground="Black" FontWeight="Light" FontSize="15" Margin="6 0 6 0">Announcements</TextBlock>
+            </StackPanel>
+        </Border>
+
+
+
+        
+    </Grid>
+    <!--End of Dock Panel For App Central left-->
+</Controls:MetroWindow>

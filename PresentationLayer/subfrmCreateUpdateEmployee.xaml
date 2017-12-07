@@ -1,0 +1,401 @@
+﻿<Controls:MetroWindow x:Class="PresentationLayer.subfrmCreateUpdateEmployee"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        Title="Create New Employee" Height="570" Width="950" 
+                      GlowBrush="Black" ResizeMode="NoResize" WindowTransitionsEnabled="True" 
+                      WindowStartupLocation="CenterScreen" Closing="Window_Closing" >
+    
+    <!--Window Resources-->
+    <Window.Resources>
+        <SolidColorBrush x:Key="blueOutline" Color="Blue"/>
+    </Window.Resources>
+    <!--End of Window Resources-->
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25*"/>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="25*"/>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="25*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+
+        <!--***************************************************************************-->
+
+        <!--Top Border for Name-->
+        <Border Background="AntiqueWhite" Grid.Column="0" Grid.ColumnSpan="16" Grid.Row="0">
+            <StackPanel Orientation="Horizontal" >
+                <Ellipse Width="20" Height="20"
+                   Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                    <!--Employee Image-->
+                </Ellipse>
+                <TextBlock Margin="4 0 0 0"
+                   VerticalAlignment="Center"
+                   Name ="txtNameTag" Text="_nameTag" Foreground="Black" FontWeight="Bold" FontSize="15"/>
+            </StackPanel>
+        </Border>
+
+        <!--Status Messages for window-->
+        <Border Background="AntiqueWhite" Grid.Row="16" Grid.ColumnSpan="16">
+            <TextBlock Text="Status Message: " Name="txtStatusMessage" Margin="5 0 0 0"/>
+        </Border>
+
+        <!--***************************************************************************-->
+        
+        
+        <!--Personal Information Details Group Box-->
+        <GroupBox Grid.Row="2" Grid.Column="1" Margin="0" Grid.ColumnSpan="8" Grid.RowSpan="11"
+                  Header="Personal Information">
+            <StackPanel Orientation="Vertical">
+                
+                <!--First Name Line-->
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="250"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="First Name:"/>
+                        <TextBox Width="200" Name="txtFirstName" Grid.Column="1" HorizontalAlignment="Left"/>
+                    </Grid>
+                </StackPanel>
+                <!--End of First Name Line-->
+
+                <!--Last Name-->
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="250"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Last Name:"/>
+                        <TextBox Width="200" Name="txtLastName" Grid.Column="1" HorizontalAlignment="Left"/>
+                    </Grid>
+                </StackPanel>
+                <!--End of Last Name-->
+
+                <!--Other Names-->
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="250"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Other Names:"/>
+                        <TextBox Width="200" Name="txtOtherNames" Grid.Column="1" HorizontalAlignment="Left"/>
+                    </Grid>
+                </StackPanel>
+                <!--End of other names-->
+
+                <!--Telephone Line-->
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="210"/>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="150"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Telephone:"/>
+                        <TextBox Width="200" Name="txtPersonalTelephone" Grid.Column="1" HorizontalAlignment="Left"/>
+                        <!--<Button Content="+" Click="btnAddPersonalTelephone" Grid.Column="2" Width="20" HorizontalAlignment="Left" />
+                        <ComboBox Grid.Column="3" Name="cmbTelephoneTypes"/>-->
+                    </Grid>
+                </StackPanel>
+                <!--End of Telephone Line-->
+
+                <!--Personal Email Line-->
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="210"/>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="150"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Email:"/>
+                        <TextBox Width="200" Name="txtPersonalEmail" Grid.Column="1" HorizontalAlignment="Left"/>
+                        <!--<Button Content="+" Grid.Column="2" Width="20" HorizontalAlignment="Left" Click="btnAddPersonEmails"/>
+                        <ComboBox Grid.Column="3" Name="cmbEmailTypes"/>-->
+                    </Grid>
+                </StackPanel>
+                <!--End of Personal Email Line-->
+
+                <!--Bottom half elements-->
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="210"/>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="150"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="32"/>
+                            <RowDefinition Height="32"/>
+                            <RowDefinition Height="32"/>
+                            <RowDefinition Height="32"/>
+                        </Grid.RowDefinitions>
+                        
+                        <!--Address Line-->
+                        <Label Content="Address:"/>
+                        <TextBox Width="200" Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Left"
+                                 Name="txtAddress" IsReadOnly="True" MouseDoubleClick="msdEditAddress" ToolTip="Double Click To Edit" ToolTipOpening="txtAddress_ToolTipOpening" ToolTipClosing="txtAddress_ToolTipClosing" AcceptsReturn="True" TextWrapping="WrapWithOverflow"/>
+
+                        <Button Content="+" Grid.Column="2" Width="20" HorizontalAlignment="Left" Click="btnAddAddress"/>
+                        <ComboBox SelectionChanged="cmbAddressTypes_SelectionChanged" Grid.Column="3" Name="cmbAddressTypes"/>
+                        <!--End of Address Line-->
+                        
+                        <!--Nationality Line-->
+                        <StackPanel Orientation="Horizontal" Margin="0 5 0 0" Grid.Row="2" Grid.ColumnSpan="2" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="250"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Content="Nationality:"/>
+                                <ComboBox Width="200" Name="cmbNationality" Grid.Column="1" HorizontalAlignment="Left" Height="25"/>
+                            </Grid>
+                        </StackPanel>
+                        <!--End of Nationality Line-->
+                        
+                        <!--Marital Status Line-->
+                        <StackPanel Orientation="Horizontal" Margin="0 5 0 0" Grid.Row="3" Grid.ColumnSpan="2" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="250"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Content="Marital Status:"/>
+                                <CheckBox Width="200" Name="chkMaritalStatus" Grid.Column="1" HorizontalAlignment="Left" Height="25"/>
+                            </Grid>
+                        </StackPanel>
+                        <!--End of Marital Status Line-->
+                        
+                        <!--Gender Line-->
+                        <StackPanel Orientation="Horizontal" Margin="0 5 0 0" Grid.Row="4" Grid.ColumnSpan="2" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="250"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Content="Gender:"/>
+                                <ComboBox Width="200" Name="cmbGender" Grid.Column="1" HorizontalAlignment="Left" Height="25"/>
+                            </Grid>
+                        </StackPanel>
+                        <!--End of Gender Line-->
+                        
+                        <!--Birth Date Line-->
+                        <StackPanel Orientation="Horizontal" Margin="0 5 0 0" Grid.Row="5" Grid.ColumnSpan="2" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="250"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Content="Birth Date:"/>
+                                <DatePickerTextBox Width="200" Grid.Column="1" HorizontalAlignment="Left" Height="25"/>
+                                <DatePicker Name="dateDOB" Width="200" Grid.Column="1" HorizontalAlignment="Left" Height="25"/>
+                            </Grid>
+                        </StackPanel>
+                        <!--End of Birth Date Line-->
+                        
+                        <!--Additional Information-->
+                        <Label Content="Additional Information" Grid.Row="1" Grid.Column="3" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                        <TextBox Name="txtAdditionalInfo" TextWrapping="WrapWithOverflow" Grid.Row="2" Grid.RowSpan="3" Grid.Column="3"/>
+                        <!--End of Additional Information-->
+               
+                    </Grid>
+                </StackPanel>
+                <!--Bottom half elements-->
+
+            </StackPanel>
+            
+        </GroupBox>
+        <!--End of Personal Information Group Box-->
+        
+        <!--Company Information Details-->
+        <GroupBox Grid.Row="2" Grid.Column="10" Margin="0" Grid.ColumnSpan="5" Grid.RowSpan="11" 
+                  Header="Company Information">
+            
+            <StackPanel Orientation="Vertical">
+                <!--Username-->
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 5" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="95"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Label Content="Username:"/>
+                        <TextBox Name="txtUsername" Grid.Column="1" Margin="0 0 0 0"/>
+                        <Button Content="Generate" Grid.Column="2" Width="Auto" Margin="5 0 0 0" />
+                    </Grid>
+                </StackPanel>
+                <!--End of Username Line-->
+
+                <!--Password-->
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="95"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Password:"/>
+                        <PasswordBox Name="txtPassword" Grid.Column="1" Margin="0 0 0 0"/>
+                        <Button Content="Reset" Grid.Column="2" Width="Auto" Margin="5 0 0 0" />
+                    </Grid>
+                </StackPanel>
+                <!--End of Password Line-->
+
+                <!--Telephone-->
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="95"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Telephone:"/>
+                        <TextBox Name="txtCompanyTelephone" Grid.Column="1" Margin="0 0 0 0"/>
+                        <Button Content="Generate" Grid.Column="2" Width="Auto" Margin="5 0 0 0" />
+                    </Grid>
+                </StackPanel>
+                <!--End of Telephone Line-->
+                
+                <!--Company Email Line-->
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="95"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Email:"/>
+                        <TextBox Name="txtCompanyEmail" Grid.Column="1" Margin="0 0 0 0"/>
+                        <Button Content="Generate" Grid.Column="2" Width="Auto" Margin="5 0 0 0" />
+                    </Grid>
+                </StackPanel>
+                <!--End of Company Email Line-->
+
+                <!--Department-->
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="95"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Department:"/>
+                        <ComboBox Name="cmbDepartment" SelectionChanged="cmbDepartment_SelectionChanged" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 0 0 0"/>
+                    </Grid>
+                </StackPanel>
+                <!--End of Department Line-->
+
+                <!--Job Position-->
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="95"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Job Position:"/>
+                        <ComboBox Name="cmbJobPosition" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 0 0 0"/>
+                    </Grid>
+                </StackPanel>
+                <!--End of Job Position Line-->
+
+                <!--Clearance Level-->
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="95"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Clearance Level"/>
+                        <ComboBox Name="cmbClearanceLevel" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 0 0 0"/>
+                    </Grid>
+                </StackPanel>
+                <!--End of Clearance Level Line-->
+
+                <!--Employee Active Status Line-->
+                <StackPanel Orientation="Horizontal" Margin="0 5 0 0" Grid.Row="3" Grid.ColumnSpan="2" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="250"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Active?:"/>
+                        <CheckBox Width="200" Name="chkisActive" Grid.Column="1" HorizontalAlignment="Left" Height="25"/>
+                    </Grid>
+                </StackPanel>
+                <!--End of Employee Active Status Line-->
+
+            </StackPanel>
+
+        </GroupBox>
+        <!--End of Company Information Details-->
+        
+        <!--Function Buttons-->
+        <StackPanel Orientation="Horizontal" Grid.Row="14" Grid.Column="11" Grid.ColumnSpan="4" FlowDirection="RightToLeft">
+            <Button Click="btnCancel" Content="Cancel" Width="100" Margin="0 0 0 0" BorderBrush="{StaticResource blueOutline}"/>
+            <Button Click="btnSave" Content="Save" Width="100" Margin="10 0 0 0" BorderBrush="{StaticResource blueOutline}"/>
+        </StackPanel>
+        <!--End of Function Buttons-->
+
+    </Grid>
+</Controls:MetroWindow>
