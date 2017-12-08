@@ -1,0 +1,167 @@
+﻿<Controls:MetroWindow x:Class="RestaurantPro.subfrmAddAddress"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        Title="Add Address" Height="400" Width="400" 
+                      GlowBrush="Black" ResizeMode="NoResize" WindowTransitionsEnabled="True" 
+                      WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25*"/>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="66"/>
+            <ColumnDefinition Width="25*"/>
+
+
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25*"/>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="25*"/>
+        </Grid.RowDefinitions>
+
+
+
+        <!--Manage Address Details-->
+        <GroupBox Grid.Row="1" Grid.Column="1" Margin="0" Grid.ColumnSpan="5" Grid.RowSpan="8" 
+                  Header="Manage Addresses">
+
+            <StackPanel Orientation="Vertical">
+                <!--Address Type-->
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 5" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="215"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Address Type:"/>
+                        <ComboBox Name="cmbAddressType" Grid.Column="2" Width="Auto" Margin="5 0 0 0" SelectionChanged="cmbAddressType_SelectionChanged" />
+                    </Grid>
+                </StackPanel>
+                <!--End of Address Type Line-->
+
+                <!--Address Line 1-->
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 5" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="215"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Address Line 1:"/>
+                        <TextBox Name="txtAddressLine1" Grid.Column="2" Width="Auto" Margin="5 0 0 0" />
+                    </Grid>
+                </StackPanel>
+                <!--End of Address Line 1-->
+
+                <!--Address Line 2-->
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 5" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="215"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Address Line 2:"/>
+                        <TextBox Name="txtAddressLine2" Grid.Column="2" Width="Auto" Margin="5 0 0 0" />
+                    </Grid>
+                </StackPanel>
+                <!--End of Address Line 2-->
+
+                <!--Address Line 3-->
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 5" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="215"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Address Line 3:"/>
+                        <TextBox Name="txtAddressLine3" Grid.Column="2" Width="Auto" Margin="5 0 0 0" />
+                    </Grid>
+                </StackPanel>
+                <!--End of Address Line 3-->
+
+                <!--City-->
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 5" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="215"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="City:"/>
+                        <TextBox Name="txtCity" Grid.Column="2" Width="Auto" Margin="5 0 0 0" />
+                    </Grid>
+                </StackPanel>
+                <!--End of City-->
+
+                <!--State-->
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 5" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="215"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="State:"/>
+                        <ComboBox Name="cmbState" Grid.Column="2" Width="Auto" Margin="5 0 0 0" />
+                    </Grid>
+                </StackPanel>
+                <!--End of State-->
+
+                <!--Zip-->
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 5" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="215"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Zip:"/>
+                        <TextBox Name="txtZip" Grid.Column="2" Width="Auto" Margin="5 0 0 0" />
+                    </Grid>
+                </StackPanel>
+                <!--End of Zip-->
+
+                <!--Country-->
+                <StackPanel Orientation="Horizontal" Margin="0 0 0 5" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="215"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Country:"/>
+                        <ComboBox Name="cmbCountry" Grid.Column="2" Width="Auto" Margin="5 0 0 0" />
+                    </Grid>
+                </StackPanel>
+                <!--End of Country-->
+
+            </StackPanel>
+        </GroupBox>
+        <!--End of Add Address Details-->
+
+        <!--Function Buttons-->
+        <StackPanel Orientation="Horizontal" Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="4" FlowDirection="RightToLeft">
+            <Button Content="Cancel" Width="100" Margin="0 0 0 0" BorderBrush="Blue" Click="btnCancel_Click"/>
+            <Button  Click="btnSave_Click" Content="Save" Width="100" Margin="10 0 0 0" BorderBrush="Blue"/>
+        </StackPanel>
+        <!--End of Function Buttons-->
+
+    </Grid>
+</Controls:MetroWindow>

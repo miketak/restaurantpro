@@ -4,6 +4,7 @@ using DataObjects.ProgramDataObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -57,7 +58,7 @@ namespace BusinessLogic
         /// <param name="username">Entered username</param>
         /// <param name="password">Entered password</param>
         /// <returns>Returns User if Authentication Passes</returns>
-        public User AuthenticateUser(string username, string password)
+        public User AuthenticateUser(string username, SecureString password)
         {
             User user = null;
             

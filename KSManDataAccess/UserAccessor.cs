@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,12 +25,57 @@ namespace DataAccessLayer
         /// <param name="username">Username for verification</param>
         /// <param name="passwordHash">Password for verification</param>
         /// <returns></returns>
-        public static bool VerifyUsernameAndPassword(string username, string passwordHash)
+        public static bool VerifyUsernameAndPassword(string username, SecureString passwordHash)
         {
-            return username == "rkpadi" && passwordHash == "password" ||
-                   username == "linda" && passwordHash == "password";
+            string pass = "password";
+            var secure = new SecureString();
 
+            foreach (char c in pass)
+            {
+                secure.AppendChar(c);
+            }
+
+            return username == "rkpadi" && IsPasswordSame(passwordHash, secure) ||
+                   username == "linda" && IsPasswordSame(passwordHash, secure);
         }
+
+        /// <summary>
+        /// Checks for password equality
+        /// </summary>
+        /// <param name="ss1"></param>
+        /// <param name="ss2"></param>
+        /// <returns></returns>
+        public static bool IsPasswordSame(SecureString ss1, SecureString ss2)
+        {
+            IntPtr bstr1 = IntPtr.Zero;
+            IntPtr bstr2 = IntPtr.Zero;
+            try
+            {
+                bstr1 = Marshal.SecureStringToBSTR(ss1);
+                bstr2 = Marshal.SecureStringToBSTR(ss2);
+                int length1 = Marshal.ReadInt32(bstr1, -4);
+                int length2 = Marshal.ReadInt32(bstr2, -4);
+                if (length1 == length2)
+                {
+                    for (int x = 0; x < length1; ++x)
+                    {
+                        byte b1 = Marshal.ReadByte(bstr1, x);
+                        byte b2 = Marshal.ReadByte(bstr2, x);
+                        if (b1 != b2) return false;
+                    }
+                }
+                else return false;
+                return true;
+            }
+            finally
+            {
+                if (bstr2 != IntPtr.Zero) Marshal.ZeroFreeBSTR(bstr2);
+                if (bstr1 != IntPtr.Zero) Marshal.ZeroFreeBSTR(bstr1);
+            }
+        }
+
+
+
 
         /// <summary>
         /// Retrieves User by Username
