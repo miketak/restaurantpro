@@ -52,7 +52,7 @@
         <Label Content="Username: " VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right" Foreground="Blue" Grid.Column="1" FontSize="14" HorizontalAlignment="Right"  Grid.Row="2" VerticalAlignment="Bottom" Height="Auto" Width="Auto"/>
         <Label Content="Password: " VerticalContentAlignment="Bottom" HorizontalContentAlignment="Right" Foreground="Blue" Grid.Column="1" FontSize="14" HorizontalAlignment="Right"  Grid.Row="3" VerticalAlignment="Bottom" Height="Auto" Width="Auto"/>
         <TextBox Name="txtUsername" 
-                 Text = "{Binding MVUser.Username, UpdateSourceTrigger=PropertyChanged}"
+                 Text = "{Binding MVUser.Username, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                  Grid.Column="2" 
                  HorizontalAlignment="Left" 
                  Height="Auto" 

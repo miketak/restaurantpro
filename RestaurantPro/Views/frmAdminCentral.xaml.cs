@@ -29,11 +29,11 @@ namespace RestaurantPro
         /// Admin Central Constructor
         /// </summary>
         /// <param name="user"></param>
-        public frmAdminCentral(User user)
+        public frmAdminCentral()//User user)
         {
             InitializeComponent();
-            _user = user;
-            txtName.Text = _user.FirstName + " " + _user.LastName;
+            //_user = user;
+            //txtName.Text = _user.FirstName + " " + _user.LastName;
         }
 
         private void btnManageDepartment(object sender, RoutedEventArgs e)

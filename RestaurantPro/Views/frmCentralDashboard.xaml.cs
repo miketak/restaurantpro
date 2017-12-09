@@ -33,9 +33,9 @@ namespace RestaurantPro
         /// Central Dashboard Constructor
         /// </summary>
         /// <param name="user"></param>
-        public frmCentralDashboard(User user)
+        public frmCentralDashboard()
         {
-            _user = user;
+            //_user = user;
             InitializeComponent();
             SetupWindow();
         }
@@ -43,10 +43,10 @@ namespace RestaurantPro
         private void SetupWindow()
         {
             //Set first and last name
-            txtName.Text = _user.FirstName + " " + _user.LastName;
+            //txtName.Text = _user.FirstName + " " + _user.LastName;
 
             //Set status message
-            txtStatusMessage.Content += "Welcome back " + _user.FirstName + " " + _user.LastName;           
+            //txtStatusMessage.Content += "Welcome back " + _user.FirstName + " " + _user.LastName;           
         }
 
         private async void tryMe_Click(object sender, RoutedEventArgs e)
@@ -89,7 +89,7 @@ namespace RestaurantPro
         private void btnAdminCentral(object sender, RoutedEventArgs e)
         {
             //this.Hide();
-            var frmAdminCentral = new frmAdminCentral(_user);
+            var frmAdminCentral = new frmAdminCentral();
             frmAdminCentral.Show();
         }
 

@@ -112,11 +112,13 @@
     <Compile Include="Commands\MVUserLoginCommand.cs" />
     <Compile Include="Models\MVUser.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Properties\Annotations1.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\CentralDashboardViewModel.cs" />
     <Compile Include="ViewModels\MVUserViewModel.cs" />
     <Compile Include="Views\subfrmAddAddress.xaml.cs">
       <DependentUpon>subfrmAddAddress.xaml</DependentUpon>

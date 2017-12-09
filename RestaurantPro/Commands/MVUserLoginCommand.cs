@@ -10,23 +10,22 @@ namespace RestaurantPro.Commands
 {
     internal class MVUserLoginCommand : ICommand
     {
+        private MVUserViewModel viewModel;
+
         public MVUserLoginCommand(MVUserViewModel viewModel)
         {
-            _ViewModel = viewModel;
+            this.viewModel = viewModel;
         }
-
-        private MVUserViewModel _ViewModel;
-
 
         #region ICommand Members
         public bool CanExecute(object parameter)
         {
-            return _ViewModel.CanLogin;
+            return string.IsNullOrWhiteSpace(viewModel.MVUser.Error);
         }
 
         public void Execute(object parameter)
         {
-            _ViewModel.SaveChanges();
+            viewModel.SaveChanges();
         }
 
         public event EventHandler CanExecuteChanged

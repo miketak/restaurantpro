@@ -1,71 +1,56 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using RestaurantPro.Annotations;
 
 namespace RestaurantPro.Models
 {
-    public class MVUser : INotifyPropertyChanged
+    public class MVUser : INotifyPropertyChanged, IDataErrorInfo
     {
+        private string username;
+        private string firstName;
+        private string lastName;
+        
+        
         /// <summary>
         /// Initialized a news instance of User
         /// </summary>
-        public MVUser(string username, string firstName, string lastName, string password)
+        public MVUser(string userUsername, string userFirstName, string userLastName)
         {
-            Username = username;
-            FirstName = firstName;
-            LastName = lastName;
-            Password = password;
+            Username = userUsername;
+            FirstName = userFirstName;
+            LastName = userLastName;
         }
 
-        public MVUser()
-        {
-            //Username = "";
-            //FirstName = "";
-            //LastName = "";
-            //Password = "";
-        }
-
-        private string _Username;
+        public MVUser(){ }
+        
         public string Username
         {
-            get { return _Username; }
+            get { return username; }
             set
             {
-                _Username = value;
-                OnPropertyChanged("Username");
+                username = value;
+                OnPropertyChanged();
             }
         }
 
-        private string _FirstName;
         public string FirstName
         {
-            get { return _FirstName; }
+            get { return firstName; }
             set
             {
-                _FirstName = value;
-                OnPropertyChanged("FirstName");
+                firstName = value;
+                OnPropertyChanged();
             }
         }
-
-        private string _LastName;
+        
         public string LastName
         {
-            get { return _LastName; }
+            get { return lastName; }
             set
             {
-                _LastName = value;
-                OnPropertyChanged("LastName");
-            }
-        }
-
-        private string _Password;
-        public string Password
-        {
-            get { return _Password; }
-            set
-            {
-                _Password = value;
-                OnPropertyChanged("Password");
+                lastName = value;
+                OnPropertyChanged();
             }
         }
 
@@ -82,6 +67,32 @@ namespace RestaurantPro.Models
 
         #endregion
 
+        #region IDataErrorInfo Members
 
+        public string Error { get; private set; }
+
+        public string this[string columnName]
+        {
+            get 
+            {
+                if (columnName == "Username")
+                {
+                    if (String.IsNullOrWhiteSpace(Username))
+                    {
+                        Error = "Username cannot be null";
+                    }
+                    else
+                    {
+                        Error = null;
+                    }
+                }
+
+                return Error;
+            }
+        }
+
+        
+
+        #endregion
     }
 }
