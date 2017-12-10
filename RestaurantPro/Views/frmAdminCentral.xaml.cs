@@ -1,19 +1,7 @@
-﻿using DataObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using DataObjects;
 
-namespace RestaurantPro
+namespace RestaurantPro.Views
 {
     /// <summary>
     /// Interaction logic for frmAdminCentral.xaml
@@ -28,7 +16,6 @@ namespace RestaurantPro
         /// <summary>
         /// Admin Central Constructor
         /// </summary>
-        /// <param name="user"></param>
         public frmAdminCentral()//User user)
         {
             InitializeComponent();

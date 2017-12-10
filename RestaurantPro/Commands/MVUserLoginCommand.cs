@@ -20,7 +20,7 @@ namespace RestaurantPro.Commands
         #region ICommand Members
         public bool CanExecute(object parameter)
         {
-            return string.IsNullOrWhiteSpace(viewModel.MVUser.Error);
+            return string.IsNullOrWhiteSpace(viewModel.MVUser.Error) && !viewModel.IsSecurePasswordNull();
         }
 
         public void Execute(object parameter)

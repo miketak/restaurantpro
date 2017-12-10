@@ -3,9 +3,9 @@ using System.Diagnostics;
 using System.Security;
 using System.Windows.Input;
 using BusinessLogic;
-using PresentationLayer.ViewModels;
 using RestaurantPro.Commands;
 using RestaurantPro.Models;
+using RestaurantPro.Views;
 
 namespace RestaurantPro.ViewModels
 {
@@ -18,6 +18,12 @@ namespace RestaurantPro.ViewModels
         private MVUser mVUser;
         private CentralDashboardViewModel childViewModel_CentralDashboard;
         public SecureString SecurePassword { private get; set; }
+
+
+        public bool IsSecurePasswordNull()
+        {
+            return SecurePassword == null;
+        }
         
         /// <summary>
         /// Constructor to initialize MVUser and MVUserLoginCommand

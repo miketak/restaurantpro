@@ -1,45 +1,41 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using PresentationLayer.Annotations;
+using RestaurantPro.Annotations;
 
-namespace PresentationLayer.ViewModels
+namespace RestaurantPro.ViewModels
 {
     internal class CentralDashboardViewModel : INotifyPropertyChanged
     {
-        private string firstName;
-        private string lastName;
+        private string _firstName;
+        private string _lastName;
 
         /// <summary>
         /// Gets or sets some information
         /// </summary>
         public String FirstName
         {
-            get { return firstName; }
+            get { return _firstName; }
             set
             {
-                firstName = value;
+                _firstName = value;
                 OnPropertyChanged();
             }
         }
 
         public string LastName
         {
-            get { return lastName; }
+            get { return _lastName; }
             set
             {
-                lastName = value;
+                _lastName = value;
                 OnPropertyChanged();
             }
         }
 
         public string FullName
         {
-            get { return firstName + " " + lastName; }
+            get { return _firstName + " " + _lastName; }
         }
 
 

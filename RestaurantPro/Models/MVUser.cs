@@ -5,11 +5,14 @@ using RestaurantPro.Annotations;
 
 namespace RestaurantPro.Models
 {
+    /// <summary>
+    /// Temporary Class for 
+    /// </summary>
     public class MVUser : INotifyPropertyChanged, IDataErrorInfo
     {
-        private string username;
-        private string firstName;
-        private string lastName;
+        private string _username;
+        private string _firstName;
+        private string _lastName;
         
         
         /// <summary>
@@ -26,30 +29,30 @@ namespace RestaurantPro.Models
         
         public string Username
         {
-            get { return username; }
+            get { return _username; }
             set
             {
-                username = value;
+                _username = value;
                 OnPropertyChanged();
             }
         }
 
         public string FirstName
         {
-            get { return firstName; }
+            get { return _firstName; }
             set
             {
-                firstName = value;
+                _firstName = value;
                 OnPropertyChanged();
             }
         }
         
         public string LastName
         {
-            get { return lastName; }
+            get { return _lastName; }
             set
             {
-                lastName = value;
+                _lastName = value;
                 OnPropertyChanged();
             }
         }
@@ -79,14 +82,13 @@ namespace RestaurantPro.Models
                 {
                     if (String.IsNullOrWhiteSpace(Username))
                     {
-                        Error = "Username cannot be null";
+                        Error = "Kindly enter username";
                     }
                     else
                     {
                         Error = null;
                     }
                 }
-
                 return Error;
             }
         }
