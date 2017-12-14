@@ -10,19 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RestaurantPro
+namespace RestaurantPro.HomeDashboard
 {
     /// <summary>
-    /// Interaction logic for subfrmAddPersonalTelephone.xaml
+    /// Interaction logic for HomeDashboardView.xaml
     /// </summary>
-    public partial class subfrmAddPersonalTelephone
+    public partial class HomeDashboardView : UserControl
     {
-        /// <summary>
-        /// Add Personal Telephone Back to Parent Page
-        /// </summary>
-        public subfrmAddPersonalTelephone()
+        public HomeDashboardView()
         {
             InitializeComponent();
         }

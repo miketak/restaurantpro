@@ -17,41 +17,6 @@ namespace BusinessLogic
     /// </summary>
     public class UserManager
     {
-
-        /// <summary>
-        /// Hash Encryption for Password
-        /// </summary>
-        /// <param name="source">Source string</param>
-        /// <returns>Encrypted String</returns>
-        internal string HashSHA256(string source)   //change back to internal
-        {
-            var result = "";
-
-            // this logic is always the same for our purposes
-            // create a byte array (8 bit unsigned int)
-            byte[] data;
-
-            // Hash providers are all created with factory methods.
-            using (SHA256 sha256hash = SHA256.Create())
-            {
-                // hash the input
-                data = sha256hash.ComputeHash(Encoding.UTF8.GetBytes(source));
-            }
-
-            // use a stringbuilder to conserve memory
-            var s = new StringBuilder();
-
-            // loop through the bytes creating characts
-            for (int i = 0; i < data.Length; i++)
-            {
-                s.Append(data[i].ToString("x2"));
-            }
-
-            result = s.ToString();
-            return result;
-        }
-        
-
         /// <summary>
         /// Authenticates employee
         /// </summary>
@@ -63,7 +28,7 @@ namespace BusinessLogic
             User user = null;
             
             //Username & Password pre-validation
-            if (username.Length < 5 || username.Length > 20)
+            if (username.Length < 2 || username.Length > 20)
             {
                 throw new ApplicationException("Invalid Username");
             }
@@ -74,7 +39,7 @@ namespace BusinessLogic
 
             try
             {
-                if ( UserAccessor.VerifyUsernameAndPassword( username, password)) //HashSHA256(password) ) )
+                if ( UserAccessor.VerifyUsernameAndPassword( username, password))
                 {
                     password = null;
                     // need to create a employee object to use as an access token
@@ -105,23 +70,7 @@ namespace BusinessLogic
         /// <returns></returns>
         public bool UpdatePassword(int userID, string oldPassword, string newPassword)
         {
-            var result = false;
-            try
-            {
-                if (1 == UserAccessor.UpdatePasswordHash(userID, HashSHA256(oldPassword), HashSHA256(newPassword)))
-                {
-                    result = true;
-                }
-                else
-                {
-                    result = false;
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            return result;
+           throw new NotImplementedException();
         }
 
 

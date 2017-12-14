@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 using RestaurantPro.Annotations;
 
@@ -8,93 +9,38 @@ namespace RestaurantPro.Models
     /// <summary>
     /// Temporary Class for 
     /// </summary>
-    public class MVUser : INotifyPropertyChanged, IDataErrorInfo
+    public class MVUser : ValidatableBindableBase
     {
+
+        [Key]
+        public Guid Id { get; set; }
+
         private string _username;
         private string _firstName;
         private string _lastName;
-        
-        
-        /// <summary>
-        /// Initialized a news instance of User
-        /// </summary>
-        public MVUser(string userUsername, string userFirstName, string userLastName)
-        {
-            Username = userUsername;
-            FirstName = userFirstName;
-            LastName = userLastName;
-        }
 
-        public MVUser(){ }
-        
+        [Required]
         public string Username
         {
             get { return _username; }
-            set
-            {
-                _username = value;
-                OnPropertyChanged();
-            }
+            set { SetProperty(ref _username, value); }
         }
 
-        public string FirstName
-        {
-            get { return _firstName; }
-            set
-            {
-                _firstName = value;
-                OnPropertyChanged();
-            }
-        }
+        //public string FirstName
+        //{
+        //    get { return _firstName; }
+        //    set { SetProperty(ref _firstName, value); }
+        //}
         
-        public string LastName
-        {
-            get { return _lastName; }
-            set
-            {
-                _lastName = value;
-                OnPropertyChanged();
-            }
-        }
+        //public string LastName
+        //{
+        //    get { return _lastName; }
+        //    set { SetProperty(ref _lastName, value); }
+        //}
 
-        #region InotifyPropertyChanged Members
+        //public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
-        public event PropertyChangedEventHandler PropertyChanged;
 
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            var handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
-        }
 
-        #endregion
-
-        #region IDataErrorInfo Members
-
-        public string Error { get; private set; }
-
-        public string this[string columnName]
-        {
-            get 
-            {
-                if (columnName == "Username")
-                {
-                    if (String.IsNullOrWhiteSpace(Username))
-                    {
-                        Error = "Kindly enter username";
-                    }
-                    else
-                    {
-                        Error = null;
-                    }
-                }
-                return Error;
-            }
-        }
-
-        
-
-        #endregion
     }
 }

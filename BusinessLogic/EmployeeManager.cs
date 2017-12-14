@@ -28,7 +28,7 @@ namespace BusinessLogic
 
             //Set Password
             var userEncode = new UserManager();
-            employee.PasswordHash = userEncode.HashSHA256(employee.Username.ToUpper());
+           // employee.PasswordHash = userEncode.HashSHA256(employee.Username.ToUpper());
 
             //Set Hire Date - control must be created in presentation layer
             employee.HireDate = DateTime.Now;
