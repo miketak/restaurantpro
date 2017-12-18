@@ -55,6 +55,14 @@
     </DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.4.0-ALPHA029\lib\net45\MahApps.Metro.dll</HintPath>
       <Private>True</Private>
@@ -175,13 +183,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj">
-      <Project>{34ddfba5-24f3-4d7e-9d63-9018c61bd931}</Project>
-      <Name>BusinessLogic</Name>
+    <ProjectReference Include="..\RestaurantPro.Core\RestaurantPro.Core.csproj">
+      <Project>{85FEB505-D0A9-4253-83F1-9F78FD3334DE}</Project>
+      <Name>RestaurantPro.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DataObjects\DataObjects.csproj">
-      <Project>{b501cf57-19ad-41f2-af62-b9a34ffa2b69}</Project>
-      <Name>DataObjects</Name>
+    <ProjectReference Include="..\RestaurantPro.Infrastructure\RestaurantPro.Infrastructure.csproj">
+      <Project>{08B93852-EB08-4BFC-B1B4-2E8CD7C86273}</Project>
+      <Name>RestaurantPro.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

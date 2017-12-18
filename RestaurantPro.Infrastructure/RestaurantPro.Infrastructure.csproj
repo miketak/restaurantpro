@@ -50,10 +50,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntityConfigurations\UserConfiguration.cs" />
+    <Compile Include="Migrations\201712180324012_InitialCreate.cs" />
+    <Compile Include="Migrations\201712180324012_InitialCreate.Designer.cs">
+      <DependentUpon>201712180324012_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="RestProContext.cs" />
+    <Compile Include="Services\UserAuthenticationService.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -66,7 +72,11 @@
       <Name>RestaurantPro.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201712180324012_InitialCreate.resx">
+      <DependentUpon>201712180324012_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

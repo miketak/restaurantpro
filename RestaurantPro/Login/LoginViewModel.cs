@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Security;
 using System.Windows;
-using BusinessLogic;
+using RestaurantPro.Core.Services;
+using RestaurantPro.Infrastructure.Services;
 using RestaurantPro.Models;
 
 namespace RestaurantPro.Login
@@ -11,15 +12,17 @@ namespace RestaurantPro.Login
     /// </summary>
     public class LoginViewModel : BindableBase
     {
+
+        private IUserAuthenticationService _userAuthenticationService;
+
         public SecureString SecurePassword { private get; set; }
-        private UserManager _userManager;
 
         /// <summary>
         /// Login View Model Constructor
         /// </summary>
         public LoginViewModel()
         {
-            _userManager = new UserManager();
+            _userAuthenticationService = new UserAuthenticationService();
             LoginCommand = new RelayCommand(OnLogin, CanLogin);
         }
 
@@ -54,7 +57,7 @@ namespace RestaurantPro.Login
         {
             try
             {
-                var _user = _userManager.AuthenticateUser(CurrentUser.Username, SecurePassword);
+                var _user = _userAuthenticationService.AuthenticateUser(CurrentUser.Username, SecurePassword);
             }
             catch (Exception e)
             {
