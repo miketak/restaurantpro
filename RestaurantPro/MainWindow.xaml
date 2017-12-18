@@ -18,14 +18,14 @@
 		Cursor="Arrow">
 
 	<!--Data Context and Triggers-->
-	<Window.DataContext>
+	<!--<Window.DataContext>
 		<local:MainWindowViewModel/>
 	</Window.DataContext>
 	<i:Interaction.Triggers>
 		<i:EventTrigger EventName="Loaded">
 			<ei:CallMethodAction TargetObject="{Binding}" MethodName="SetLoginContext"/>
 		</i:EventTrigger>
-	</i:Interaction.Triggers>
+	</i:Interaction.Triggers>-->
 	<!--End of Data Context and Triggers-->
 
 	<!--Window Resources-->

@@ -69,7 +69,7 @@ namespace RestaurantPro.Infrastructure.Services
         /// <param name="ss1"></param>
         /// <param name="ss2"></param>
         /// <returns></returns>
-        public static bool IsPasswordSame(SecureString ss1, SecureString ss2)
+        public bool IsPasswordSame(SecureString ss1, SecureString ss2)
         {
             IntPtr bstr1 = IntPtr.Zero;
             IntPtr bstr2 = IntPtr.Zero;

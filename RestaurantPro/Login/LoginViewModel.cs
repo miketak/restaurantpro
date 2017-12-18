@@ -20,9 +20,9 @@ namespace RestaurantPro.Login
         /// <summary>
         /// Login View Model Constructor
         /// </summary>
-        public LoginViewModel()
+        public LoginViewModel(IUserAuthenticationService userAuthenticationService)
         {
-            _userAuthenticationService = new UserAuthenticationService();
+            _userAuthenticationService = userAuthenticationService;
             LoginCommand = new RelayCommand(OnLogin, CanLogin);
         }
 

@@ -11,8 +11,5 @@ namespace RestaurantPro.Core.Services
     public interface IUserAuthenticationService
     {
         User AuthenticateUser(string username, SecureString password);
-
-        //bool VerifyUsernameAndPassword(string username, SecureString password);
-
     }
 }

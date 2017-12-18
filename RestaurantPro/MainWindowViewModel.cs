@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using RestaurantPro.Core.Services;
 using RestaurantPro.HomeDashboard;
 using RestaurantPro.Login;
 using RestaurantPro.Models;
@@ -18,15 +19,24 @@ namespace RestaurantPro
     {
         private BindableBase _CurrentViewModel;
 
-        private LoginViewModel _loginViewModel = new LoginViewModel();
-        private HomeDashboardViewModel _homeDashboardViewModel = new HomeDashboardViewModel();
+        private LoginViewModel _loginViewModel;
+        private HomeDashboardViewModel _homeDashboardViewModel;
+
 
         /// <summary>
         /// Constructor to subscription of events for overall program navigation.
         /// </summary>
-        public MainWindowViewModel()
+        public MainWindowViewModel(IUserAuthenticationService userAuthenticationService)
         {
             NavCommand = new RelayCommand<string>(OnNav);
+
+            //DependencyResolution
+            _loginViewModel = new LoginViewModel(userAuthenticationService);
+            _homeDashboardViewModel = new HomeDashboardViewModel();
+
+
+            //Set Login context
+            SetLoginContext();
 
             //Event Subscriptions
             _loginViewModel.LoginRequested += NavToHomeDashboard;

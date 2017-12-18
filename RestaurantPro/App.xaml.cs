@@ -5,6 +5,10 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using RestaurantPro.Core.Services;
+using RestaurantPro.Infrastructure.Services;
+using RestaurantPro.Login;
+using Unity;
 
 namespace RestaurantPro
 {
@@ -13,5 +17,17 @@ namespace RestaurantPro
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            IUnityContainer container = new UnityContainer();
+            container.RegisterType<IUserAuthenticationService, UserAuthenticationService>();
+
+            var mainWindowViewModel = container.Resolve<MainWindowViewModel>();
+            var window = new MainWindow{DataContext = mainWindowViewModel};
+            window.Show();
+
+        }
     }
 }
