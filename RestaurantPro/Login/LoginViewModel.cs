@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Security;
 using System.Windows;
+using AutoMapper;
+using RestaurantPro.Core.Domain;
 using RestaurantPro.Core.Services;
 using RestaurantPro.Infrastructure.Services;
 using RestaurantPro.Models;
@@ -27,11 +29,11 @@ namespace RestaurantPro.Login
         }
 
         #region Object Binding
-        private MVUser _CurrentUser;
+        private WpfUser _CurrentUser;
         /// <summary>
         /// Current User
         /// </summary>
-        public MVUser CurrentUser
+        public WpfUser CurrentUser
         {
             get { return _CurrentUser; }
             set { SetProperty(ref _CurrentUser, value); }
@@ -49,7 +51,7 @@ namespace RestaurantPro.Login
         /// <summary>
         /// Action Event to navigate to Home Dashboard
         /// </summary>
-        public event Action<MVUser> LoginRequested = delegate { };
+        public event Action<WpfUser> LoginRequested = delegate { };
         #endregion
 
         #region Command Implementations
@@ -57,14 +59,19 @@ namespace RestaurantPro.Login
         {
             try
             {
-                var _user = _userAuthenticationService.AuthenticateUser(CurrentUser.Username, SecurePassword);
+                var user = _userAuthenticationService.AuthenticateUser(CurrentUser.Username, SecurePassword);
+                var config = new MapperConfiguration(cfg =>
+                {
+                    cfg.CreateMap<User, WpfUser>();
+                });
+                IMapper iMapper = config.CreateMapper();
+                CurrentUser = iMapper.Map<User, WpfUser>(user);
             }
             catch (Exception e)
             {
                 MessageBox.Show("Check username and password");
                 return;
             }
-
             LoginRequested(CurrentUser);
         }
 

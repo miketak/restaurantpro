@@ -9,16 +9,27 @@ namespace RestaurantPro.HomeDashboard
 {
     public class HomeDashboardViewModel : BindableBase
     {
-        private MVUser currentUser;
-
+     
         /// <summary>
         /// Sets Current User in the system.
         /// </summary>
         /// <param name="user"></param>
-        public void SetCurrentUser(MVUser user)
+        public void SetCurrentUser(WpfUser user)
         {
-            currentUser = user;
+            CurrentUser = user;
         }
+
+        #region Object Binding
+        private WpfUser _CurrentUser;
+        /// <summary>
+        /// Current User
+        /// </summary>
+        public WpfUser CurrentUser
+        {
+            get { return _CurrentUser; }
+            set { SetProperty(ref _CurrentUser, value); }
+        }
+        #endregion
 
 
 

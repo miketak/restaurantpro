@@ -22,10 +22,19 @@
 
         <!--Left Pane-->
         <Border Background="DimGray"  Width="Auto" Margin="0,0,0,0" Grid.Column="1"
-                Grid.RowSpan="4">
+                Grid.RowSpan="4"
+                DataContext="{Binding CurrentUser}">
             <StackPanel Orientation="Vertical" Margin="10 5 10 5">
                 <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right" 
                             Orientation="Horizontal" Width="Auto" Height="30">
+                    <TextBlock VerticalAlignment="Center" 
+                               Text="Welcome: " 
+                               FontSize="15" FontWeight="ExtraBold" FontFamily="Arial"
+                               Margin="0 0 10 0"/>
+                    <TextBlock VerticalAlignment="Center"
+                               Text="{Binding FullName}" 
+                               FontSize="15" FontWeight="ExtraBold" FontFamily="Arial"
+                               Margin="0 0 20 0"/>
                     <TextBox Name="txtSearch" Height="25" Width="200" 
                              HorizontalAlignment="Right" VerticalAlignment="Top" 
                              Foreground="Gray" Text="Search"/>

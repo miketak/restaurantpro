@@ -47,7 +47,7 @@ namespace RestaurantPro
         /// </summary>
         public void SetLoginContext()
         {
-            _loginViewModel.CurrentUser = new MVUser();
+            _loginViewModel.CurrentUser = new WpfUser();
             CurrentViewModel = _loginViewModel;
         }
 
@@ -83,7 +83,7 @@ namespace RestaurantPro
 
         #region Navigation Events Fire Methods
 
-        private void NavToHomeDashboard(MVUser currentUser)
+        private void NavToHomeDashboard(WpfUser currentUser)
         {
             _homeDashboardViewModel.SetCurrentUser(currentUser);
             CurrentViewModel = _homeDashboardViewModel;
