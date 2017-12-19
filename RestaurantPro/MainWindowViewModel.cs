@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using RestaurantPro.Core;
 using RestaurantPro.Core.Services;
 using RestaurantPro.HomeDashboard;
 using RestaurantPro.InventoryFeatures;
@@ -30,7 +31,7 @@ namespace RestaurantPro
         /// <summary>
         /// Constructor to subscription of events for overall program navigation.
         /// </summary>
-        public MainWindowViewModel(IUserAuthenticationService userAuthenticationService)
+        public MainWindowViewModel(IUserAuthenticationService userAuthenticationService, IUnitOfWork unitOfWork)
         {
             NavCommand = new RelayCommand<string>(OnNav);
 
@@ -38,7 +39,7 @@ namespace RestaurantPro
             _loginViewModel = new LoginViewModel(userAuthenticationService);
             _homeDashboardViewModel = new HomeDashboardViewModel();
             _inventoryDashboardViewModel = new InventoryDashboardViewModel();
-            _workCycleListViewModel = new WorkCycleListViewModel();
+            _workCycleListViewModel = new WorkCycleListViewModel(unitOfWork);
 
             //Set Login context
             SetLoginContext();

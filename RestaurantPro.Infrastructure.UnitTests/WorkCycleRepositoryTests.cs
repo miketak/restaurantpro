@@ -36,8 +36,21 @@ namespace RestaurantPro.Infrastructure.UnitTests
             _unitOfWork.Complete();
 
 
-            var workCycle = _unitOfWork.WorkCycles.SingleOrDefault(w => w.Id == 1);
+            var workCycle = _unitOfWork.WorkCycles.SingleOrDefault(w => w.Name == "Cycle 600");
             Assert.AreEqual(testCycle1.Name, workCycle.Name);
+
+        }
+
+        [TestMethod]
+        public void DeactivateWorkCycleTest()
+        {
+            var cycleId = 3;
+
+            _unitOfWork.WorkCycles.DeactivateWorkCycle(cycleId);
+            
+            var workCycleFromDb = _unitOfWork.WorkCycles.SingleOrDefault(cycle => cycle.Id == cycleId);
+
+            Assert.IsFalse(workCycleFromDb.Active);
 
         }
 
@@ -46,7 +59,7 @@ namespace RestaurantPro.Infrastructure.UnitTests
         {
             string expectedNewCycleName = "New Cycle Name";
 
-            var testInsertedWorkCycle = _unitOfWork.WorkCycles.SingleOrDefault(cycle => cycle.Name == "Cycle 1");
+            var testInsertedWorkCycle = _unitOfWork.WorkCycles.SingleOrDefault(cycle => cycle.Name == "Cycle 600");
 
             testInsertedWorkCycle.Name = expectedNewCycleName;
             testInsertedWorkCycle.DateEnd = new DateTime(2017, 12, 25);
@@ -59,6 +72,8 @@ namespace RestaurantPro.Infrastructure.UnitTests
 
             _unitOfWork.Complete();
         }
+
+
 
 
 
