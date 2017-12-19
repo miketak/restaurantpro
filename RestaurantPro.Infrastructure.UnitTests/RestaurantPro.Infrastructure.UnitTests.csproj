@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserAuthenticationServiceTests.cs" />
+    <Compile Include="WorkCycleRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RestaurantPro.Core\RestaurantPro.Core.csproj">

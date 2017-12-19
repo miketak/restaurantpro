@@ -45,6 +45,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
+    <Compile Include="Repositories\IWorkCycleRepository.cs" />
     <Compile Include="Services\IUserAuthenticationService.cs" />
   </ItemGroup>
   <ItemGroup>

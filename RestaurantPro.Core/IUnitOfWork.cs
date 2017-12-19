@@ -6,6 +6,8 @@ namespace RestaurantPro.Core
     {
         IUserRepository Users { get; }
 
+        IWorkCycleRepository WorkCycles { get; }
+
         int Complete();
     }
 }

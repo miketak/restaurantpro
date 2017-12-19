@@ -12,9 +12,11 @@ namespace RestaurantPro.Infrastructure
         {
             _context = context;
             Users = new UserRepository(_context);
+            WorkCycles = new WorkCycleRepository(_context);
         }
 
         public IUserRepository Users { get; private set; }
+        public IWorkCycleRepository WorkCycles { get; private set; }
 
 
         public int Complete()
