@@ -15,9 +15,12 @@ namespace RestaurantPro.Infrastructure
 
         public virtual DbSet<User> Users { get; set; }
 
+        public virtual DbSet<WorkCycle> WorkCycles { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new UserConfiguration());
+            modelBuilder.Configurations.Add(new WorkCycleConfigurations());
         }
  
     }

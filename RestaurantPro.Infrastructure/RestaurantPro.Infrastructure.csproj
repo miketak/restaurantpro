@@ -50,9 +50,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntityConfigurations\UserConfiguration.cs" />
+    <Compile Include="EntityConfigurations\WorkCycleConfigurations.cs" />
     <Compile Include="Migrations\201712180324012_InitialCreate.cs" />
     <Compile Include="Migrations\201712180324012_InitialCreate.Designer.cs">
       <DependentUpon>201712180324012_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712190437303_WorkCycleTableCreation.cs" />
+    <Compile Include="Migrations\201712190437303_WorkCycleTableCreation.Designer.cs">
+      <DependentUpon>201712190437303_WorkCycleTableCreation.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,6 +80,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201712180324012_InitialCreate.resx">
       <DependentUpon>201712180324012_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712190437303_WorkCycleTableCreation.resx">
+      <DependentUpon>201712190437303_WorkCycleTableCreation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

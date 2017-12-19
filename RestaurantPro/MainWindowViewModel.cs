@@ -43,8 +43,6 @@ namespace RestaurantPro
             _homeDashboardViewModel.LogoutRequested += NavToLoginView;
         }
 
-
-
         /// <summary>
         /// Sets to Login Context on Start Up
         /// </summary>
