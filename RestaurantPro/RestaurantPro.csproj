@@ -153,6 +153,11 @@
     <Compile Include="InventoryFeatures\InventoryDashboardView.xaml.cs">
       <DependentUpon>InventoryDashboardView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="InventoryFeatures\InventoryDashboardViewModel.cs" />
+    <Compile Include="InventoryFeatures\WorkCycles\WorkCycleListView.xaml.cs">
+      <DependentUpon>WorkCycleListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="InventoryFeatures\WorkCycles\WorkCycleListViewModel.cs" />
     <Compile Include="Login\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
@@ -168,14 +173,15 @@
     </Compile>
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ValidatableBindableBase.cs" />
-    <Compile Include="InventoryFeatures\WorkCycles\WorkCycleListView.xaml.cs">
-      <DependentUpon>WorkCycleListView.xaml</DependentUpon>
-    </Compile>
     <Page Include="HomeDashboard\HomeDashboardView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="InventoryFeatures\InventoryDashboardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InventoryFeatures\WorkCycles\WorkCycleListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -202,10 +208,6 @@
     <Page Include="Auxilliary\Resources\IconsNonShared.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="InventoryFeatures\WorkCycles\WorkCycleListView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

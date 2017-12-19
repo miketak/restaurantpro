@@ -50,6 +50,7 @@
                 <!--Dashboard Options-->
                 <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Name ="invent" 
+                            Command="{Binding InventoryDashboardCommand}"
                             Background="AliceBlue" Foreground="Black" 
                             Height="120" Width="120"
                             Margin="20 20 20 20">

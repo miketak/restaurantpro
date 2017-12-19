@@ -7,6 +7,8 @@ using System.Windows;
 using System.Windows.Input;
 using RestaurantPro.Core.Services;
 using RestaurantPro.HomeDashboard;
+using RestaurantPro.InventoryFeatures;
+using RestaurantPro.InventoryFeatures.WorkCycles;
 using RestaurantPro.Login;
 using RestaurantPro.Models;
 
@@ -21,6 +23,8 @@ namespace RestaurantPro
 
         private LoginViewModel _loginViewModel;
         private HomeDashboardViewModel _homeDashboardViewModel;
+        private InventoryDashboardViewModel _inventoryDashboardViewModel;
+        private WorkCycleListViewModel _workCycleListViewModel;
 
 
         /// <summary>
@@ -30,10 +34,11 @@ namespace RestaurantPro
         {
             NavCommand = new RelayCommand<string>(OnNav);
 
-            //DependencyResolution
+            //View Model Initializations
             _loginViewModel = new LoginViewModel(userAuthenticationService);
             _homeDashboardViewModel = new HomeDashboardViewModel();
-
+            _inventoryDashboardViewModel = new InventoryDashboardViewModel();
+            _workCycleListViewModel = new WorkCycleListViewModel();
 
             //Set Login context
             SetLoginContext();
@@ -41,6 +46,13 @@ namespace RestaurantPro
             //Event Subscriptions
             _loginViewModel.LoginRequested += NavToHomeDashboard;
             _homeDashboardViewModel.LogoutRequested += NavToLoginView;
+            _homeDashboardViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
+            _inventoryDashboardViewModel.HomeDashboardRequested += NavToHomeDashboard;
+            _inventoryDashboardViewModel.LogoutRequested += NavToLoginView;
+            _inventoryDashboardViewModel.ManageWorkCyclesRequsted += NavToManageWorkCycles;
+            _workCycleListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
+            _workCycleListViewModel.LogoutRequested += NavToLoginView;
+
         }
 
         /// <summary>
@@ -95,6 +107,20 @@ namespace RestaurantPro
             _loginViewModel.CurrentUser = currentUser;
             CurrentViewModel = _loginViewModel;
         }
+
+        private void NavigateToInventoryDashboard(WpfUser currentUser)
+        {
+            _inventoryDashboardViewModel.SetCurrentUser(currentUser);
+            CurrentViewModel = _inventoryDashboardViewModel;
+        }
+
+        private void NavToManageWorkCycles(WpfUser currentUser)
+        {
+            _workCycleListViewModel.SetCurrentUser(currentUser);
+            CurrentViewModel = _workCycleListViewModel;
+        }
+
+
 
         #endregion
 

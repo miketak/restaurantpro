@@ -34,10 +34,10 @@
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="30"
                             VerticalAlignment="Bottom">
-                    <Button Name="backToInventory" Content="Back To Inventory"
+                    <Button Name="BackHome" Content="Home"
                             Width="120"
                             Background="Green"
-                            Command="{Binding BackToInventoryCommand}"/>
+                            Command="{Binding BackHomeCommand}"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
