@@ -40,7 +40,10 @@ namespace RestaurantPro
 
             //Event Subscriptions
             _loginViewModel.LoginRequested += NavToHomeDashboard;
+            _homeDashboardViewModel.LogoutRequested += NavToLoginView;
         }
+
+
 
         /// <summary>
         /// Sets to Login Context on Start Up
@@ -81,12 +84,18 @@ namespace RestaurantPro
         /// </summary>
         public RelayCommand<string> NavCommand { get; private set; }
 
-        #region Navigation Events Fire Methods
+        #region Navigation Event Implementations
 
         private void NavToHomeDashboard(WpfUser currentUser)
         {
             _homeDashboardViewModel.SetCurrentUser(currentUser);
             CurrentViewModel = _homeDashboardViewModel;
+        }
+
+        private void NavToLoginView(WpfUser currentUser)
+        {
+            _loginViewModel.CurrentUser = currentUser;
+            CurrentViewModel = _loginViewModel;
         }
 
         #endregion

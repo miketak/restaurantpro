@@ -41,7 +41,7 @@ namespace RestaurantPro.Login
         #endregion
         
 
-        #region Commands
+        #region Command Declarations
 
         public RelayCommand LoginCommand { get; private set; }
 
@@ -52,6 +52,7 @@ namespace RestaurantPro.Login
         /// Action Event to navigate to Home Dashboard
         /// </summary>
         public event Action<WpfUser> LoginRequested = delegate { };
+
         #endregion
 
         #region Command Implementations

@@ -17,6 +17,7 @@ namespace RestaurantPro.HomeDashboard
         public void SetCurrentUser(WpfUser user)
         {
             CurrentUser = user;
+            LogoutCommand = new RelayCommand(OnLogout);
         }
 
         #region Object Binding
@@ -31,8 +32,25 @@ namespace RestaurantPro.HomeDashboard
         }
         #endregion
 
+        #region Relay Events
+        public event Action<WpfUser> LogoutRequested = delegate { };
+        #endregion
 
+        #region Command Declarations
 
+        public RelayCommand LogoutCommand { get; private set; }
+        
+        #endregion
+
+        #region Command Implementations
+
+        private void OnLogout()
+        {
+            CurrentUser = null;
+            LogoutRequested(new WpfUser());
+        }
+
+        #endregion
     }
 
 

@@ -22,9 +22,10 @@
 
         <!--Left Pane-->
         <Border Background="DimGray"  Width="Auto" Margin="0,0,0,0" Grid.Column="1"
-                Grid.RowSpan="4"
-                DataContext="{Binding CurrentUser}">
+                Grid.RowSpan="4">
             <StackPanel Orientation="Vertical" Margin="10 5 10 5">
+                
+                <!--Top Panel Controls-->
                 <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right" 
                             Orientation="Horizontal" Width="Auto" Height="30">
                     <TextBlock VerticalAlignment="Center" 
@@ -32,14 +33,21 @@
                                FontSize="15" FontWeight="ExtraBold" FontFamily="Arial"
                                Margin="0 0 10 0"/>
                     <TextBlock VerticalAlignment="Center"
+                               DataContext="{Binding CurrentUser}"
                                Text="{Binding FullName}" 
                                FontSize="15" FontWeight="ExtraBold" FontFamily="Arial"
                                Margin="0 0 20 0"/>
                     <TextBox Name="txtSearch" Height="25" Width="200" 
                              HorizontalAlignment="Right" VerticalAlignment="Top" 
                              Foreground="Gray" Text="Search"/>
+                    <Button Name="logout" Content="Log Out"
+                            Width="100" Margin="10 0 10 0"
+                            Background="LightCoral"
+                            Command="{Binding LogoutCommand}"/>
                 </StackPanel>
+                <!--End of Top Panel Controls--> 
                 
+                <!--Dashboard Options-->
                 <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Name ="invent" 
                             Background="AliceBlue" Foreground="Black" 
@@ -97,6 +105,8 @@
                     </Button>
                     
                 </WrapPanel>
+                <!--End of Dashboard Options-->
+                
             </StackPanel>
         </Border>
         
