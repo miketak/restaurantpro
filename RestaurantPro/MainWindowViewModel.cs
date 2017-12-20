@@ -26,6 +26,7 @@ namespace RestaurantPro
         private HomeDashboardViewModel _homeDashboardViewModel;
         private InventoryDashboardViewModel _inventoryDashboardViewModel;
         private WorkCycleListViewModel _workCycleListViewModel;
+        private AddEditWorkingCycleViewModel _addEditWorkingCycleViewModel;
 
 
         /// <summary>
@@ -40,19 +41,28 @@ namespace RestaurantPro
             _homeDashboardViewModel = new HomeDashboardViewModel();
             _inventoryDashboardViewModel = new InventoryDashboardViewModel();
             _workCycleListViewModel = new WorkCycleListViewModel(unitOfWork);
+            _addEditWorkingCycleViewModel = new AddEditWorkingCycleViewModel(unitOfWork);
 
             //Set Login context
             SetLoginContext();
 
             //Event Subscriptions
             _loginViewModel.LoginRequested += NavToHomeDashboard;
+
             _homeDashboardViewModel.LogoutRequested += NavToLoginView;
             _homeDashboardViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
             _inventoryDashboardViewModel.HomeDashboardRequested += NavToHomeDashboard;
+
             _inventoryDashboardViewModel.LogoutRequested += NavToLoginView;
             _inventoryDashboardViewModel.ManageWorkCyclesRequsted += NavToManageWorkCycles;
+
             _workCycleListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
             _workCycleListViewModel.LogoutRequested += NavToLoginView;
+            _workCycleListViewModel.AddWorkCycleRequested += NavToAddWorkCycleView;
+
+            _addEditWorkingCycleViewModel.LogoutRequested += NavToLoginView;
+            _addEditWorkingCycleViewModel.ManageWorkCyclesRequsted += NavToManageWorkCycles;
+            
 
         }
 
@@ -111,7 +121,7 @@ namespace RestaurantPro
 
         private void NavigateToInventoryDashboard(WpfUser currentUser)
         {
-            _inventoryDashboardViewModel.SetCurrentUser(currentUser);
+            _inventoryDashboardViewModel.SetCurrentUserAndInitializeCommands(currentUser);
             CurrentViewModel = _inventoryDashboardViewModel;
         }
 
@@ -119,6 +129,12 @@ namespace RestaurantPro
         {
             _workCycleListViewModel.SetCurrentUserAndInitializeCommands(currentUser);
             CurrentViewModel = _workCycleListViewModel;
+        }
+
+        public void NavToAddWorkCycleView(WpfWorkCycle workCycle, WpfUser currentUser)
+        {
+            _addEditWorkingCycleViewModel.SetCurrentUserAndInitializeCommands(currentUser);
+            CurrentViewModel = _addEditWorkingCycleViewModel;
         }
 
 

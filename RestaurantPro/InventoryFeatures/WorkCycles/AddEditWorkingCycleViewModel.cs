@@ -1,16 +1,24 @@
 ﻿using System;
+using RestaurantPro.Core;
 using RestaurantPro.Models;
 
-namespace RestaurantPro.InventoryFeatures
+namespace RestaurantPro.InventoryFeatures.WorkCycles
 {
-    public class InventoryDashboardViewModel : BindableBase
+    public class AddEditWorkingCycleViewModel : BindableBase
     {
+        private IUnitOfWork _unitOfWork;
+
+        public AddEditWorkingCycleViewModel(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
         public void SetCurrentUserAndInitializeCommands(WpfUser user)
         {
             CurrentUser = user;
             LogoutCommand = new RelayCommand(OnLogout);
-            BackHomeCommand = new RelayCommand(OnHomeClick);
-            ManageWorkCyclesCommand = new RelayCommand(OnManageCyclesClick);
+            BackToWorkCycleListCommand = new RelayCommand(OnManageCyclesListClick);
+            CancelCommand = new RelayCommand(OnManageCyclesListClick);
         }
 
 
@@ -30,8 +38,6 @@ namespace RestaurantPro.InventoryFeatures
 
         public event Action<WpfUser> LogoutRequested = delegate { };
 
-        public event Action<WpfUser> HomeDashboardRequested = delegate { };
-
         public event Action<WpfUser> ManageWorkCyclesRequsted = delegate { };
 
         #endregion
@@ -40,10 +46,9 @@ namespace RestaurantPro.InventoryFeatures
 
         public RelayCommand LogoutCommand { get; private set; }
 
-        public RelayCommand BackHomeCommand { get; private set; }
+        public RelayCommand BackToWorkCycleListCommand { get; private set; }
 
-        public RelayCommand ManageWorkCyclesCommand { get; private set; }
-
+        public RelayCommand CancelCommand { get; private set; }
 
         #endregion
 
@@ -55,12 +60,7 @@ namespace RestaurantPro.InventoryFeatures
             LogoutRequested(new WpfUser());
         }
 
-        private void OnHomeClick()
-        {
-            HomeDashboardRequested(CurrentUser);
-        }
-
-        private void OnManageCyclesClick()
+        private void OnManageCyclesListClick()
         {
             ManageWorkCyclesRequsted(CurrentUser);
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
+using System.Windows;
 using AutoMapper;
 using Microsoft.Windows.Controls;
 using RestaurantPro.Core;
@@ -34,6 +35,7 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
             LogoutCommand = new RelayCommand(OnLogout);
             DeactivateWorkCycleCommand = new RelayCommand<WpfWorkCycle>(DeactivateWorkCycle);
             DeleteWorkingCycleCommand = new RelayCommand<WpfWorkCycle>(DeleteWorkCycle);
+            AddWorkingCycleCommand = new RelayCommand (AddWorkCycle);
         }
 
         #region DataGrid Functionality
@@ -125,6 +127,8 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
 
         public event Action<WpfUser> InventoryDashboardRequested = delegate { };
 
+        public event Action<WpfWorkCycle, WpfUser> AddWorkCycleRequested = delegate { };
+
         #endregion
 
         #region Command
@@ -136,6 +140,8 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
         public RelayCommand<WpfWorkCycle> DeactivateWorkCycleCommand { get; private set; }
 
         public RelayCommand<WpfWorkCycle> DeleteWorkingCycleCommand { get; private set; }
+
+        public RelayCommand AddWorkingCycleCommand { get; private set; }
 
         #endregion
 
@@ -162,6 +168,12 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
         {
             var workCycleEntity = MapWorkCycleToWpfWorkCycle(wpfWorkCycle);
 
+            if (workCycleEntity == null)
+            {
+                MessageBox.Show("Kindly select a work cycle");
+                return;
+            }
+
             workCycleEntity = _unitOfWork.WorkCycles.SingleOrDefault(
                 w => w.Id == workCycleEntity.Id);
 
@@ -170,6 +182,11 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
             _unitOfWork.Complete();
 
             LoadWorkCycles();
+        }
+
+        private void AddWorkCycle()
+        {
+            AddWorkCycleRequested(new WpfWorkCycle(), CurrentUser);
         }
 
         #endregion

@@ -44,6 +44,9 @@
 		</DataTemplate>		
 		<DataTemplate DataType="{x:Type workcyclelist:WorkCycleListViewModel}">
 			<workcyclelist:WorkCycleListView/>
+		</DataTemplate>		
+		<DataTemplate DataType="{x:Type workcyclelist:AddEditWorkingCycleViewModel}">
+			<workcyclelist:AddEditWorkingCycleView/>
 		</DataTemplate>
 	</Window.Resources>
 	<!--End of Window Reousrces-->

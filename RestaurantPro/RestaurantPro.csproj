@@ -158,6 +158,7 @@
     <Compile Include="InventoryFeatures\WorkCycles\AddEditWorkingCycleView.xaml.cs">
       <DependentUpon>AddEditWorkingCycleView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="InventoryFeatures\WorkCycles\AddEditWorkingCycleViewModel.cs" />
     <Compile Include="InventoryFeatures\WorkCycles\WorkCycleListView.xaml.cs">
       <DependentUpon>WorkCycleListView.xaml</DependentUpon>
     </Compile>
