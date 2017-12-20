@@ -145,6 +145,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Auxilliary\Converters\NegatableBooleanToVisibilityConverter.cs" />
     <Compile Include="BindableBase.cs" />
     <Compile Include="HomeDashboard\HomeDashboardView.xaml.cs">
       <DependentUpon>HomeDashboardView.xaml</DependentUpon>
@@ -154,6 +155,9 @@
       <DependentUpon>InventoryDashboardView.xaml</DependentUpon>
     </Compile>
     <Compile Include="InventoryFeatures\InventoryDashboardViewModel.cs" />
+    <Compile Include="InventoryFeatures\WorkCycles\AddEditWorkingCycleView.xaml.cs">
+      <DependentUpon>AddEditWorkingCycleView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="InventoryFeatures\WorkCycles\WorkCycleListView.xaml.cs">
       <DependentUpon>WorkCycleListView.xaml</DependentUpon>
     </Compile>
@@ -179,6 +183,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="InventoryFeatures\InventoryDashboardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InventoryFeatures\WorkCycles\AddEditWorkingCycleView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -281,7 +289,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Auxilliary\Converters\" />
     <Folder Include="Auxilliary\Helpers\" />
     <Folder Include="Auxilliary\Validations\" />
     <Folder Include="DesignTime\" />

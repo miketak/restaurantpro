@@ -1,0 +1,238 @@
+﻿<UserControl x:Class="RestaurantPro.InventoryFeatures.WorkCycles.AddEditWorkingCycleView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:conv="clr-namespace:RestaurantPro.Auxilliary.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1000">
+
+    <UserControl.Resources>
+        <conv:NegatableBooleanToVisibilityConverter x:Key="VisConverter"/>
+        <conv:NegatableBooleanToVisibilityConverter x:Key="NegVisConverter"
+                                                    Negate="True"/>
+        <Style TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError"
+                         Value="true">
+                    <Setter Property="ToolTip"
+                            Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                        Path=(Validation.Errors).CurrentItem.ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="220"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock Grid.Column="1"
+                   Grid.Row="2"
+                   Text="Add/Edit Work Cycles"
+                   VerticalAlignment="Bottom"
+                   HorizontalAlignment="Center"
+                   FontSize="30"
+                   FontWeight="Bold"
+                   FontFamily="Arial"/>
+
+        <!--Top Panel Controls-->
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="30"
+                        VerticalAlignment="Bottom">
+                <Button Name="BackToWorkCycleList" Content="Back To Work Cycle Lists"
+                        Width="180"
+                        Background="Green"
+                        Command="{Binding BackToWorkCycleListCommand}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom" Height="30"
+                        Grid.Column="1">
+                <TextBlock VerticalAlignment="Center" 
+                           Text="Current User: " 
+                           FontSize="15" FontWeight="ExtraBold" FontFamily="Arial"
+                           Margin="0 0 10 0"/>
+                <TextBlock VerticalAlignment="Center"
+                           DataContext="{Binding CurrentUser}"
+                           Text="{Binding FullName}" 
+                           FontSize="15" FontWeight="ExtraBold" FontFamily="Arial"
+                           Margin="0 0 20 0"/>
+                <Button Name="logout" Content="Log Out"
+                        Width="100" Margin="10 0 10 0"
+                        Background="LightCoral"
+                        Command="{Binding LogoutCommand}"/>
+            </StackPanel>
+
+        </Grid>
+        <!--End of Top Panel Controls-->
+
+        <!--Add/Edit Forms-->
+        <Grid x:Name="AddEditForm"
+              DataContext="WorkCycle"
+            Grid.Column="1"
+              Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="160"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!--Working Cycle Name-->
+            <Label VerticalAlignment="Center" 
+                   Grid.Row="0" 
+                   Margin="3" 
+                   FontSize="20"
+                   HorizontalAlignment="Left" 
+                   Grid.Column="0"
+                   Content="Name:" />
+            <TextBox x:Name="Name"
+                     Width="225"
+                     VerticalAlignment="Center"
+                     Text="{Binding Name, ValidatesOnNotifyDataErrors=True}"
+                     Grid.Row="0" 
+                     Margin="3" 
+                     Height="23" 
+                     HorizontalAlignment="Left" 
+                     Grid.Column="1" />
+
+            <!--Working Cycle Start Date-->
+            <Label VerticalAlignment="Center" 
+                   Grid.Row="1" 
+                   Margin="3" 
+                   FontSize="20"
+                   HorizontalAlignment="Left" 
+                   Grid.Column="0"
+                   Content="Start Date:" />
+            <DatePicker x:Name="DateBegin"
+                     Width="225"
+                     VerticalAlignment="Center"
+                     Text="{Binding DateBegin, ValidatesOnNotifyDataErrors=True}"
+                     Grid.Row="1" 
+                     Margin="3" 
+                     Height="23" 
+                     HorizontalAlignment="Left" 
+                     Grid.Column="1" />
+
+            <!--Working Cycle End Date-->
+            <Label VerticalAlignment="Center" 
+                   Grid.Row="2" 
+                   Margin="3" 
+                   FontSize="20"
+                   HorizontalAlignment="Left" 
+                   Grid.Column="0"
+                   Content="End Date:" />
+            <DatePicker x:Name="DateEnd"
+                     Width="225"
+                     VerticalAlignment="Center"
+                     Text="{Binding DateEnd, ValidatesOnNotifyDataErrors=True}"
+                     Grid.Row="2" 
+                     Margin="3" 
+                     Height="23" 
+                     HorizontalAlignment="Left" 
+                     Grid.Column="1" />
+
+            <!--Working Cycle Activity Status-->
+            <Label VerticalAlignment="Center" 
+                   Grid.Row="3" 
+                   Margin="3" 
+                   FontSize="20"
+                   HorizontalAlignment="Left" 
+                   Grid.Column="0"
+                   Content="Activity Status:" />
+            <CheckBox x:Name="Active"
+                     VerticalAlignment="Center"
+                     IsChecked="{Binding Active, ValidatesOnNotifyDataErrors=True}"
+                     Grid.Row="3" 
+                     Margin="3" 
+                     Height="23" 
+                     HorizontalAlignment="Left" 
+                     Grid.Column="1" />
+            
+            <!--Working Cycle Created By-->
+            <Label VerticalAlignment="Center" 
+                   Grid.Row="4" 
+                   Margin="3" 
+                   FontSize="20"
+                   HorizontalAlignment="Left" 
+                   Grid.Column="0"
+                   Content="Created By:" />
+            <TextBlock x:Name="CreatedBy"
+                     VerticalAlignment="Center"
+                     Width="225"
+                     Text="{Binding FullName, ValidatesOnNotifyDataErrors=True}"
+                     Grid.Row="4" 
+                     Margin="3" 
+                     Height="23" 
+                     HorizontalAlignment="Left" 
+                     Grid.Column="1" />
+            
+        </Grid>
+        <!--End of Add/Edit Form -->
+        
+        
+        <!--Add/Edit Controls-->
+        <Grid x:Name="AddEditFormControls" 
+            Grid.Column="1"
+              Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Save Command-->
+            <Button Content="Save"
+                    Command="{Binding SaveCommand}"
+                    Visibility="{Binding EditMode, Converter={StaticResource VisConverter}}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Width="150" Height="35"/>
+            
+            <!--Add Command--> 
+            <Button Content="Add"
+                    Command="{Binding SaveCommand}"
+                    Visibility="{Binding EditMode, Converter={StaticResource NegVisConverter}}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Width="150" Height="35"/>
+            
+            <!--Cancel Command-->
+            <Button Content="Cancel"
+                    Command="{Binding CancelCommand}"
+                    HorizontalAlignment="Right"
+                    Grid.Column="1"
+                    VerticalAlignment="Top"
+                    Width="150" Height="35"
+                    Margin="0 0 10 0"/>
+
+        </Grid>
+        <!--End of Add/Edit Controls-->
+            
+    </Grid>
+</UserControl>
