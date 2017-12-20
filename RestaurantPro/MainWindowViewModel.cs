@@ -117,7 +117,7 @@ namespace RestaurantPro
 
         private void NavToManageWorkCycles(WpfUser currentUser)
         {
-            _workCycleListViewModel.SetCurrentUser(currentUser);
+            _workCycleListViewModel.SetCurrentUserAndInitializeCommands(currentUser);
             CurrentViewModel = _workCycleListViewModel;
         }
 

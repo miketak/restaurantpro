@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using AutoMapper;
+using Microsoft.Windows.Controls;
 using RestaurantPro.Core;
 using RestaurantPro.Core.Domain;
 using RestaurantPro.Models;
@@ -20,12 +22,18 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
         }
 
 
-        public void SetCurrentUser(WpfUser user)
+        /// <summary>
+        /// Initialize View Model Commands for View and sets
+        /// the current user.
+        /// </summary>
+        /// <param name="user"></param>
+        public void SetCurrentUserAndInitializeCommands(WpfUser user)
         {
             CurrentUser = user;
             BackToInventoryCommand = new RelayCommand(OnBackToInventoryInventoryClick);
             LogoutCommand = new RelayCommand(OnLogout);
             DeactivateWorkCycleCommand = new RelayCommand<WpfWorkCycle>(DeactivateWorkCycle);
+            DeleteWorkingCycleCommand = new RelayCommand<WpfWorkCycle>(DeleteWorkCycle);
         }
 
         #region DataGrid Functionality
@@ -36,7 +44,7 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
         {
             var workCycleEntity = _unitOfWork.WorkCycles.GetAll().ToList();
 
-            var wpfWorkCycles = MapWorkCycleToWpfWorkCycle(workCycleEntity);
+            var wpfWorkCycles = MapWorkCycleListToWpfWorkCycleList(workCycleEntity);
 
             wpfWorkCycles = AppendCreatedByUsers(wpfWorkCycles);
 
@@ -59,7 +67,11 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
             return wpfWorkCycles;
         }
 
-        private List<WpfWorkCycle> MapWorkCycleToWpfWorkCycle(List<WorkCycle> workCyclesEntity)
+        #endregion
+
+        #region  Automapper
+
+        private List<WpfWorkCycle> MapWorkCycleListToWpfWorkCycleList(List<WorkCycle> workCyclesEntity)
         {
             var config = new MapperConfiguration(cfg =>
             {
@@ -73,9 +85,19 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
             return _allWorkCycles;
         }
 
+        private WorkCycle MapWorkCycleToWpfWorkCycle( WpfWorkCycle wpfWorkCyclesEntity)
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<WpfWorkCycle, WorkCycle>();
+            });
+
+            IMapper iMapper = config.CreateMapper();
+
+            return  iMapper.Map<WpfWorkCycle, WorkCycle>(wpfWorkCyclesEntity);
+        }
+
         #endregion
-
-
 
         #region Object Bindings
 
@@ -113,6 +135,8 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
 
         public RelayCommand<WpfWorkCycle> DeactivateWorkCycleCommand { get; private set; }
 
+        public RelayCommand<WpfWorkCycle> DeleteWorkingCycleCommand { get; private set; }
+
         #endregion
 
         #region Command Implementations
@@ -131,6 +155,20 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
         private void DeactivateWorkCycle(WpfWorkCycle wpfWorkCycle)
         {
             _unitOfWork.WorkCycles.DeactivateWorkCycle(wpfWorkCycle.Id);
+            LoadWorkCycles();
+        }
+
+        private void DeleteWorkCycle(WpfWorkCycle wpfWorkCycle)
+        {
+            var workCycleEntity = MapWorkCycleToWpfWorkCycle(wpfWorkCycle);
+
+            workCycleEntity = _unitOfWork.WorkCycles.SingleOrDefault(
+                w => w.Id == workCycleEntity.Id);
+
+            _unitOfWork.WorkCycles.Remove(workCycleEntity);
+
+            _unitOfWork.Complete();
+
             LoadWorkCycles();
         }
 

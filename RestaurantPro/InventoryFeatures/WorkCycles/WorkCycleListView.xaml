@@ -85,7 +85,8 @@
 		<!--End of Work Cycle Search Control-->
 
 		<!--Working Cycle Data Grid-->
-		<DataGrid ItemsSource="{Binding WorkCycles}"
+		<DataGrid Name="WorkingCycleGrid"
+				  ItemsSource="{Binding WorkCycles}"
 				  Grid.Column="1"
 				  AutoGenerateColumns ="False"
 				  CanUserAddRows="False"
@@ -138,7 +139,8 @@
 				<Button Name="DeleteWorkingCycle" Content="Delete"
 						Width="100" Margin="10 0 10 0"
 						Background="Red"
-						Command="{Binding DeleteWorkingCycleCommand}"/>
+						Command="{Binding DeleteWorkingCycleCommand}"
+						CommandParameter="{Binding ElementName=WorkingCycleGrid, Path=SelectedItem}"/>
 
 				<Button Name="AddWorkingCycle" Content="Add"
 						Width="100" Margin="10 0 10 0"
