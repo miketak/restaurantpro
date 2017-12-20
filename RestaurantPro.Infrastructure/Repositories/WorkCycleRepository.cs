@@ -19,7 +19,19 @@ namespace RestaurantPro.Infrastructure.Repositories
             var a = SingleOrDefault(x => x.Id == id);
             a.Active = false;
             _context.SaveChanges();
+        }
 
+        public void UpdateWorkCycle(WorkCycle workCycle)
+        {
+            var workCycleInDb = SingleOrDefault(x => x.Id == workCycle.Id);
+
+            workCycleInDb.Name = workCycle.Name;
+            workCycleInDb.DateBegin = workCycle.DateBegin;
+            workCycleInDb.DateEnd = workCycle.DateEnd;
+            workCycleInDb.Active = workCycle.Active;
+            workCycleInDb.UserId = workCycle.UserId;
+
+            _context.SaveChanges();
         }
     }
 }

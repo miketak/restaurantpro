@@ -168,6 +168,7 @@
     </Compile>
     <Compile Include="Login\LoginViewModel.cs" />
     <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="Models\RestproMapper.cs" />
     <Compile Include="Models\WpfUser.cs" />
     <Compile Include="Models\WpfWorkCycle.cs" />
     <Compile Include="Properties\Annotations.cs" />

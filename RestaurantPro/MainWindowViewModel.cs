@@ -59,10 +59,12 @@ namespace RestaurantPro
             _workCycleListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
             _workCycleListViewModel.LogoutRequested += NavToLoginView;
             _workCycleListViewModel.AddWorkCycleRequested += NavToAddWorkCycleView;
+            _workCycleListViewModel.EditWorkCycleRequested += NavToEditWorkCycleView;
 
             _addEditWorkingCycleViewModel.LogoutRequested += NavToLoginView;
             _addEditWorkingCycleViewModel.ManageWorkCyclesRequsted += NavToManageWorkCycles;
-            
+            _addEditWorkingCycleViewModel.Done += NavToManageWorkCycles;
+
 
         }
 
@@ -127,13 +129,23 @@ namespace RestaurantPro
 
         private void NavToManageWorkCycles(WpfUser currentUser)
         {
-            _workCycleListViewModel.SetCurrentUserAndInitializeCommands(currentUser);
+            _workCycleListViewModel.SetCurrentUser(currentUser);
             CurrentViewModel = _workCycleListViewModel;
         }
 
         public void NavToAddWorkCycleView(WpfWorkCycle workCycle, WpfUser currentUser)
         {
-            _addEditWorkingCycleViewModel.SetCurrentUserAndInitializeCommands(currentUser);
+            _addEditWorkingCycleViewModel.EditMode = false;
+            _addEditWorkingCycleViewModel.SetCurrentUser(currentUser);
+            _addEditWorkingCycleViewModel.SetWorkingCycle(workCycle);
+            CurrentViewModel = _addEditWorkingCycleViewModel;
+        }
+
+        private void NavToEditWorkCycleView(WpfWorkCycle workCycle, WpfUser currentUser)
+        {
+            _addEditWorkingCycleViewModel.EditMode = true;
+            _addEditWorkingCycleViewModel.SetCurrentUser(currentUser);
+            _addEditWorkingCycleViewModel.SetWorkingCycle(workCycle);
             CurrentViewModel = _addEditWorkingCycleViewModel;
         }
 

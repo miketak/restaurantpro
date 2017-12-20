@@ -39,18 +39,25 @@ namespace RestaurantPro.Infrastructure.UnitTests
             var workCycle = _unitOfWork.WorkCycles.SingleOrDefault(w => w.Name == "Cycle 600");
             Assert.AreEqual(testCycle1.Name, workCycle.Name);
 
+            _unitOfWork.WorkCycles.Remove(workCycle);
+            _unitOfWork.Complete();
+
         }
 
         [TestMethod]
         public void DeactivateWorkCycleTest()
         {
-            var cycleId = 3;
+            _unitOfWork.WorkCycles.Add(testCycle1);
+            _unitOfWork.Complete();
 
-            _unitOfWork.WorkCycles.DeactivateWorkCycle(cycleId);
+            var workCycleFromDb = _unitOfWork.WorkCycles.SingleOrDefault(cycle => cycle.Name == testCycle1.Name);
+
+            _unitOfWork.WorkCycles.DeactivateWorkCycle(workCycleFromDb.Id);
             
-            var workCycleFromDb = _unitOfWork.WorkCycles.SingleOrDefault(cycle => cycle.Id == cycleId);
-
             Assert.IsFalse(workCycleFromDb.Active);
+
+            _unitOfWork.WorkCycles.Remove(workCycleFromDb);
+            _unitOfWork.Complete();
 
         }
 
@@ -58,18 +65,45 @@ namespace RestaurantPro.Infrastructure.UnitTests
         public void UpdateWorkCycleNameByCycleNameTest()
         {
             string expectedNewCycleName = "New Cycle Name";
+            _unitOfWork.WorkCycles.Add(testCycle1);
+            _unitOfWork.Complete();
 
-            var testInsertedWorkCycle = _unitOfWork.WorkCycles.SingleOrDefault(cycle => cycle.Name == "Cycle 600");
+            var testInsertedWorkCycle = _unitOfWork.WorkCycles.SingleOrDefault(cycle => cycle.Name == testCycle1.Name);
 
             testInsertedWorkCycle.Name = expectedNewCycleName;
             testInsertedWorkCycle.DateEnd = new DateTime(2017, 12, 25);
-
             _unitOfWork.Complete();
 
             Assert.AreEqual(expectedNewCycleName, testInsertedWorkCycle.Name);
 
             _unitOfWork.WorkCycles.Remove(testInsertedWorkCycle);
+            _unitOfWork.Complete();
+        }
 
+        [TestMethod]
+        public void UpdateWorkCycleTest()
+        {
+            _unitOfWork.WorkCycles.Add(testCycle1);
+            _unitOfWork.Complete();
+
+            var workCycleInDb = _unitOfWork.WorkCycles.SingleOrDefault(w => w.Name == testCycle1.Name);
+
+            var newWorkCycle = new WorkCycle
+            {
+                Id = workCycleInDb.Id,
+                Name = "Lindador Cycle",
+                DateBegin = new DateTime(2017, 10, 05),
+                DateEnd = new DateTime(2018, 12, 15),
+                Active = true,
+                UserId = 2
+            };
+            _unitOfWork.WorkCycles.UpdateWorkCycle(newWorkCycle);
+
+            var workCycleToRemove = _unitOfWork.WorkCycles.SingleOrDefault(w => w.Id == workCycleInDb.Id);
+
+            Assert.AreEqual(newWorkCycle.Name, workCycleToRemove.Name);
+            
+            _unitOfWork.WorkCycles.Remove(workCycleToRemove);
             _unitOfWork.Complete();
         }
 

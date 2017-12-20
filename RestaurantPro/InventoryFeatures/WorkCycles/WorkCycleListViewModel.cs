@@ -20,6 +20,13 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
         public WorkCycleListViewModel(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+
+            BackToInventoryCommand = new RelayCommand(OnBackToInventoryInventoryClick);
+            LogoutCommand = new RelayCommand(OnLogout);
+            DeactivateWorkCycleCommand = new RelayCommand<WpfWorkCycle>(DeactivateWorkCycle);
+            DeleteWorkingCycleCommand = new RelayCommand<WpfWorkCycle>(DeleteWorkCycle);
+            AddWorkingCycleCommand = new RelayCommand(OnAddWorkCycle);
+            EditWorkCycleCommand = new RelayCommand<WpfWorkCycle>(OnEditWorkCycle);
         }
 
 
@@ -28,14 +35,9 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
         /// the current user.
         /// </summary>
         /// <param name="user"></param>
-        public void SetCurrentUserAndInitializeCommands(WpfUser user)
+        public void SetCurrentUser(WpfUser user)
         {
             CurrentUser = user;
-            BackToInventoryCommand = new RelayCommand(OnBackToInventoryInventoryClick);
-            LogoutCommand = new RelayCommand(OnLogout);
-            DeactivateWorkCycleCommand = new RelayCommand<WpfWorkCycle>(DeactivateWorkCycle);
-            DeleteWorkingCycleCommand = new RelayCommand<WpfWorkCycle>(DeleteWorkCycle);
-            AddWorkingCycleCommand = new RelayCommand (AddWorkCycle);
         }
 
         #region DataGrid Functionality
@@ -129,6 +131,8 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
 
         public event Action<WpfWorkCycle, WpfUser> AddWorkCycleRequested = delegate { };
 
+        public event Action<WpfWorkCycle, WpfUser> EditWorkCycleRequested = delegate { };
+
         #endregion
 
         #region Command
@@ -142,6 +146,8 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
         public RelayCommand<WpfWorkCycle> DeleteWorkingCycleCommand { get; private set; }
 
         public RelayCommand AddWorkingCycleCommand { get; private set; }
+
+        public RelayCommand<WpfWorkCycle> EditWorkCycleCommand { get; private set; }
 
         #endregion
 
@@ -184,9 +190,14 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
             LoadWorkCycles();
         }
 
-        private void AddWorkCycle()
+        private void OnAddWorkCycle()
         {
             AddWorkCycleRequested(new WpfWorkCycle(), CurrentUser);
+        }
+
+        private void OnEditWorkCycle(WpfWorkCycle wpfWorkCycle)
+        {
+            EditWorkCycleRequested(wpfWorkCycle, CurrentUser);
         }
 
         #endregion

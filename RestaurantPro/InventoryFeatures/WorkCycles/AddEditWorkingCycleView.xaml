@@ -87,7 +87,7 @@
 
         <!--Add/Edit Forms-->
         <Grid x:Name="AddEditForm"
-              DataContext="WorkCycle"
+              DataContext="{Binding WorkCycle}"
             Grid.Column="1"
               Grid.Row="3">
             <Grid.ColumnDefinitions>
@@ -133,7 +133,7 @@
             <DatePicker x:Name="DateBegin"
                      Width="225"
                      VerticalAlignment="Center"
-                     Text="{Binding DateBegin, ValidatesOnNotifyDataErrors=True}"
+                     SelectedDate="{Binding DateBegin, ValidatesOnNotifyDataErrors=True}"
                      Grid.Row="1" 
                      Margin="3" 
                      Height="23" 
@@ -151,7 +151,7 @@
             <DatePicker x:Name="DateEnd"
                      Width="225"
                      VerticalAlignment="Center"
-                     Text="{Binding DateEnd, ValidatesOnNotifyDataErrors=True}"
+                     SelectedDate="{Binding DateEnd, ValidatesOnNotifyDataErrors=True}"
                      Grid.Row="2" 
                      Margin="3" 
                      Height="23" 

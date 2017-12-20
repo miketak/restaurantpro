@@ -11,9 +11,12 @@ namespace RestaurantPro.Models
     /// </summary>
     public class WpfUser : ValidatableBindableBase
     {
-
-        [Key]
-        public Guid Id { get; set; }
+        private int _id;
+        public int Id
+        {
+            get { return _id; }
+            set { SetProperty(ref _id, value); }
+        }
 
         private string _username;
         private string _firstName;

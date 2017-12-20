@@ -1,23 +1,61 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using RestaurantPro.Core.Domain;
 
 namespace RestaurantPro.Models
 {
-    public class WpfWorkCycle
+    public class WpfWorkCycle : ValidatableBindableBase
     {
+        public WpfWorkCycle()
+        {
+            DateBegin = DateTime.Today;
+            DateEnd = DateTime.Today;
+        }
+
+        
         public int Id { get; set; }
 
-        public string Name { get; set; }
+        private string _name;
 
-        public DateTime DateBegin { get; set; }
+        [Required]
+        public string Name
+        {
+            get { return _name; }
+            set { SetProperty(ref _name, value); }
+        }
 
-        public DateTime DateEnd { get; set; }
+        private DateTime _dateBegin;
+        [Required]
+        public DateTime DateBegin
+        {
+            get { return _dateBegin; }
+            set { SetProperty(ref _dateBegin, value); }
+        }
 
-        public bool Active { get; set; }
+        private DateTime _dateEnd;
+        [Required]
+        public DateTime DateEnd
+        {
+            get { return _dateEnd; }
+            set { SetProperty(ref _dateEnd, value); }
+        }
+
+        private bool _active;
+        public bool Active
+        {
+            get { return _active; }
+            set { SetProperty(ref _active, value); }
+        }
 
         public virtual User User { get; set; }
 
-        public int UserId { get; set; }
+
+        private int _userId;
+        public int UserId
+        {
+            get { return _userId; }
+            set { SetProperty(ref _userId, value); }
+        }
 
 
         #region Fields for Working Cycle Datagrid View 
