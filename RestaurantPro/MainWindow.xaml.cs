@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using RestaurantPro.Login;
 
 namespace RestaurantPro
 {

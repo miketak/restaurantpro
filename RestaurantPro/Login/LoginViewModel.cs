@@ -2,6 +2,7 @@
 using System.Security;
 using System.Windows;
 using AutoMapper;
+using RestaurantPro.Core;
 using RestaurantPro.Core.Domain;
 using RestaurantPro.Core.Services;
 using RestaurantPro.Infrastructure.Services;
@@ -16,15 +17,17 @@ namespace RestaurantPro.Login
     {
 
         private IUserAuthenticationService _userAuthenticationService;
+        private IUnitOfWork _unitOfWork;
 
         public SecureString SecurePassword { private get; set; }
 
         /// <summary>
         /// Login View Model Constructor
         /// </summary>
-        public LoginViewModel(IUserAuthenticationService userAuthenticationService)
+        public LoginViewModel(IUnitOfWork unitOfWork)//IUserAuthenticationService userAuthenticationService)
         {
-            _userAuthenticationService = userAuthenticationService;
+            //_userAuthenticationService = userAuthenticationService;
+            _unitOfWork = unitOfWork;
             LoginCommand = new RelayCommand(OnLogin, CanLogin);
         }
 
@@ -40,7 +43,6 @@ namespace RestaurantPro.Login
         }
         #endregion
         
-
         #region Command Declarations
 
         public RelayCommand LoginCommand { get; private set; }
@@ -60,7 +62,7 @@ namespace RestaurantPro.Login
         {
             try
             {
-                var user = _userAuthenticationService.AuthenticateUser(CurrentUser.Username, SecurePassword);
+                var user = _unitOfWork.UserAuthenticationService.AuthenticateUser(CurrentUser.Username, SecurePassword);
                 var config = new MapperConfiguration(cfg =>
                 {
                     cfg.CreateMap<User, WpfUser>();

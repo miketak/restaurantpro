@@ -28,16 +28,15 @@ namespace RestaurantPro
         private WorkCycleListViewModel _workCycleListViewModel;
         private AddEditWorkingCycleViewModel _addEditWorkingCycleViewModel;
 
-
         /// <summary>
         /// Constructor to subscription of events for overall program navigation.
         /// </summary>
-        public MainWindowViewModel(IUserAuthenticationService userAuthenticationService, IUnitOfWork unitOfWork)
+        public MainWindowViewModel(IUnitOfWork unitOfWork)
         {
             NavCommand = new RelayCommand<string>(OnNav);
 
             //View Model Initializations
-            _loginViewModel = new LoginViewModel(userAuthenticationService);
+            _loginViewModel = new LoginViewModel(unitOfWork);
             _homeDashboardViewModel = new HomeDashboardViewModel();
             _inventoryDashboardViewModel = new InventoryDashboardViewModel();
             _workCycleListViewModel = new WorkCycleListViewModel(unitOfWork);

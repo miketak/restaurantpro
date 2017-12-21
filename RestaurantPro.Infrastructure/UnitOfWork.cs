@@ -1,6 +1,8 @@
 ﻿using RestaurantPro.Core;
 using RestaurantPro.Core.Repositories;
+using RestaurantPro.Core.Services;
 using RestaurantPro.Infrastructure.Repositories;
+using RestaurantPro.Infrastructure.Services;
 
 namespace RestaurantPro.Infrastructure
 {
@@ -13,11 +15,14 @@ namespace RestaurantPro.Infrastructure
             _context = context;
             Users = new UserRepository(_context);
             WorkCycles = new WorkCycleRepository(_context);
+            UserAuthenticationService = new UserAuthenticationService(new UserRepository(_context));
+            Suppliers = new SupplierRepository(_context);
         }
 
         public IUserRepository Users { get; private set; }
         public IWorkCycleRepository WorkCycles { get; private set; }
-
+        public IUserAuthenticationService UserAuthenticationService { get; private set; }
+        public ISupplierRepository Suppliers { get; private set; }
 
         public int Complete()
         {
@@ -28,6 +33,7 @@ namespace RestaurantPro.Infrastructure
         {
             _context.Dispose();
         }
+
         
     }
 }

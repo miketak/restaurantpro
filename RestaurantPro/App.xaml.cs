@@ -24,7 +24,6 @@ namespace RestaurantPro
             base.OnStartup(e);
 
             IUnityContainer container = new UnityContainer();
-            container.RegisterType<IUserAuthenticationService, UserAuthenticationService>();
             container.RegisterType<IUnitOfWork, UnitOfWork>();
 
             var mainWindowViewModel = container.Resolve<MainWindowViewModel>();

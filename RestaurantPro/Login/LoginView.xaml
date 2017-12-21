@@ -67,7 +67,7 @@
                    Width="Auto"/>
 
             <TextBox Name="usernameTextBox" 
-                     Text = "{Binding Username, ValidatesOnDataErrors=True}"
+                     Text = "{Binding Username, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                      Grid.Column="1" 
                      HorizontalAlignment="Left" 
                      Height="25" 

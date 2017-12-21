@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
+using RestaurantPro.Core;
 using RestaurantPro.Core.Domain;
 using RestaurantPro.Core.Repositories;
 using RestaurantPro.Core.Services;
@@ -13,12 +14,10 @@ namespace RestaurantPro.Infrastructure.Services
     public class UserAuthenticationService : IUserAuthenticationService
     {
         private IUserRepository _userRepository;
-        private RestProContext _context;
 
-        public UserAuthenticationService()//IUserRepository userRepository)
+        public UserAuthenticationService(IUserRepository userRepository)
         {
-            _context = new RestProContext();
-            _userRepository = new UserRepository(_context);
+            _userRepository = userRepository;
         }
 
         public User AuthenticateUser(string username, SecureString password)

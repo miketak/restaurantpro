@@ -1,4 +1,5 @@
 ﻿using RestaurantPro.Core.Repositories;
+using RestaurantPro.Core.Services;
 
 namespace RestaurantPro.Core
 {
@@ -7,6 +8,10 @@ namespace RestaurantPro.Core
         IUserRepository Users { get; }
 
         IWorkCycleRepository WorkCycles { get; }
+
+        ISupplierRepository Suppliers { get; }
+
+        IUserAuthenticationService UserAuthenticationService { get; }
 
         int Complete();
     }
