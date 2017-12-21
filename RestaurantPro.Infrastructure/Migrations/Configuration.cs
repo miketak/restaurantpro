@@ -34,6 +34,20 @@ namespace RestaurantPro.Infrastructure.Migrations
             };
             workCycles.ForEach(w => context.WorkCycles.AddOrUpdate(t => t.Name, w));
             context.SaveChanges();
+
+
+            //Adding Purchase Order Statuses
+            var poStatuses = new List<PoStatus>
+            {
+                new PoStatus{ Status = "New"},
+                new PoStatus{ Status = "In Progress"},
+                new PoStatus{ Status = "Received"},
+                new PoStatus{ Status = "Changed"},
+                new PoStatus{ Status = "Closed"},
+                new PoStatus{ Status = "Canceled"}
+            };
+            poStatuses.ForEach(p => context.PurchaseOrderStatuses.AddOrUpdate(t => t.Status, p));
+            context.SaveChanges();
         }
     }
 }

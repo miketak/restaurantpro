@@ -1,4 +1,7 @@
-﻿namespace RestaurantPro.Core.Domain
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace RestaurantPro.Core.Domain
 {
     public class Supplier
     {
@@ -14,5 +17,7 @@
         public string Email { get; set; }
 
         public bool Active { get; set; }
+
+        public virtual ICollection<RawMaterialCatalog> RawMaterialCatalog { get; set; }
     }
 }

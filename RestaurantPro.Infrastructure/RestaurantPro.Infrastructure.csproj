@@ -49,6 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntityConfigurations\PoStatusConfiguration.cs" />
+    <Compile Include="EntityConfigurations\PurchaseOrderConfiguration.cs" />
+    <Compile Include="EntityConfigurations\RawMaterialCatalogConfiguration.cs" />
     <Compile Include="EntityConfigurations\UserConfiguration.cs" />
     <Compile Include="EntityConfigurations\WorkCycleConfigurations.cs" />
     <Compile Include="Migrations\201712180324012_InitialCreate.cs" />
@@ -74,6 +77,30 @@
     <Compile Include="Migrations\201712211335448_AddActiveBitToSupplier.cs" />
     <Compile Include="Migrations\201712211335448_AddActiveBitToSupplier.Designer.cs">
       <DependentUpon>201712211335448_AddActiveBitToSupplier.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712211356070_AddRawMaterialsAndRawMaterialsCategoriesTables.cs" />
+    <Compile Include="Migrations\201712211356070_AddRawMaterialsAndRawMaterialsCategoriesTables.Designer.cs">
+      <DependentUpon>201712211356070_AddRawMaterialsAndRawMaterialsCategoriesTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712211414287_AddPoStatusTable.cs" />
+    <Compile Include="Migrations\201712211414287_AddPoStatusTable.Designer.cs">
+      <DependentUpon>201712211414287_AddPoStatusTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712211428256_RemoveMeasureFromRawMaterial.cs" />
+    <Compile Include="Migrations\201712211428256_RemoveMeasureFromRawMaterial.Designer.cs">
+      <DependentUpon>201712211428256_RemoveMeasureFromRawMaterial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712211438304_AddRawMaterialCatalogTable.cs" />
+    <Compile Include="Migrations\201712211438304_AddRawMaterialCatalogTable.Designer.cs">
+      <DependentUpon>201712211438304_AddRawMaterialCatalogTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712211849395_AddPurchaseOrderTable.cs" />
+    <Compile Include="Migrations\201712211849395_AddPurchaseOrderTable.Designer.cs">
+      <DependentUpon>201712211849395_AddPurchaseOrderTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712211856175_ChangeRawMaterialCatalogsToRawMaterialCatalog.cs" />
+    <Compile Include="Migrations\201712211856175_ChangeRawMaterialCatalogsToRawMaterialCatalog.Designer.cs">
+      <DependentUpon>201712211856175_ChangeRawMaterialCatalogsToRawMaterialCatalog.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -113,6 +140,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712211335448_AddActiveBitToSupplier.resx">
       <DependentUpon>201712211335448_AddActiveBitToSupplier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712211356070_AddRawMaterialsAndRawMaterialsCategoriesTables.resx">
+      <DependentUpon>201712211356070_AddRawMaterialsAndRawMaterialsCategoriesTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712211414287_AddPoStatusTable.resx">
+      <DependentUpon>201712211414287_AddPoStatusTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712211428256_RemoveMeasureFromRawMaterial.resx">
+      <DependentUpon>201712211428256_RemoveMeasureFromRawMaterial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712211438304_AddRawMaterialCatalogTable.resx">
+      <DependentUpon>201712211438304_AddRawMaterialCatalogTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712211849395_AddPurchaseOrderTable.resx">
+      <DependentUpon>201712211849395_AddPurchaseOrderTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712211856175_ChangeRawMaterialCatalogsToRawMaterialCatalog.resx">
+      <DependentUpon>201712211856175_ChangeRawMaterialCatalogsToRawMaterialCatalog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

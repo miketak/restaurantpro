@@ -39,6 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\PoStatus.cs" />
+    <Compile Include="Domain\PurchaseOrder.cs" />
+    <Compile Include="Domain\RawMaterial.cs" />
+    <Compile Include="Domain\RawMaterialCatalog.cs" />
+    <Compile Include="Domain\RawMaterialCategory.cs" />
     <Compile Include="Domain\Supplier.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Domain\WorkCycle.cs" />
