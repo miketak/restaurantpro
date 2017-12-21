@@ -51,9 +51,13 @@
   <ItemGroup>
     <Compile Include="EntityConfigurations\PoStatusConfiguration.cs" />
     <Compile Include="EntityConfigurations\PurchaseOrderConfiguration.cs" />
+    <Compile Include="EntityConfigurations\PurchaseOrderLinesConfiguration.cs" />
     <Compile Include="EntityConfigurations\RawMaterialCatalogConfiguration.cs" />
+    <Compile Include="EntityConfigurations\RawMaterialConfiguration.cs" />
+    <Compile Include="EntityConfigurations\SupplierConfiguration.cs" />
     <Compile Include="EntityConfigurations\UserConfiguration.cs" />
     <Compile Include="EntityConfigurations\WorkCycleConfigurations.cs" />
+    <Compile Include="EntityConfigurations\WorkCycleLinesConfiguration.cs" />
     <Compile Include="Migrations\201712180324012_InitialCreate.cs" />
     <Compile Include="Migrations\201712180324012_InitialCreate.Designer.cs">
       <DependentUpon>201712180324012_InitialCreate.cs</DependentUpon>
@@ -101,6 +105,18 @@
     <Compile Include="Migrations\201712211856175_ChangeRawMaterialCatalogsToRawMaterialCatalog.cs" />
     <Compile Include="Migrations\201712211856175_ChangeRawMaterialCatalogsToRawMaterialCatalog.Designer.cs">
       <DependentUpon>201712211856175_ChangeRawMaterialCatalogsToRawMaterialCatalog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712211937450_AddWorkCycleFKToPurchaseOrdersTable.cs" />
+    <Compile Include="Migrations\201712211937450_AddWorkCycleFKToPurchaseOrdersTable.Designer.cs">
+      <DependentUpon>201712211937450_AddWorkCycleFKToPurchaseOrdersTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712212159397_PurchaseOrderLinesTable.cs" />
+    <Compile Include="Migrations\201712212159397_PurchaseOrderLinesTable.Designer.cs">
+      <DependentUpon>201712212159397_PurchaseOrderLinesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712212221278_AddWorkCycleLinesTable.cs" />
+    <Compile Include="Migrations\201712212221278_AddWorkCycleLinesTable.Designer.cs">
+      <DependentUpon>201712212221278_AddWorkCycleLinesTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -158,6 +174,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712211856175_ChangeRawMaterialCatalogsToRawMaterialCatalog.resx">
       <DependentUpon>201712211856175_ChangeRawMaterialCatalogsToRawMaterialCatalog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712211937450_AddWorkCycleFKToPurchaseOrdersTable.resx">
+      <DependentUpon>201712211937450_AddWorkCycleFKToPurchaseOrdersTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712212159397_PurchaseOrderLinesTable.resx">
+      <DependentUpon>201712212159397_PurchaseOrderLinesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712212221278_AddWorkCycleLinesTable.resx">
+      <DependentUpon>201712212221278_AddWorkCycleLinesTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

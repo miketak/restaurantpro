@@ -18,6 +18,16 @@ namespace RestaurantPro.Core.Domain
 
         public bool Active { get; set; }
 
+        #region Navigation Properties
+
         public virtual ICollection<RawMaterialCatalog> RawMaterialCatalog { get; set; }
+
+        public virtual ICollection<PurchaseOrderLines> PurchaseOrderLines { get; set; }
+
+        public virtual ICollection<WorkCycleLines> WorkCycleLines { get; set; }
+
+        #endregion
+
+        
     }
 }

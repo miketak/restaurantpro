@@ -7,12 +7,12 @@ namespace RestaurantPro.Infrastructure.Migrations
     {
         public override void Up()
         {
-            RenameTable(name: "dbo.RawMaterialCatalogs", newName: "RawMaterialCatalog");
+            RenameTable(name: "dbo.RawMaterialCatalog", newName: "RawMaterialCatalog");
         }
         
         public override void Down()
         {
-            RenameTable(name: "dbo.RawMaterialCatalog", newName: "RawMaterialCatalogs");
+            RenameTable(name: "dbo.RawMaterialCatalog", newName: "RawMaterialCatalog");
         }
     }
 }

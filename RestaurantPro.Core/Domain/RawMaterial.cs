@@ -13,7 +13,18 @@ namespace RestaurantPro.Core.Domain
 
         public int RawMaterialCategoryId { get; set; }
 
-        public virtual ICollection<RawMaterialCatalog> RawMaterialCatalogs { get; set; }
+
+        #region Navigation Properties
+
+        public virtual ICollection<RawMaterialCatalog> RawMaterialCatalog { get; set; }
+
+        public virtual ICollection<PurchaseOrderLines> PurchaseOrderLines { get; set; }
+
+        public virtual ICollection<WorkCycleLines> WorkCycleLines { get; set; }
+
+        #endregion
+
+        
 
     }
 }

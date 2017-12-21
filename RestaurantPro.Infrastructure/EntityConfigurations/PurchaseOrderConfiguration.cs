@@ -7,8 +7,9 @@ namespace RestaurantPro.Infrastructure.EntityConfigurations
     {
         public PurchaseOrderConfiguration()
         {
-
+            HasMany(t => t.PurchaseOrderLines)
+                .WithRequired(k => k.PurchaseOrder)
+                .HasForeignKey(p => p.PurchaseOrderId);
         }
-        
     }
 }

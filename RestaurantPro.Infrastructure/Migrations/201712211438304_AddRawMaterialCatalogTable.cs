@@ -8,7 +8,7 @@ namespace RestaurantPro.Infrastructure.Migrations
         public override void Up()
         {
             CreateTable(
-                "dbo.RawMaterialCatalogs",
+                "dbo.RawMaterialCatalog",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -27,11 +27,11 @@ namespace RestaurantPro.Infrastructure.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.RawMaterialCatalogs", "SupplierId", "dbo.Suppliers");
-            DropForeignKey("dbo.RawMaterialCatalogs", "RawMaterialId", "dbo.RawMaterials");
-            DropIndex("dbo.RawMaterialCatalogs", new[] { "SupplierId" });
-            DropIndex("dbo.RawMaterialCatalogs", new[] { "RawMaterialId" });
-            DropTable("dbo.RawMaterialCatalogs");
+            DropForeignKey("dbo.RawMaterialCatalog", "SupplierId", "dbo.Suppliers");
+            DropForeignKey("dbo.RawMaterialCatalog", "RawMaterialId", "dbo.RawMaterials");
+            DropIndex("dbo.RawMaterialCatalog", new[] { "SupplierId" });
+            DropIndex("dbo.RawMaterialCatalog", new[] { "RawMaterialId" });
+            DropTable("dbo.RawMaterialCatalog");
         }
     }
 }

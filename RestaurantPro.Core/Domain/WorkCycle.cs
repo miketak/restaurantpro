@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RestaurantPro.Core.Domain
 {
@@ -14,8 +15,17 @@ namespace RestaurantPro.Core.Domain
 
         public bool Active { get; set; }
 
-        public virtual  User User { get; set; }
-
         public int UserId { get; set; }
+
+
+        #region Navigation Properties
+
+        public virtual User User { get; set; }
+
+        public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
+
+        public virtual ICollection<WorkCycleLines> WorkCycleLines { get; set; }
+
+        #endregion
     }
 }

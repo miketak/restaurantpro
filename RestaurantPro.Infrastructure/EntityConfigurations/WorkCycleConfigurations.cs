@@ -12,8 +12,17 @@ namespace RestaurantPro.Infrastructure.EntityConfigurations
             Property(u => u.Name)
                 .IsRequired()
                 .HasMaxLength(24)
-                .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_WorkCycleName", 1) { IsUnique = true }));
+                .HasColumnAnnotation(IndexAnnotation.AnnotationName,
+                    new IndexAnnotation(new IndexAttribute("IX_WorkCycleName", 1) {IsUnique = true}));
+
+            HasMany(t => t.PurchaseOrders)
+                .WithRequired(k => k.WorkCycle)
+                .HasForeignKey(p => p.WorkCycleId)
+                .WillCascadeOnDelete(false);
+
+            HasMany(t => t.WorkCycleLines)
+                .WithRequired(k => k.WorkCycle)
+                .HasForeignKey(p => p.WorkCycleId);
         }
-        
     }
 }
