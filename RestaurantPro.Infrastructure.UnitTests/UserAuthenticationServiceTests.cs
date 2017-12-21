@@ -15,7 +15,7 @@ namespace RestaurantPro.Infrastructure.UnitTests
 
         public UserAuthenticationServiceTests()
         {
-            _userAuthenticationService = new UserAuthenticationService();
+            _userAuthenticationService = new UserAuthenticationService(new UserRepository(new RestProContext()));
         }
 
         [TestMethod]
