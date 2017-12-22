@@ -8,7 +8,7 @@ namespace RestaurantPro.Infrastructure.Migrations
         public override void Up()
         {
             CreateTable(
-                "dbo.PurchaseOrderLines",
+                "dbo.PurchaseOrderLine",
                 c => new
                     {
                         PurchaseOrderId = c.Int(nullable: false),
@@ -29,13 +29,13 @@ namespace RestaurantPro.Infrastructure.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.PurchaseOrderLines", "SupplierId", "dbo.Suppliers");
-            DropForeignKey("dbo.PurchaseOrderLines", "RawMaterialId", "dbo.RawMaterials");
-            DropForeignKey("dbo.PurchaseOrderLines", "PurchaseOrderId", "dbo.PurchaseOrders");
-            DropIndex("dbo.PurchaseOrderLines", new[] { "RawMaterialId" });
-            DropIndex("dbo.PurchaseOrderLines", new[] { "SupplierId" });
-            DropIndex("dbo.PurchaseOrderLines", new[] { "PurchaseOrderId" });
-            DropTable("dbo.PurchaseOrderLines");
+            DropForeignKey("dbo.PurchaseOrderLine", "SupplierId", "dbo.Suppliers");
+            DropForeignKey("dbo.PurchaseOrderLine", "RawMaterialId", "dbo.RawMaterials");
+            DropForeignKey("dbo.PurchaseOrderLine", "PurchaseOrderId", "dbo.PurchaseOrders");
+            DropIndex("dbo.PurchaseOrderLine", new[] { "RawMaterialId" });
+            DropIndex("dbo.PurchaseOrderLine", new[] { "SupplierId" });
+            DropIndex("dbo.PurchaseOrderLine", new[] { "PurchaseOrderId" });
+            DropTable("dbo.PurchaseOrderLine");
         }
     }
 }

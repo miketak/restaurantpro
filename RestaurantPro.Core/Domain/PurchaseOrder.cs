@@ -19,6 +19,8 @@ namespace RestaurantPro.Core.Domain
 
         public bool Active { get; set; }
 
+        public IEnumerable<PurchaseOrderLine> Lines { get; set; }
+
 
         #region Navigation Properties
 
@@ -28,8 +30,7 @@ namespace RestaurantPro.Core.Domain
 
         public virtual WorkCycle WorkCycle { get; set; }
 
-        public virtual ICollection<PurchaseOrderLines> PurchaseOrderLines { get; set; }
-        
+        public virtual ICollection<PurchaseOrderLine> PurchaseOrderLines { get; set; }
 
         #endregion
 

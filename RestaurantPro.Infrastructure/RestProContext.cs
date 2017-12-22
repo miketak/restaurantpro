@@ -29,7 +29,7 @@ namespace RestaurantPro.Infrastructure
 
         public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
 
-        public virtual DbSet<PurchaseOrderLines> PurchaseOrderLines { get; set; }
+        public virtual DbSet<PurchaseOrderLine> PurchaseOrderLines { get; set; }
 
         public virtual DbSet<Location> Locations { get; set; }
 

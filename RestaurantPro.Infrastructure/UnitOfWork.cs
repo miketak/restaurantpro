@@ -18,6 +18,8 @@ namespace RestaurantPro.Infrastructure
             UserAuthenticationService = new UserAuthenticationService(new UserRepository(_context));
             Suppliers = new SupplierRepository(_context);
             Statuses = new StatusRepository(_context);
+            PurchaseOrders = new PurchaseOrderRepository(_context);
+            RawMaterials = new RawMaterialsRepository(_context);
         }
 
         public IUserRepository Users { get; private set; }
@@ -25,6 +27,8 @@ namespace RestaurantPro.Infrastructure
         public IUserAuthenticationService UserAuthenticationService { get; private set; }
         public ISupplierRepository Suppliers { get; private set; }
         public IStatusRepository Statuses { get; private set; }
+        public IPurchaseOrderRepository PurchaseOrders { get; private set; }
+        public IRawMaterialsRepository RawMaterials { get; private set; }
 
         public int Complete()
         {

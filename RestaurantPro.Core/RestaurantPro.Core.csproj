@@ -42,7 +42,7 @@
     <Compile Include="Domain\Location.cs" />
     <Compile Include="Domain\PoStatus.cs" />
     <Compile Include="Domain\PurchaseOrder.cs" />
-    <Compile Include="Domain\PurchaseOrderLines.cs" />
+    <Compile Include="Domain\PurchaseOrderLine.cs" />
     <Compile Include="Domain\RawMaterial.cs" />
     <Compile Include="Domain\RawMaterialCatalog.cs" />
     <Compile Include="Domain\RawMaterialCategory.cs" />
@@ -52,6 +52,8 @@
     <Compile Include="Domain\WorkCycleLines.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\IPurchaseOrderRepository.cs" />
+    <Compile Include="Repositories\IRawMaterialsRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\IStatusRepository.cs" />
     <Compile Include="Repositories\ISupplierRepository.cs" />

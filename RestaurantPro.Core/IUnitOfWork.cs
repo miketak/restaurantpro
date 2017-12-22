@@ -15,6 +15,10 @@ namespace RestaurantPro.Core
 
         IStatusRepository Statuses { get; }
 
+        IPurchaseOrderRepository PurchaseOrders { get; }
+
+        IRawMaterialsRepository RawMaterials { get; }
+
         int Complete();
     }
 }

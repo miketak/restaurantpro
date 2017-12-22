@@ -122,8 +122,14 @@
     <Compile Include="Migrations\201712221248354_AddFieldsToWorkCycleAndAddLocationsTable.Designer.cs">
       <DependentUpon>201712221248354_AddFieldsToWorkCycleAndAddLocationsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712221647140_MakePONumberInPurchaseOrdersUnique.cs" />
+    <Compile Include="Migrations\201712221647140_MakePONumberInPurchaseOrdersUnique.Designer.cs">
+      <DependentUpon>201712221647140_MakePONumberInPurchaseOrdersUnique.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\PurchaseOrderRepository.cs" />
+    <Compile Include="Repositories\RawMaterialsRepository.cs" />
     <Compile Include="Repositories\StatusRepository.cs" />
     <Compile Include="Repositories\SupplierRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
@@ -191,6 +197,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712221248354_AddFieldsToWorkCycleAndAddLocationsTable.resx">
       <DependentUpon>201712221248354_AddFieldsToWorkCycleAndAddLocationsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712221647140_MakePONumberInPurchaseOrdersUnique.resx">
+      <DependentUpon>201712221647140_MakePONumberInPurchaseOrdersUnique.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -15,6 +15,7 @@ namespace RestaurantPro.Infrastructure.Migrations
 
         protected override void Seed(RestProContext context)
         {
+
             #region Add Users
 
             var users = new List<User>
@@ -71,6 +72,51 @@ namespace RestaurantPro.Infrastructure.Migrations
             context.SaveChanges();
 
             #endregion
+
+            #region Add Suppliers
+
+            var suppliers = new List<Supplier>
+            {
+                new Supplier{ Name="Kofi and Co Enterprise", Address="81 Miller AV", Telephone="2332345042434", Email = "ma@yahoo.com", Active= true},
+                new Supplier{ Name="Ama African Market", Address="Bung 9, 1934 Road", Telephone="3197438828", Email = "ama@yahoo.com", Active= true},
+                new Supplier{ Name="Richard Padi Ventures", Address="6301 Kirkwoord Bolevard", Telephone="123456789", Email = "rkpadi@yahoo.com", Active= true},
+                new Supplier{ Name="Zigi Industries", Address="21 Century Road", Telephone="0012354345560", Email = "zigi@gmail.com", Active= true},
+                new Supplier{ Name="Spanky Market", Address="Farmers Market Rd.", Telephone="9171243312276", Email = "ddade@yahoo.com", Active= true}
+            };
+            suppliers.ForEach(p => context.Suppliers.AddOrUpdate(t => t.Name, p));
+            context.SaveChanges();
+
+            #endregion
+
+            #region Add Raw Material Categories
+
+            var categories = new List<RawMaterialCategory>
+            {
+                new RawMaterialCategory { Name = "Vegetables", Description = "Vegetable Desc"},
+                new RawMaterialCategory { Name = "Fruits", Description = "Fruits Desc"},
+                new RawMaterialCategory { Name = "Condiments", Description = "Condiments Desc"},
+                new RawMaterialCategory { Name = "Drinks", Description = "Drinks Desc"}
+            };
+            categories.ForEach(p => context.RawMaterialCategories.AddOrUpdate(t => t.Name, p));
+            context.SaveChanges();
+
+            #endregion
+
+            #region Add Raw Materials
+
+            var rawMaterials = new List<RawMaterial>
+            {
+                new RawMaterial {Name = "Tomatoes", RawMaterialCategoryId = 1},
+                new RawMaterial {Name = "Cabbage", RawMaterialCategoryId = 1},
+                new RawMaterial {Name = "Sprite", RawMaterialCategoryId = 4},
+                new RawMaterial {Name = "Orange", RawMaterialCategoryId = 2},
+                new RawMaterial {Name = "Garlic", RawMaterialCategoryId = 3}
+            };
+            rawMaterials.ForEach(p => context.RawMaterials.AddOrUpdate(t => t.Name, p));
+            context.SaveChanges();
+
+            #endregion
+
         }
     }
 }

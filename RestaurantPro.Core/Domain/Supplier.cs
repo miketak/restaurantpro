@@ -22,7 +22,7 @@ namespace RestaurantPro.Core.Domain
 
         public virtual ICollection<RawMaterialCatalog> RawMaterialCatalog { get; set; }
 
-        public virtual ICollection<PurchaseOrderLines> PurchaseOrderLines { get; set; }
+        public virtual ICollection<PurchaseOrderLine> PurchaseOrderLines { get; set; }
 
         public virtual ICollection<WorkCycleLines> WorkCycleLines { get; set; }
 
