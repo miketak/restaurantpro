@@ -13,6 +13,8 @@ namespace RestaurantPro.Core
 
         IUserAuthenticationService UserAuthenticationService { get; }
 
+        IStatusRepository Statuses { get; }
+
         int Complete();
     }
 }

@@ -17,12 +17,14 @@ namespace RestaurantPro.Infrastructure
             WorkCycles = new WorkCycleRepository(_context);
             UserAuthenticationService = new UserAuthenticationService(new UserRepository(_context));
             Suppliers = new SupplierRepository(_context);
+            Statuses = new StatusRepository(_context);
         }
 
         public IUserRepository Users { get; private set; }
         public IWorkCycleRepository WorkCycles { get; private set; }
         public IUserAuthenticationService UserAuthenticationService { get; private set; }
         public ISupplierRepository Suppliers { get; private set; }
+        public IStatusRepository Statuses { get; private set; }
 
         public int Complete()
         {

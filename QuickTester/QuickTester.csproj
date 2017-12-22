@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{85FEB505-D0A9-4253-83F1-9F78FD3334DE}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{0DC42AA1-074C-4021-81DC-EDF422AB5122}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RestaurantPro.Core</RootNamespace>
-    <AssemblyName>RestaurantPro.Core</AssemblyName>
+    <RootNamespace>QuickTester</RootNamespace>
+    <AssemblyName>QuickTester</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -30,7 +32,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -39,27 +50,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\PoStatus.cs" />
-    <Compile Include="Domain\PurchaseOrder.cs" />
-    <Compile Include="Domain\PurchaseOrderLines.cs" />
-    <Compile Include="Domain\RawMaterial.cs" />
-    <Compile Include="Domain\RawMaterialCatalog.cs" />
-    <Compile Include="Domain\RawMaterialCategory.cs" />
-    <Compile Include="Domain\Supplier.cs" />
-    <Compile Include="Domain\User.cs" />
-    <Compile Include="Domain\WorkCycle.cs" />
-    <Compile Include="Domain\WorkCycleLines.cs" />
-    <Compile Include="IUnitOfWork.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\IRepository.cs" />
-    <Compile Include="Repositories\IStatusRepository.cs" />
-    <Compile Include="Repositories\ISupplierRepository.cs" />
-    <Compile Include="Repositories\IUserRepository.cs" />
-    <Compile Include="Repositories\IWorkCycleRepository.cs" />
-    <Compile Include="Services\IUserAuthenticationService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RestaurantPro.Core\RestaurantPro.Core.csproj">
+      <Project>{85feb505-d0a9-4253-83f1-9f78fd3334de}</Project>
+      <Name>RestaurantPro.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RestaurantPro.Infrastructure\RestaurantPro.Infrastructure.csproj">
+      <Project>{08b93852-eb08-4bfc-b1b4-2e8cd7c86273}</Project>
+      <Name>RestaurantPro.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
