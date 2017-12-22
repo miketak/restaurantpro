@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\Location.cs" />
     <Compile Include="Domain\PoStatus.cs" />
     <Compile Include="Domain\PurchaseOrder.cs" />
     <Compile Include="Domain\PurchaseOrderLines.cs" />

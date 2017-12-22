@@ -15,6 +15,8 @@ namespace RestaurantPro.Infrastructure.Migrations
 
         protected override void Seed(RestProContext context)
         {
+            #region Add Users
+
             var users = new List<User>
             {
                 new User{ Username = "rkpadi", FirstName = "Richard", LastName = "Padi", Email = "rkpadi@yahoo.com", Password = "password"},
@@ -23,6 +25,9 @@ namespace RestaurantPro.Infrastructure.Migrations
             users.ForEach(u => context.Users.AddOrUpdate(p => p.LastName, u));
             context.SaveChanges();
 
+            #endregion
+
+            #region Add Work Cycles
 
             var workCycles = new List<WorkCycle>
             {
@@ -35,6 +40,9 @@ namespace RestaurantPro.Infrastructure.Migrations
             workCycles.ForEach(w => context.WorkCycles.AddOrUpdate(t => t.Name, w));
             context.SaveChanges();
 
+            #endregion
+
+            #region Add Purchase Order Statuses
 
             //Adding Purchase Order Statuses
             var poStatuses = new List<PoStatus>
@@ -48,6 +56,21 @@ namespace RestaurantPro.Infrastructure.Migrations
             };
             poStatuses.ForEach(p => context.PurchaseOrderStatuses.AddOrUpdate(t => t.Status, p));
             context.SaveChanges();
+
+            #endregion
+
+            #region Add Locations
+
+            var locations = new List<Location>
+            {
+                new Location {LocationId = "Room A"},
+                new Location {LocationId = "Room B"},
+                new Location {LocationId = "Home Warehouse"}
+            };
+            locations.ForEach(p => context.Locations.AddOrUpdate(t => t.LocationId, p));
+            context.SaveChanges();
+
+            #endregion
         }
     }
 }

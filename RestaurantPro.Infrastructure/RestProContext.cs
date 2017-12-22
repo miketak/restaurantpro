@@ -31,6 +31,8 @@ namespace RestaurantPro.Infrastructure
 
         public virtual DbSet<PurchaseOrderLines> PurchaseOrderLines { get; set; }
 
+        public virtual DbSet<Location> Locations { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new PurchaseOrderLinesConfiguration());
