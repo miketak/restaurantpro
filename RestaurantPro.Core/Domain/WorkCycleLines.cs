@@ -10,9 +10,13 @@ namespace RestaurantPro.Core.Domain
 
         public int SupplierId { get; set; }
 
-        public float Quantity { get; set; }
+        public float PlannedQuantity { get; set; }
+
+        public float ActualQuantity { get; set; }
 
         public float CurrentQuanity { get; set; }
+
+        public double UnitPrice { get; set; }
 
         public string UnitOfMeasure { get; set; }
 

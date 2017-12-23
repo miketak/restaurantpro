@@ -126,6 +126,14 @@
     <Compile Include="Migrations\201712221647140_MakePONumberInPurchaseOrdersUnique.Designer.cs">
       <DependentUpon>201712221647140_MakePONumberInPurchaseOrdersUnique.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712231033054_AddFieldsToWorkCycleLines.cs" />
+    <Compile Include="Migrations\201712231033054_AddFieldsToWorkCycleLines.Designer.cs">
+      <DependentUpon>201712231033054_AddFieldsToWorkCycleLines.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712231037159_AddUnitPriceToPurchaseOrderLines.cs" />
+    <Compile Include="Migrations\201712231037159_AddUnitPriceToPurchaseOrderLines.Designer.cs">
+      <DependentUpon>201712231037159_AddUnitPriceToPurchaseOrderLines.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\PurchaseOrderRepository.cs" />
@@ -200,6 +208,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712221647140_MakePONumberInPurchaseOrdersUnique.resx">
       <DependentUpon>201712221647140_MakePONumberInPurchaseOrdersUnique.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712231033054_AddFieldsToWorkCycleLines.resx">
+      <DependentUpon>201712231033054_AddFieldsToWorkCycleLines.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712231037159_AddUnitPriceToPurchaseOrderLines.resx">
+      <DependentUpon>201712231037159_AddUnitPriceToPurchaseOrderLines.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

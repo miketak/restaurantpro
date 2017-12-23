@@ -9,6 +9,8 @@
 
         public int SupplierId { get; set; }
 
+        public double UnitPrice { get; set; }
+
         public float Quantity { get; set; }
 
         public string UnitOfMeasure { get; set; }
