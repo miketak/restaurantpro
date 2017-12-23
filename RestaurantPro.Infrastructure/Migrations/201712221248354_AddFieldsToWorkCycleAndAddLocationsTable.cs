@@ -15,7 +15,7 @@ namespace RestaurantPro.Infrastructure.Migrations
                     })
                 .PrimaryKey(t => t.LocationId);
             
-            AddColumn("dbo.WorkCycleLines", "CurrentQuanity", c => c.Single(nullable: false));
+            AddColumn("dbo.WorkCycleLines", "CurrentQuantity", c => c.Single(nullable: false));
             AddColumn("dbo.WorkCycleLines", "WasMoved", c => c.Boolean(nullable: false));
             AddColumn("dbo.WorkCycleLines", "MoveDate", c => c.DateTime(nullable: false));
             AddColumn("dbo.WorkCycleLines", "LocationId", c => c.String(maxLength: 128));
@@ -30,7 +30,7 @@ namespace RestaurantPro.Infrastructure.Migrations
             DropColumn("dbo.WorkCycleLines", "LocationId");
             DropColumn("dbo.WorkCycleLines", "MoveDate");
             DropColumn("dbo.WorkCycleLines", "WasMoved");
-            DropColumn("dbo.WorkCycleLines", "CurrentQuanity");
+            DropColumn("dbo.WorkCycleLines", "CurrentQuantity");
             DropTable("dbo.Locations");
         }
     }

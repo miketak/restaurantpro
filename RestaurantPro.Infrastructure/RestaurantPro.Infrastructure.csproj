@@ -134,6 +134,18 @@
     <Compile Include="Migrations\201712231037159_AddUnitPriceToPurchaseOrderLines.Designer.cs">
       <DependentUpon>201712231037159_AddUnitPriceToPurchaseOrderLines.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712231444092_MakeMoveDateNullableInWorkCycleLinesTable.cs" />
+    <Compile Include="Migrations\201712231444092_MakeMoveDateNullableInWorkCycleLinesTable.Designer.cs">
+      <DependentUpon>201712231444092_MakeMoveDateNullableInWorkCycleLinesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712231455326_MakeActualAndCurrentQuantityNullable.cs" />
+    <Compile Include="Migrations\201712231455326_MakeActualAndCurrentQuantityNullable.Designer.cs">
+      <DependentUpon>201712231455326_MakeActualAndCurrentQuantityNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712231457538_CorrectMoveDataNullableError.cs" />
+    <Compile Include="Migrations\201712231457538_CorrectMoveDataNullableError.Designer.cs">
+      <DependentUpon>201712231457538_CorrectMoveDataNullableError.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\PurchaseOrderRepository.cs" />
@@ -214,6 +226,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712231037159_AddUnitPriceToPurchaseOrderLines.resx">
       <DependentUpon>201712231037159_AddUnitPriceToPurchaseOrderLines.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712231444092_MakeMoveDateNullableInWorkCycleLinesTable.resx">
+      <DependentUpon>201712231444092_MakeMoveDateNullableInWorkCycleLinesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712231455326_MakeActualAndCurrentQuantityNullable.resx">
+      <DependentUpon>201712231455326_MakeActualAndCurrentQuantityNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712231457538_CorrectMoveDataNullableError.resx">
+      <DependentUpon>201712231457538_CorrectMoveDataNullableError.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

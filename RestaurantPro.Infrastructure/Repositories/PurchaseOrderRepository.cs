@@ -58,5 +58,32 @@ namespace RestaurantPro.Infrastructure.Repositories
             
         }
 
+        /// <summary>
+        /// Gets Purchase Order by purchase order number 
+        /// based on active bit.
+        /// </summary>
+        /// <param name="isActive"></param>
+        /// <param name="purchaseOrderNumber"></param>
+        public PurchaseOrder GetPurchaseOrderByPurchaseOrderNumber(string purchaseOrderNumber, bool isActive)
+        {
+            return _context.PurchaseOrders
+                .Include(po => po.PurchaseOrderLines)
+                .Where(c => c.Active == isActive)
+                .SingleOrDefault(c => c.PurchaseOrderNumber == purchaseOrderNumber);
+        }
+
+        /// <summary>
+        /// Gets Purchase Order by purchase order id 
+        /// based on active bit.
+        /// </summary>
+        /// <param name="isActive"></param>
+        /// <param name="purchaseOrderId"></param>
+        public PurchaseOrder GetPurchaseOrderById(int purchaseOrderId, bool isActive)
+        {
+                return _context.PurchaseOrders
+                    .Include(po => po.PurchaseOrderLines)
+                    .Where(c => c.Active == isActive)
+                    .SingleOrDefault(c => c.Id == purchaseOrderId);
+        }
     }
 }

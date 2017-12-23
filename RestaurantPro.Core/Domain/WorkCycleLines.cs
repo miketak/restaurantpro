@@ -12,9 +12,9 @@ namespace RestaurantPro.Core.Domain
 
         public float PlannedQuantity { get; set; }
 
-        public float ActualQuantity { get; set; }
+        public float? ActualQuantity { get; set; }
 
-        public float CurrentQuanity { get; set; }
+        public float? CurrentQuantity { get; set; }
 
         public double UnitPrice { get; set; }
 
@@ -22,7 +22,7 @@ namespace RestaurantPro.Core.Domain
 
         public bool WasMoved { get; set; }
 
-        public DateTime MoveDate { get; set; }
+        public DateTime? MoveDate { get; set; }
 
         public string LocationId { get; set; }
 

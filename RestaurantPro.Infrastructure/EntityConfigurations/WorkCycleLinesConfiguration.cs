@@ -13,6 +13,9 @@ namespace RestaurantPro.Infrastructure.EntityConfigurations
                 table.SupplierId,
                 table.WorkCycleId
             });
+
+            Property(u => u.MoveDate)
+                .IsOptional();
         }
         
     }

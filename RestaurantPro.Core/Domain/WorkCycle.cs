@@ -17,6 +17,8 @@ namespace RestaurantPro.Core.Domain
 
         public int UserId { get; set; }
 
+        public IEnumerable<WorkCycleLines> Lines { get; set; }
+
 
         #region Navigation Properties
 
