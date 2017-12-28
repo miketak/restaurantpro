@@ -2,14 +2,15 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1000">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
 
@@ -21,95 +22,142 @@
         </Grid.ColumnDefinitions>
 
         <!--Left Pane-->
-        <Border Background="DimGray"  Width="Auto" Margin="0,0,0,0" Grid.Column="1"
-                Grid.RowSpan="4">
-            <StackPanel Orientation="Vertical" Margin="10 5 10 5">
-                
-                <!--Top Panel Controls-->
-                <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right" 
-                            Orientation="Horizontal" Width="Auto" Height="30">
-                    <TextBlock VerticalAlignment="Center" 
-                               Text="Welcome: " 
-                               FontSize="15" FontWeight="ExtraBold" FontFamily="Arial"
-                               Margin="0 0 10 0"/>
-                    <TextBlock VerticalAlignment="Center"
-                               DataContext="{Binding CurrentUser}"
-                               Text="{Binding FullName}" 
-                               FontSize="15" FontWeight="ExtraBold" FontFamily="Arial"
-                               Margin="0 0 20 0"/>
-                    <TextBox Name="txtSearch" Height="25" Width="200" 
-                             HorizontalAlignment="Right" VerticalAlignment="Top" 
-                             Foreground="Gray" Text="Search"/>
-                    <Button Name="logout" Content="Log Out"
-                            Width="100" Margin="10 0 10 0"
-                            Background="LightCoral"
-                            Command="{Binding LogoutCommand}"/>
-                </StackPanel>
-                <!--End of Top Panel Controls--> 
-                
-                <!--Dashboard Options-->
-                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Name ="invent" 
-                            Command="{Binding InventoryDashboardCommand}"
-                            Background="AliceBlue" Foreground="Black" 
-                            Height="120" Width="120"
-                            Margin="20 20 20 20">
-                        <TextBlock Text="Inventory Management" TextWrapping="Wrap" 
-                                   FontSize="17" TextAlignment="Center" 
-                                   FontFamily="Arial" FontWeight="DemiBold"/>
-                    </Button>                    
-                    
-                    <Button Name ="report" 
-                            Background="AliceBlue" Foreground="Black" 
-                            Height="120" Width="120"
-                            Margin="20 20 20 20">
-                        <TextBlock Text="Reports" TextWrapping="Wrap" 
-                                   FontSize="17" TextAlignment="Center" 
-                                   FontFamily="Arial" FontWeight="DemiBold"/>
-                    </Button>
-                                        
-                    
-                    <Button Name ="pos" 
-                            Background="AliceBlue" Foreground="Black" 
-                            Height="120" Width="120"
-                            Margin="20 20 20 20">
-                        <TextBlock Text="POS" TextWrapping="Wrap" 
-                                   FontSize="17" TextAlignment="Center" 
-                                   FontFamily="Arial" FontWeight="DemiBold"/>
-                    </Button>                    
-                    
-                    <Button Name ="admin" 
-                            Background="AliceBlue" Foreground="Black" 
-                            Height="120" Width="120"
-                            Margin="20 20 20 20">
-                        <TextBlock Text="Admin Panel" TextWrapping="Wrap" 
-                                   FontSize="17" TextAlignment="Center" 
-                                   FontFamily="Arial" FontWeight="DemiBold"/>
-                    </Button>                    
-                    
-                    <Button Name ="empManagement" 
-                            Background="AliceBlue" Foreground="Black" 
-                            Height="120" Width="120"
-                            Margin="20 20 20 20">
-                        <TextBlock Text="Employee Management" TextWrapping="Wrap" 
-                                   FontSize="17" TextAlignment="Center" 
-                                   FontFamily="Arial" FontWeight="DemiBold"/>
-                    </Button>
-                                        
-                    <Button Name ="scScales" 
-                            Background="AliceBlue" Foreground="Black" 
-                            Height="120" Width="120"
-                            Margin="20 20 20 20">
-                        <TextBlock Text="My Space" TextWrapping="Wrap" 
-                                   FontSize="17" TextAlignment="Center" 
-                                   FontFamily="Arial" FontWeight="DemiBold"/>
-                    </Button>
-                    
-                </WrapPanel>
-                <!--End of Dashboard Options-->
-                
-            </StackPanel>
-        </Border>
-        
+        <Grid x:Name="TopBar" Grid.Column="1" Margin="0">
+        	<Grid.ColumnDefinitions>
+        		<ColumnDefinition/>
+        		<ColumnDefinition/>
+        	</Grid.ColumnDefinitions>
+    		<StackPanel Margin="0" Orientation="Horizontal">
+        		<TextBlock x:Name="userName" VerticalAlignment="Center"
+        			DataContext="{Binding CurrentUser}"
+        			Text="{Binding FullName}" 
+        			FontSize="18.667" FontWeight="ExtraBold" FontFamily="Adobe Fan Heiti Std B"
+    			Width="Auto"/>
+        	</StackPanel>
+    		<Button x:Name="logout" Content="Log Out"
+    			Width="100" Margin="0"
+    			Command="{Binding LogoutCommand}" 
+                    HorizontalAlignment="Right" 
+                    Grid.Column="1" 
+                    Background="#00F7F7F7" 
+                    BorderBrush="#00CCCCC9" 
+                    FontSize="16" 
+                    FontFamily="Arial Black"/>
+    	</Grid>
+        <WrapPanel x:Name="MainContentWrapPanel" Orientation="Horizontal" 
+                   HorizontalAlignment="Center" Grid.Column="1" Margin="60,0" 
+                   Grid.Row="2">
+					
+        	<Button x:Name ="invent" 
+        		Style="{DynamicResource MetroTileStyle}"
+        		Command="{Binding InventoryDashboardCommand}"
+        		Height="120" Width="120"
+        		Margin="20 20 20 20"
+        		BorderBrush="#FFCA5502">
+        		<Button.Effect>
+        			<DropShadowEffect BlurRadius="15"/>
+        		</Button.Effect>
+        		<TextBlock Text="Inventory Management" TextWrapping="Wrap" 
+        			FontSize="15" TextAlignment="Center" 
+        			FontFamily="Arial" FontWeight="DemiBold"/>
+        	</Button> 
+
+        	<Button x:Name ="reports" 
+        		Style="{DynamicResource MetroTileStyle}"
+        		Command=""
+        		Height="120" Width="120"
+        		Margin="20 20 20 20"
+        		BorderBrush="#FFCA5502">
+        		<Button.Effect>
+        			<DropShadowEffect BlurRadius="15"/>
+        		</Button.Effect>
+        		<TextBlock Text="Reports" TextWrapping="Wrap" 
+        			FontSize="15" TextAlignment="Center" 
+        			FontFamily="Arial" FontWeight="DemiBold"/>
+        	</Button> 
+
+        	<Button x:Name ="pos" 
+        		Style="{DynamicResource MetroTileStyle}"
+        		Command=""
+        		Height="120" Width="120"
+        		Margin="20 20 20 20"
+        		BorderBrush="#FFCA5502">
+        		<Button.Effect>
+        			<DropShadowEffect BlurRadius="15"/>
+        		</Button.Effect>
+        		<TextBlock Text="POS" TextWrapping="Wrap" 
+        			FontSize="15" TextAlignment="Center" 
+        			FontFamily="Arial" FontWeight="DemiBold"/>
+        	</Button> 
+
+        	<Button x:Name ="admin" 
+        		Style="{DynamicResource MetroTileStyle}"
+        		Command=""
+        		Height="120" Width="120"
+        		Margin="20 20 20 20"
+        		BorderBrush="#FFCA5502">
+        		<Button.Effect>
+        			<DropShadowEffect BlurRadius="15"/>
+        		</Button.Effect>
+        		<TextBlock Text="Admin Panel" TextWrapping="Wrap" 
+        			FontSize="15" TextAlignment="Center" 
+        			FontFamily="Arial" FontWeight="DemiBold"/>
+        	</Button>
+					
+        	<Button x:Name ="empManagement" 
+        		Style="{DynamicResource MetroTileStyle}"
+        		Command=""
+        		Height="120" Width="120"
+        		Margin="20 20 20 20"
+        		BorderBrush="#FFCA5502">
+        		<Button.Effect>
+        			<DropShadowEffect BlurRadius="15"/>
+        		</Button.Effect>
+        		<TextBlock Text="Employee Management" TextWrapping="Wrap" 
+        			FontSize="15" TextAlignment="Center" 
+        			FontFamily="Arial" FontWeight="DemiBold"/>
+        	</Button>    
+					
+        	<Button x:Name ="scScales" 
+        		Style="{DynamicResource MetroTileStyle}"
+        		Command=""
+        		Height="120" Width="120"
+        		Margin="20 20 20 20"
+        		BorderBrush="#FFCA5502">
+        		<Button.Effect>
+        			<DropShadowEffect BlurRadius="15"/>
+        		</Button.Effect>
+        		<TextBlock Text="My Space" TextWrapping="Wrap" 
+        			FontSize="15" TextAlignment="Center" 
+        			FontFamily="Arial" FontWeight="DemiBold"/>
+        	</Button>
+        </WrapPanel>
+                    <TextBox controls:TextBoxHelper.Watermark="Search"
+                     controls:TextBoxHelper.ClearTextButton="True"
+                        Grid.Row="1" Grid.Column="1"
+						Name="SearchTextBox"
+                        Height="36"
+                        FontSize="18"
+						HorizontalAlignment="Center"
+						VerticalAlignment="Bottom" 
+						VerticalContentAlignment="Center"
+                        HorizontalContentAlignment="Center"
+						Margin="0,0,-105,0" Width="285">
+                <TextBox.Style>
+                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MetroTextBox}" >
+                        <Setter Property="Foreground" Value="{DynamicResource MainForeground}"/>
+                        <Setter Property="BorderBrush" Value="{DynamicResource MainBorderColor}"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="controls:TextBoxHelper.ClearTextButton" Value="True"/>
+                        <Setter Property="Padding" Value="0,1,0,0" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="Orange"/>
+                                <Setter Property="controls:TextBoxHelper.ClearTextButton" Value="True"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+        </TextBox>
     </Grid>
 </UserControl>

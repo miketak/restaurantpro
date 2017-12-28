@@ -1,10 +1,10 @@
-﻿<Window
+﻿<controls:MetroWindow
 		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:local="clr-namespace:RestaurantPro"
-		xmlns:login="clr-namespace:RestaurantPro.Login"
+        xmlns:login="clr-namespace:RestaurantPro.Login"
 		xmlns:home="clr-namespace:RestaurantPro.HomeDashboard"
 		xmlns:inventdash="clr-namespace:RestaurantPro.InventoryFeatures"
 		xmlns:workcyclelist="clr-namespace:RestaurantPro.InventoryFeatures.WorkCycles"
@@ -17,7 +17,8 @@
 		Background="#fff"
 		WindowStartupLocation="CenterScreen" 
 		WindowState="Maximized"
-		ResizeMode="CanResizeWithGrip" 
+		ResizeMode="CanResizeWithGrip"
+        BorderThickness="0"
 		Cursor="Arrow">
 
 	<!--Data Context and Triggers-->
@@ -51,7 +52,7 @@
 	</Window.Resources>
 	<!--End of Window Reousrces-->
 	
-	<Grid Background="DimGray">
+	<Grid Background="{DynamicResource MainBackground}">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="30"/>
@@ -66,15 +67,15 @@
 		<!--SC Signature-->
 		<StackPanel Grid.Row="1" 
 			Orientation="Horizontal"
-			HorizontalAlignment="Right">
+			HorizontalAlignment="Center">
 			<Label Content="Stable Corps. All Copyrights Reserved 2017"
-				Foreground="White" 
-				FontFamily="Garamond"
-				HorizontalAlignment="Right"
-				VerticalAlignment="Top"
+				Foreground="{DynamicResource MainForeground}" 
+				FontFamily="Adobe Caslon Pro Bold"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Bottom"
 				Margin="0 0 10 0"
-				FontSize="12" Width="213"/>
+				FontSize="10.667"/>
 		</StackPanel>
 		<!--End of SC Signature-->	
 	</Grid>
-</Window>
+</controls:MetroWindow>
