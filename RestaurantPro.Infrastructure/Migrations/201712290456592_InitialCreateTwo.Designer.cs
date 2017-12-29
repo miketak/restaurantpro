@@ -7,13 +7,13 @@ namespace RestaurantPro.Infrastructure.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class WorkCycleTableCreation : IMigrationMetadata
+    public sealed partial class InitialCreateTwo : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(WorkCycleTableCreation));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreateTwo));
         
         string IMigrationMetadata.Id
         {
-            get { return "201712190437303_WorkCycleTableCreation"; }
+            get { return "201712290456592_InitialCreateTwo"; }
         }
         
         string IMigrationMetadata.Source

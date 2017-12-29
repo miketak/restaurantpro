@@ -58,93 +58,9 @@
     <Compile Include="EntityConfigurations\UserConfiguration.cs" />
     <Compile Include="EntityConfigurations\WorkCycleConfigurations.cs" />
     <Compile Include="EntityConfigurations\WorkCycleLinesConfiguration.cs" />
-    <Compile Include="Migrations\201712180324012_InitialCreate.cs" />
-    <Compile Include="Migrations\201712180324012_InitialCreate.Designer.cs">
-      <DependentUpon>201712180324012_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712190437303_WorkCycleTableCreation.cs" />
-    <Compile Include="Migrations\201712190437303_WorkCycleTableCreation.Designer.cs">
-      <DependentUpon>201712190437303_WorkCycleTableCreation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712190524555_AlterWorkingCycleForeignKeytoUserId.cs" />
-    <Compile Include="Migrations\201712190524555_AlterWorkingCycleForeignKeytoUserId.Designer.cs">
-      <DependentUpon>201712190524555_AlterWorkingCycleForeignKeytoUserId.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712190628218_MakeWorkCycleNameUniqueWithLengthOf24.cs" />
-    <Compile Include="Migrations\201712190628218_MakeWorkCycleNameUniqueWithLengthOf24.Designer.cs">
-      <DependentUpon>201712190628218_MakeWorkCycleNameUniqueWithLengthOf24.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712211301382_AddSuppliersTable.cs" />
-    <Compile Include="Migrations\201712211301382_AddSuppliersTable.Designer.cs">
-      <DependentUpon>201712211301382_AddSuppliersTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712211335448_AddActiveBitToSupplier.cs" />
-    <Compile Include="Migrations\201712211335448_AddActiveBitToSupplier.Designer.cs">
-      <DependentUpon>201712211335448_AddActiveBitToSupplier.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712211356070_AddRawMaterialsAndRawMaterialsCategoriesTables.cs" />
-    <Compile Include="Migrations\201712211356070_AddRawMaterialsAndRawMaterialsCategoriesTables.Designer.cs">
-      <DependentUpon>201712211356070_AddRawMaterialsAndRawMaterialsCategoriesTables.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712211414287_AddPoStatusTable.cs" />
-    <Compile Include="Migrations\201712211414287_AddPoStatusTable.Designer.cs">
-      <DependentUpon>201712211414287_AddPoStatusTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712211428256_RemoveMeasureFromRawMaterial.cs" />
-    <Compile Include="Migrations\201712211428256_RemoveMeasureFromRawMaterial.Designer.cs">
-      <DependentUpon>201712211428256_RemoveMeasureFromRawMaterial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712211438304_AddRawMaterialCatalogTable.cs" />
-    <Compile Include="Migrations\201712211438304_AddRawMaterialCatalogTable.Designer.cs">
-      <DependentUpon>201712211438304_AddRawMaterialCatalogTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712211849395_AddPurchaseOrderTable.cs" />
-    <Compile Include="Migrations\201712211849395_AddPurchaseOrderTable.Designer.cs">
-      <DependentUpon>201712211849395_AddPurchaseOrderTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712211856175_ChangeRawMaterialCatalogsToRawMaterialCatalog.cs" />
-    <Compile Include="Migrations\201712211856175_ChangeRawMaterialCatalogsToRawMaterialCatalog.Designer.cs">
-      <DependentUpon>201712211856175_ChangeRawMaterialCatalogsToRawMaterialCatalog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712211937450_AddWorkCycleFKToPurchaseOrdersTable.cs" />
-    <Compile Include="Migrations\201712211937450_AddWorkCycleFKToPurchaseOrdersTable.Designer.cs">
-      <DependentUpon>201712211937450_AddWorkCycleFKToPurchaseOrdersTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712212159397_PurchaseOrderLinesTable.cs" />
-    <Compile Include="Migrations\201712212159397_PurchaseOrderLinesTable.Designer.cs">
-      <DependentUpon>201712212159397_PurchaseOrderLinesTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712212221278_AddWorkCycleLinesTable.cs" />
-    <Compile Include="Migrations\201712212221278_AddWorkCycleLinesTable.Designer.cs">
-      <DependentUpon>201712212221278_AddWorkCycleLinesTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712221248354_AddFieldsToWorkCycleAndAddLocationsTable.cs" />
-    <Compile Include="Migrations\201712221248354_AddFieldsToWorkCycleAndAddLocationsTable.Designer.cs">
-      <DependentUpon>201712221248354_AddFieldsToWorkCycleAndAddLocationsTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712221647140_MakePONumberInPurchaseOrdersUnique.cs" />
-    <Compile Include="Migrations\201712221647140_MakePONumberInPurchaseOrdersUnique.Designer.cs">
-      <DependentUpon>201712221647140_MakePONumberInPurchaseOrdersUnique.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712231033054_AddFieldsToWorkCycleLines.cs" />
-    <Compile Include="Migrations\201712231033054_AddFieldsToWorkCycleLines.Designer.cs">
-      <DependentUpon>201712231033054_AddFieldsToWorkCycleLines.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712231037159_AddUnitPriceToPurchaseOrderLines.cs" />
-    <Compile Include="Migrations\201712231037159_AddUnitPriceToPurchaseOrderLines.Designer.cs">
-      <DependentUpon>201712231037159_AddUnitPriceToPurchaseOrderLines.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712231444092_MakeMoveDateNullableInWorkCycleLinesTable.cs" />
-    <Compile Include="Migrations\201712231444092_MakeMoveDateNullableInWorkCycleLinesTable.Designer.cs">
-      <DependentUpon>201712231444092_MakeMoveDateNullableInWorkCycleLinesTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712231455326_MakeActualAndCurrentQuantityNullable.cs" />
-    <Compile Include="Migrations\201712231455326_MakeActualAndCurrentQuantityNullable.Designer.cs">
-      <DependentUpon>201712231455326_MakeActualAndCurrentQuantityNullable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712231457538_CorrectMoveDataNullableError.cs" />
-    <Compile Include="Migrations\201712231457538_CorrectMoveDataNullableError.Designer.cs">
-      <DependentUpon>201712231457538_CorrectMoveDataNullableError.cs</DependentUpon>
+    <Compile Include="Migrations\201712290456592_InitialCreateTwo.cs" />
+    <Compile Include="Migrations\201712290456592_InitialCreateTwo.Designer.cs">
+      <DependentUpon>201712290456592_InitialCreateTwo.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -170,71 +86,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201712180324012_InitialCreate.resx">
-      <DependentUpon>201712180324012_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712190437303_WorkCycleTableCreation.resx">
-      <DependentUpon>201712190437303_WorkCycleTableCreation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712190524555_AlterWorkingCycleForeignKeytoUserId.resx">
-      <DependentUpon>201712190524555_AlterWorkingCycleForeignKeytoUserId.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712190628218_MakeWorkCycleNameUniqueWithLengthOf24.resx">
-      <DependentUpon>201712190628218_MakeWorkCycleNameUniqueWithLengthOf24.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712211301382_AddSuppliersTable.resx">
-      <DependentUpon>201712211301382_AddSuppliersTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712211335448_AddActiveBitToSupplier.resx">
-      <DependentUpon>201712211335448_AddActiveBitToSupplier.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712211356070_AddRawMaterialsAndRawMaterialsCategoriesTables.resx">
-      <DependentUpon>201712211356070_AddRawMaterialsAndRawMaterialsCategoriesTables.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712211414287_AddPoStatusTable.resx">
-      <DependentUpon>201712211414287_AddPoStatusTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712211428256_RemoveMeasureFromRawMaterial.resx">
-      <DependentUpon>201712211428256_RemoveMeasureFromRawMaterial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712211438304_AddRawMaterialCatalogTable.resx">
-      <DependentUpon>201712211438304_AddRawMaterialCatalogTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712211849395_AddPurchaseOrderTable.resx">
-      <DependentUpon>201712211849395_AddPurchaseOrderTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712211856175_ChangeRawMaterialCatalogsToRawMaterialCatalog.resx">
-      <DependentUpon>201712211856175_ChangeRawMaterialCatalogsToRawMaterialCatalog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712211937450_AddWorkCycleFKToPurchaseOrdersTable.resx">
-      <DependentUpon>201712211937450_AddWorkCycleFKToPurchaseOrdersTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712212159397_PurchaseOrderLinesTable.resx">
-      <DependentUpon>201712212159397_PurchaseOrderLinesTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712212221278_AddWorkCycleLinesTable.resx">
-      <DependentUpon>201712212221278_AddWorkCycleLinesTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712221248354_AddFieldsToWorkCycleAndAddLocationsTable.resx">
-      <DependentUpon>201712221248354_AddFieldsToWorkCycleAndAddLocationsTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712221647140_MakePONumberInPurchaseOrdersUnique.resx">
-      <DependentUpon>201712221647140_MakePONumberInPurchaseOrdersUnique.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712231033054_AddFieldsToWorkCycleLines.resx">
-      <DependentUpon>201712231033054_AddFieldsToWorkCycleLines.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712231037159_AddUnitPriceToPurchaseOrderLines.resx">
-      <DependentUpon>201712231037159_AddUnitPriceToPurchaseOrderLines.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712231444092_MakeMoveDateNullableInWorkCycleLinesTable.resx">
-      <DependentUpon>201712231444092_MakeMoveDateNullableInWorkCycleLinesTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712231455326_MakeActualAndCurrentQuantityNullable.resx">
-      <DependentUpon>201712231455326_MakeActualAndCurrentQuantityNullable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712231457538_CorrectMoveDataNullableError.resx">
-      <DependentUpon>201712231457538_CorrectMoveDataNullableError.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201712290456592_InitialCreateTwo.resx">
+      <DependentUpon>201712290456592_InitialCreateTwo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
