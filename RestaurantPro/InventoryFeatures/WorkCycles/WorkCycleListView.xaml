@@ -5,6 +5,7 @@
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 			 xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+             xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
 			 mc:Ignorable="d" 
 			 d:DesignHeight="800" d:DesignWidth="1000">
 
@@ -23,73 +24,75 @@
 
 		<Grid.RowDefinitions>
 			<RowDefinition Height="40"/>
-			<RowDefinition Height="20"/>
-			<RowDefinition Height="40"/>
-			<RowDefinition Height="* "/>
-			<RowDefinition Height="10"/>
 			<RowDefinition Height="40"/>
 			<RowDefinition Height="40"/>
+			<RowDefinition Height="15"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="40"/>
+			<RowDefinition Height="40"/>
+			<RowDefinition/>
 		</Grid.RowDefinitions>
 
 		<!--Top Panel Controls-->
-		<Grid Grid.Column="1">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="200"/>
-				<ColumnDefinition Width="*"/>
-			</Grid.ColumnDefinitions>
-
-			<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="30"
-						VerticalAlignment="Bottom">
-				<Button Name="backToInventory" Content="Back To Inventory"
-						Width="120"
-						Background="Green"
-						Command="{Binding BackToInventoryCommand}"/>
-			</StackPanel>
-
-			<StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
-						VerticalAlignment="Bottom" Height="30"
-						Grid.Column="1">
-				<TextBlock VerticalAlignment="Center" 
-						   Text="Current User: " 
-						   FontSize="15" FontWeight="ExtraBold" FontFamily="Arial"
-						   Margin="0 0 10 0"/>
-				<TextBlock VerticalAlignment="Center"
-						   DataContext="{Binding CurrentUser}"
-						   Text="{Binding FullName}" 
-						   FontSize="15" FontWeight="ExtraBold" FontFamily="Arial"
-						   Margin="0 0 20 0"/>
-				<Button Name="logout" Content="Log Out"
-						Width="100" Margin="10 0 10 0"
-						Background="LightCoral"
-						Command="{Binding LogoutCommand}"/>
-			</StackPanel>
-
-		</Grid>
 		<!--End of Top Panel Controls-->
 
 		<!--Working Cycle Search Control-->
-		<StackPanel Orientation="Horizontal"
-					Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right"
-					Height="30">
+		<Grid x:Name="StandardGrid" Margin="0" Grid.ColumnSpan="3" Background="White">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="40"/>
+				<ColumnDefinition Width="120"/>
+				<ColumnDefinition/>
+				<ColumnDefinition Width="120"/>
+				<ColumnDefinition Width="40"/>
+			</Grid.ColumnDefinitions>
+			<TextBlock x:Name="currentUser"
+				DataContext="{Binding CurrentUser}"
+				Text="{Binding FullName}" 
+				FontSize="16" FontWeight="ExtraBold" FontFamily="Adobe Caslon Pro Bold"
+				Margin="0" Grid.Column="1" VerticalAlignment="Center"/>
+			<Button x:Name="logout" Content="Log Out"
+				Command="{Binding LogoutCommand}" Grid.Column="3" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" FontSize="14.667" Margin="0"/>
 
-			<TextBox Name="txtSearch" Height="25" Width="200" 
-					 HorizontalAlignment="Right" VerticalAlignment="Center" 
-					 Foreground="Gray" Text="Search"/>
-			<Button Name="ClearSearch" Content="X"
-					Width="40" Margin="10 0 10 0"
-					Background="Yellow"
-					Command="{Binding ClearSearchCommand}"/>
 
-		</StackPanel>
-		<!--End of Work Cycle Search Control-->
+		</Grid>
+		<TextBox controls:TextBoxHelper.Watermark="Search"
+			controls:TextBoxHelper.ClearTextButton="True"
+			Grid.Row="2" Grid.Column="1"
+			x:Name="SearchTextBox"
+			Height="36"
+			FontSize="18"
+			HorizontalAlignment="Right"
+			VerticalAlignment="Center" 
+			VerticalContentAlignment="Center"
+			HorizontalContentAlignment="Center"
+			Margin="0,2" Width="285">
+			<TextBox.Style>
+				<Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MetroTextBox}" >
+					<Setter Property="Foreground" Value="{DynamicResource MainForeground}"/>
+					<Setter Property="BorderBrush" Value="{DynamicResource MainBorderColor}"/>
+					<Setter Property="BorderThickness" Value="1"/>
+					<Setter Property="controls:TextBoxHelper.ClearTextButton" Value="True"/>
+					<Setter Property="Padding" Value="0,1,0,0" />
+					<Style.Triggers>
+						<Trigger Property="IsMouseOver" Value="True">
+							<Setter Property="Foreground" Value="Orange"/>
+							<Setter Property="controls:TextBoxHelper.ClearTextButton" Value="True"/>
+						</Trigger>
+					</Style.Triggers>
+				</Style>
+			</TextBox.Style>
+		</TextBox>
+
+		<!--Working Cycle Search Control-->
 
 		<!--Working Cycle Data Grid-->
-		<DataGrid Name="WorkingCycleGrid"
+		<DataGrid x:Name="WorkingCycleDataGrid"
 				  ItemsSource="{Binding WorkCycles}"
 				  Grid.Column="1"
 				  AutoGenerateColumns ="False"
+                  Style="{StaticResource AzureDataGrid}"
 				  CanUserAddRows="False"
-				  Grid.Row="3">
+				  Grid.Row="4" Background="{x:Null}" ColumnHeaderStyle="{DynamicResource DataGridStyle}" RowBackground="#00000000">
 			<DataGrid.Columns>
 				<DataGridTextColumn Binding="{Binding Name}" Header="Cycle Name" Width="*"/>
 				<DataGridTextColumn Binding="{Binding DateBeginForView}" Header="Beginning Date" Width="*"/>
@@ -99,12 +102,13 @@
 
 
 				<!--Edit Work Cycle Template-->
-				<DataGridTemplateColumn Width="Auto">
+				<DataGridTemplateColumn Width="80" MinWidth="80" MaxWidth="80">
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
 							<Button Content="Edit Cycle"
-									Command="{Binding DataContext.EditWorkCycleCommand, 
-								RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+									Command="{Binding DataContext.EditWorkCycleCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+									Style="{StaticResource AccentedSquareButtonStyle}"
+									Foreground="{DynamicResource MainForeground}" Background="Transparent" BorderBrush="Orange"
 									CommandParameter="{Binding}"
 									Margin="5"/>
 						</DataTemplate>
@@ -113,12 +117,13 @@
 				<!--End of Edit Work Cycle Template-->
 
 				<!--Deactivate Customer Template-->
-				<DataGridTemplateColumn Width="Auto">
+				<DataGridTemplateColumn Width="80" MinWidth="80" MaxWidth="80">
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
 							<Button Content="Deactivate"
-									Command="{Binding DataContext.DeactivateWorkCycleCommand,
-								RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+									Style="{StaticResource AccentedSquareButtonStyle}"
+									Foreground="{DynamicResource MainForeground}" Background="Transparent" BorderBrush="Orange"
+									Command="{Binding DataContext.DeactivateWorkCycleCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
 									CommandParameter="{Binding}"
 									Margin="5"/>
 						</DataTemplate>
@@ -128,26 +133,44 @@
 
 			</DataGrid.Columns>
 		</DataGrid>
-		<!--End of Working Cycle Data Grid-->
 
 		<!--Working Cycle Controls-->
-		<Grid x:Name="WorkCycleControls"  Grid.Row="5" Grid.Column="1">
+		<Grid x:Name="WorkCycleControls"  Grid.Row="6" Grid.Column="1">
 			<StackPanel Orientation="Horizontal"
 						Height="30" HorizontalAlignment="Right">
-
-				<Button Name="DeleteWorkingCycle" Content="Delete"
-						Width="100" Margin="10 0 10 0"
-						Background="Red"
-						Command="{Binding DeleteWorkingCycleCommand}"
-						CommandParameter="{Binding ElementName=WorkingCycleGrid, Path=SelectedItem}"/>
-
-				<Button Name="AddWorkingCycle" Content="Add"
-						Width="100" Margin="10 0 10 0"
-						Background="LightBlue"
-						Command="{Binding AddWorkingCycleCommand}"/>
-
+				<Button x:Name="DeleteWc"
+					Style="{StaticResource AccentedSquareButtonStyle}" 
+					Command="{Binding DeleteWorkingCycleCommand}"
+					CommandParameter="{Binding SelectedItem, ElementName=WorkingCycleDataGrid}"
+					Content="Delete"
+					IsDefault="True" 
+					Foreground="{DynamicResource MainForeground}" Background="White" BorderBrush="Orange" HorizontalAlignment="Center" 
+					VerticalAlignment="Bottom" Width="120" Height="30" Margin="0,0,10,0"/>
+				<Button x:Name="AddWc"
+					Style="{StaticResource AccentedSquareButtonStyle}" 
+					Command="{Binding AddWorkingCycleCommand}"
+					Content="ADD"
+					IsDefault="True" 
+					Foreground="{DynamicResource MainForeground}" Background="White" BorderBrush="Orange" HorizontalAlignment="Center" 
+					VerticalAlignment="Bottom" Width="120" Height="30" Margin="0"/>
 			</StackPanel>
 		</Grid>
+		<StackPanel x:Name="NavigationPanel" Grid.Column="1" Margin="0" Orientation="Horizontal" Grid.Row="1">
+			<Button x:Name="BackHome" Content="Home /"
+				Command="{Binding BackHomeCommand}" Margin="0,5" 
+				FontSize="13.333" FontFamily="Adobe Caslon Pro Bold" 
+				VerticalAlignment="Center" HorizontalAlignment="Left" 
+				Background="#00F7F7F7" BorderBrush="#00F7F7F7" Width="68"/>
+			<Button x:Name="Inventory" Content="Inventory /"
+				Command="{Binding BackToInventoryCommand}" Margin="0" 
+				FontSize="13.333" FontFamily="Adobe Caslon Pro Bold" 
+				VerticalAlignment="Center" HorizontalAlignment="Left" 
+				Background="#00F7F7F7" BorderBrush="#00F7F7F7"/>
+			<Button x:Name="WorkingCycles" Content="Work Cycles" Margin="0,5" 
+				FontSize="13.333" FontFamily="Adobe Caslon Pro Bold" 
+				VerticalAlignment="Center" HorizontalAlignment="Left" 
+				Background="#00F7F7F7" BorderBrush="#00F7F7F7"/>
+		</StackPanel>
 		<!--End of Working Cycle Controls-->
 	</Grid>
 </UserControl>
