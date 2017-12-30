@@ -171,6 +171,7 @@
     <Compile Include="Models\RestproMapper.cs" />
     <Compile Include="Models\WpfUser.cs" />
     <Compile Include="Models\WpfWorkCycle.cs" />
+    <Compile Include="Models\WpfWorkCycleLines.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\Annotations1.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

@@ -21,7 +21,9 @@ namespace RestaurantPro.Infrastructure.Migrations
             var users = new List<User>
             {
                 new User{ Username = "rkpadi", FirstName = "Richard", LastName = "Padi", Email = "rkpadi@yahoo.com", Password = "password"},
-                new User{ Username = "linda", FirstName = "Linda", LastName = "Ocloo", Email = "linda.ocloo@yahoo.com", Password = "password"}
+                new User{ Username = "linda", FirstName = "Linda", LastName = "Ocloo", Email = "linda.ocloo@yahoo.com", Password = "password"},
+                new User{ Username = "roman", FirstName = "Roman", LastName = "Boehm", Email = "rboehm@yahoo.com", Password = "password"},
+                new User{ Username = "betty", FirstName = "Betty", LastName = "Afornu", Email = "bafornu@yahoo.com", Password = "password"}
             };
             users.ForEach(u => context.Users.AddOrUpdate(p => p.LastName, u));
             context.SaveChanges();

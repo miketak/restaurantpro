@@ -58,6 +58,47 @@ namespace RestaurantPro.Models
 
             return iMapper.Map<WorkCycle, WpfWorkCycle>(source);
         }
+
+        /// <summary>
+        /// Maps WorkcycleLines to WpfWorkCycleLines
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static List<WpfWorkCycleLines> MapWorkCycleLinesToWpfWorkCycleList(List<WorkCycleLines> source)
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<WorkCycleLines, WpfWorkCycleLines>()
+                    .ForMember(dest => dest.RawMaterial, opt => opt.Ignore())
+                    .ForMember(dest => dest.TotalPrice, opt => opt.Ignore())
+                    .ForMember(dest => dest.Supplier, opt => opt.Ignore());
+            });
+
+            IMapper iMapper = config.CreateMapper();
+
+            var target = iMapper.Map<List<WorkCycleLines>, List<WpfWorkCycleLines>>(source);
+
+            return target;
+        }
+
+        /// <summary>
+        /// Maps WpfWorkcycleLines to WorkCycleLines
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static List<WorkCycleLines> MapWpfWorkCycleLinesToWorkCycleLinesList(List<WpfWorkCycleLines> source)
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<WpfWorkCycleLines, WorkCycleLines>();
+            });
+
+            IMapper iMapper = config.CreateMapper();
+
+            var target = iMapper.Map<List<WpfWorkCycleLines>, List<WorkCycleLines>>(source);
+
+            return target;
+        }
         
     }
 }

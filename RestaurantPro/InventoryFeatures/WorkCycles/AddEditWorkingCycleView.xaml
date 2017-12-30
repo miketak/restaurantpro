@@ -190,23 +190,27 @@
                      Grid.Column="4" Grid.ColumnSpan="2" />
             
         </Grid>
+        
+        <!--Datagrid-->
         <DataGrid x:Name="WorkingCycleDataGrid"
-        	ItemsSource="{Binding WorkCycles}"
+                  MinHeight="50"
+        	ItemsSource="{Binding WorkCycle.Lines, Mode=TwoWay}"
         	Grid.Column="1"
         	AutoGenerateColumns ="False"
         	Style="{StaticResource AzureDataGrid}"
-        	CanUserAddRows="False"
+        	CanUserAddRows="True"
         	Grid.Row="4" Background="{x:Null}" ColumnHeaderStyle="{DynamicResource DataGridStyle}" RowBackground="#00000000" Margin="0">
         	<DataGrid.Columns>
-        		<DataGridTextColumn Binding="{Binding Name}" Header="Raw Material" Width="*"/>
-        		<DataGridTextColumn Binding="{Binding FullName}" Header="Supplier" Width="*"/>
-        		<DataGridTextColumn Binding="{Binding DateBeginForView}" Header="Unit Price" Width="*"/>
-        		<DataGridTextColumn Binding="{Binding DateEndForView}" Header="Planned Quantity" Width="*"/>
-        		<DataGridTextColumn Binding="{Binding ActiveForView}" Header="Total Price" Width="*"/>
-        		<DataGridTemplateColumn Width="20" MinWidth="20" MaxWidth="20">
+        		<DataGridTextColumn Binding="{Binding RawMaterial}" Header="Raw Material" Width="*"/>
+        		<DataGridTextColumn Binding="{Binding Supplier}" Header="Supplier" Width="*"/>
+                <DataGridTextColumn Binding="{Binding UnitPrice, StringFormat='{}{0:c}', UpdateSourceTrigger=PropertyChanged}" Header="Unit Price" Width="*"/>
+                <DataGridTextColumn Binding="{Binding PlannedQuantity, StringFormat='{}{0:f}', UpdateSourceTrigger=PropertyChanged}" Header="Planned Quantity" Width="*"/>
+        		<DataGridTextColumn Binding="{Binding TotalPrice, StringFormat='{}{0:c}', UpdateSourceTrigger=PropertyChanged}" Header="Total Price" Width="*"/>
+        		<DataGridTemplateColumn Width="80" MinWidth="80" MaxWidth="80">
         			<DataGridTemplateColumn.CellTemplate>
         				<DataTemplate>
         					<Button Content="X"
+                                    Width="50"
         						Style="{StaticResource AccentedSquareButtonStyle}"
         						Foreground="{DynamicResource MainForeground}" Background="Transparent" BorderBrush="Orange"
         						Command="{Binding DataContext.DeleteLine, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"

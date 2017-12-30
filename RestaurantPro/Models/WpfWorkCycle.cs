@@ -1,11 +1,16 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using RestaurantPro.Core;
 using RestaurantPro.Core.Domain;
+using RestaurantPro.Infrastructure;
 
 namespace RestaurantPro.Models
 {
     public class WpfWorkCycle : ValidatableBindableBase
     {
+
         public WpfWorkCycle()
         {
             DateBegin = DateTime.Today;
@@ -57,6 +62,12 @@ namespace RestaurantPro.Models
             set { SetProperty(ref _userId, value); }
         }
 
+        private List<WpfWorkCycleLines> _workCycleLines;
+        public List<WpfWorkCycleLines> Lines
+        {
+            get { return _workCycleLines; }
+            set {  SetProperty(ref _workCycleLines, value);}
+        }
 
         #region Fields for Working Cycle Datagrid View 
 

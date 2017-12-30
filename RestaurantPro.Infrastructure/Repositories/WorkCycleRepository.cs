@@ -85,7 +85,7 @@ namespace RestaurantPro.Infrastructure.Repositories
         /// <returns></returns>
         public WorkCycle GetWorkCycleByWorkCycleName(string workCycleName, bool isActive)
         {
-            return _context.WorkCycles
+            return  _context.WorkCycles
                 .Include(po => po.WorkCycleLines)
                 .Where(c => c.Active == isActive)
                 .SingleOrDefault(c => c.Name == workCycleName);

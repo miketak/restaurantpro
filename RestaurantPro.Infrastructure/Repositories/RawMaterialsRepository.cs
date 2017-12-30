@@ -6,8 +6,10 @@ namespace RestaurantPro.Infrastructure.Repositories
 {
     public class RawMaterialsRepository : Repository<RawMaterial>, IRawMaterialsRepository
     {
-        public RawMaterialsRepository(DbContext context) : base(context)
+        public RawMaterialsRepository(DbContext context) 
+            : base(context)
         {
         }
+
     }
 }

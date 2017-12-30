@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Data.Entity;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
-using RestaurantPro.Core;
 using RestaurantPro.Core.Domain;
 using RestaurantPro.Core.Repositories;
 using RestaurantPro.Core.Services;
-using RestaurantPro.Infrastructure.Repositories;
 
 namespace RestaurantPro.Infrastructure.Services
 {
