@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using RestaurantPro.Core;
 using RestaurantPro.Core.Domain;
 using RestaurantPro.Infrastructure;
@@ -17,11 +18,9 @@ namespace RestaurantPro.Models
             DateEnd = DateTime.Today;
         }
 
-        
         public int Id { get; set; }
 
         private string _name;
-
         [Required]
         public string Name
         {
@@ -97,6 +96,46 @@ namespace RestaurantPro.Models
 
         #endregion
 
-       
+        #region Subtotal Section Fields
+
+        private double _subTotal;
+        public double SubTotal
+        {
+            get
+            {
+                CalculateSubTotal();
+                return _subTotal;
+            }
+            set { SetProperty(ref _subTotal, value); }
+        }
+
+        public double Tax{ get { return 0.175; }  } //to be abstracted to db later
+
+        private double _total;
+        public double Total
+        {
+            get
+            {
+                CalculateTotal();
+                return _total;
+            }
+            set { SetProperty(ref _total, value); }
+        }
+
+        #endregion
+
+        #region Private Calculation Methods
+
+        public void CalculateSubTotal()
+        {
+            SubTotal = Lines.Sum(a => a.GetLineTotal());
+        }
+
+        public void CalculateTotal()
+        {
+            Total = SubTotal + SubTotal * Tax;
+        }
+
+        #endregion
     }
 }

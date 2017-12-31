@@ -37,11 +37,14 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="20"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="10"/>
             <RowDefinition Height="40"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         
-        <Grid x:Name="StandardGrid" Margin="0" Grid.ColumnSpan="5" Background="White">
+        <!--Standard Grid-->
+        <Grid x:Name="StandardGrid" Margin="0" Grid.ColumnSpan="3" Background="White">
         	<Grid.ColumnDefinitions>
         		<ColumnDefinition Width="40"/>
         		<ColumnDefinition Width="120"/>
@@ -59,7 +62,7 @@
 
 
         </Grid>
-        <StackPanel x:Name="NavigationPanel" Margin="0,0,40,1" Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="4" Grid.Column="1">
+        <StackPanel x:Name="NavigationPanel" Margin="0,0,0,1" Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
         	<Button x:Name="BackHome" Content="Home /"
         		Command="{Binding BackHomeCommand}" Margin="0,5" 
         		FontSize="13.333" FontFamily="Adobe Caslon Pro Bold" 
@@ -205,7 +208,7 @@
         		<DataGridTextColumn Binding="{Binding Supplier}" Header="Supplier" Width="*"/>
                 <DataGridTextColumn Binding="{Binding UnitPrice, StringFormat='{}{0:c}', UpdateSourceTrigger=PropertyChanged}" Header="Unit Price" Width="*"/>
                 <DataGridTextColumn Binding="{Binding PlannedQuantity, StringFormat='{}{0:f}', UpdateSourceTrigger=PropertyChanged}" Header="Planned Quantity" Width="*"/>
-        		<DataGridTextColumn Binding="{Binding TotalPrice, StringFormat='{}{0:c}', UpdateSourceTrigger=PropertyChanged}" Header="Total Price" Width="*"/>
+        		<DataGridTextColumn Binding="{Binding TotalPrice, StringFormat='{}{0:c}', UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Total Price" Width="*"/>
         		<DataGridTemplateColumn Width="80" MinWidth="80" MaxWidth="80">
         			<DataGridTemplateColumn.CellTemplate>
         				<DataTemplate>
@@ -227,7 +230,7 @@
         <!--Add/Edit Controls-->
         <Grid x:Name="AddEditFormControls" 
             Grid.Column="1"
-              Grid.Row="5">
+              Grid.Row="7">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="180"/>
@@ -261,6 +264,53 @@
                     Width="150" Height="35"
                     Margin="0"/>
 
+        </Grid>
+        
+        
+        <!--SubTotal and Taxes-->
+        <Grid x:Name="SubTotalSection" 
+              DataContext="{Binding WorkCycle}"
+              Grid.Column="1" Margin="0" Grid.Row="5">
+        	<Grid.RowDefinitions>
+        		<RowDefinition Height="40"/>
+        		<RowDefinition Height="40"/>
+        		<RowDefinition Height="40"/>
+        	</Grid.RowDefinitions>
+        	<Grid.ColumnDefinitions>
+        		<ColumnDefinition/>
+        		<ColumnDefinition Width="120"/>
+        		<ColumnDefinition Width="120"/>
+        	</Grid.ColumnDefinitions>
+        	<Label VerticalAlignment="Center" 
+        		FontSize="16"
+        		HorizontalAlignment="Left"
+        		Content="Sub Total :" Height="29" Margin="0" Grid.Column="1" />
+        	<Label VerticalAlignment="Center" 
+        		FontSize="16"
+        		HorizontalAlignment="Left"
+        		Content="Taxes :" Height="29" Margin="0,5.5" Grid.Column="1" Grid.Row="1" />
+        	<Label VerticalAlignment="Center" 
+        		FontSize="16"
+        		HorizontalAlignment="Left"
+        		Content="Total :" Height="29" Margin="0,5.5" Grid.Column="1" Grid.Row="2" />
+        	<TextBlock x:Name="SubTotalValue"
+        		VerticalAlignment="Center"
+        		Text="{Binding SubTotal, StringFormat='{}{0:c}', ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+        		Margin="0" 
+        		Height="23" 
+        		HorizontalAlignment="Left" Width="100" Grid.Row="0" Grid.Column="2" />
+        	<TextBlock x:Name="TaxValue"
+        		VerticalAlignment="Center"
+        		Text="{Binding Tax, StringFormat='{}{0:P2}', ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+        		Margin="0,8.5"
+        		Height="23" 
+        		HorizontalAlignment="Left" Width="100" Grid.Column="2" Grid.Row="1" />
+        	<TextBlock x:Name="TotalValue"
+        		VerticalAlignment="Center"
+        		Text="{Binding Total, StringFormat='{}{0:c}', ValidatesOnNotifyDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+        		Margin="0"
+        		Height="23" 
+        		HorizontalAlignment="Left" Width="100" Grid.Column="2" Grid.Row="2" />
         </Grid>
         <!--End of Add/Edit Controls-->
             

@@ -73,13 +73,16 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
 
         #endregion
 
-        #region  Automapper
+        #region  Automapper ---move to RestPro Mapper Class
 
         private List<WpfWorkCycle> MapWorkCycleListToWpfWorkCycleList(List<WorkCycle> workCyclesEntity)
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<WorkCycle, WpfWorkCycle>();
+                cfg.CreateMap<WorkCycle, WpfWorkCycle>()
+                    .ForMember(dest => dest.SubTotal, opt => opt.Ignore())
+                    .ForMember(dest => dest.Tax, opt => opt.Ignore())
+                    .ForMember(dest => dest.Total, opt => opt.Ignore());
             });
 
             IMapper iMapper = config.CreateMapper();

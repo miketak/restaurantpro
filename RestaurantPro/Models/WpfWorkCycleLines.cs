@@ -31,7 +31,6 @@ namespace RestaurantPro.Models
         }
 
         private float _plannedQuantity;
-
         public float PlannedQuantity
         {
             get { return _plannedQuantity; }
@@ -100,6 +99,16 @@ namespace RestaurantPro.Models
         private void CalculateLineTotal()
         {
             TotalPrice = UnitPrice * PlannedQuantity;
+        }
+
+        /// <summary>
+        /// Sends line total to WpfWorkCycle Class for SubTotal Section
+        /// </summary>
+        /// <returns></returns>
+        public double GetLineTotal()
+        {
+            CalculateLineTotal();
+            return TotalPrice;
         }
 
         #endregion

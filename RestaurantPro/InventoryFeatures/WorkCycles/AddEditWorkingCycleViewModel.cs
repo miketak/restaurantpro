@@ -10,7 +10,7 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
 {
     public class AddEditWorkingCycleViewModel : BindableBase
     {
-        private bool _EditMode;
+        private bool _editMode;
         private readonly IUnitOfWork _unitOfWork;
 
         public AddEditWorkingCycleViewModel(IUnitOfWork unitOfWork)
@@ -31,8 +31,8 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
 
         public bool EditMode
         {
-            get { return _EditMode; }
-            set { SetProperty(ref _EditMode, value); }
+            get { return _editMode; }
+            set { SetProperty(ref _editMode, value); }
         }
 
         public void SetWorkingCycle(WpfWorkCycle wCycle)
@@ -41,27 +41,23 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
 
             if (EditMode)
             {
-                var linesInDb = _unitOfWork
+                var workCycleWithLines = _unitOfWork
                     .WorkCycles
-                    .GetWorkCycleByWorkCycleName(WorkCycle.Name, true)
-                    .WorkCycleLines;
+                    .GetWorkCycleByWorkCycleName(WorkCycle.Name, true);
 
-                if (linesInDb != null)
-                {
-                    WorkCycle.Lines = RestproMapper.MapWorkCycleLinesToWpfWorkCycleList(linesInDb.ToList());
-                }
-                    
+                if (workCycleWithLines != null)
+                    WorkCycle.Lines =
+                        RestproMapper.MapWorkCycleLinesToWpfWorkCycleList(workCycleWithLines.WorkCycleLines.ToList());
             }
-
             else
             {
                 WorkCycle.Lines = new List<WpfWorkCycleLines>();
-            }
+            } 
 
             if (WorkCycle != null)
                 WorkCycle.ErrorsChanged -= RaiseCanExecuteChanged;
-
             WorkCycle.ErrorsChanged += RaiseCanExecuteChanged;
+
         }
 
         private void RaiseCanExecuteChanged(object sender, DataErrorsChangedEventArgs e)
@@ -82,14 +78,11 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
         }
 
         private WpfWorkCycle _wpfWorkCycle;
-
         public WpfWorkCycle WorkCycle
         {
             get { return _wpfWorkCycle; }
             set { SetProperty(ref _wpfWorkCycle, value); }
         }
-
-        public List<WorkCycleLines> Lines;
 
         #endregion
 
@@ -133,7 +126,7 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
             WorkCycle = AppendCurrentUser(WorkCycle);
             var workCycleEntity = RestproMapper.MapWpfWorkCycleToWorkCycle(WorkCycle);
 
-            if (_EditMode)
+            if (_editMode)
             {
                 _unitOfWork.WorkCycles.UpdateWorkCycle(workCycleEntity);
             }
@@ -154,6 +147,15 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
         private bool CanSave()
         {
             return !WorkCycle.HasErrors;
+        }
+
+        #endregion
+
+        #region Event Implementations
+
+        private void UpdateSubTotalSection(object sender, EventArgs e)
+        {
+            WorkCycle.CalculateSubTotal();
         }
 
         #endregion
