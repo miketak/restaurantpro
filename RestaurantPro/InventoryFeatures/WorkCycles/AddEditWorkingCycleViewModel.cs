@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using RestaurantPro.Core;
 using RestaurantPro.Core.Domain;
 using RestaurantPro.Models;
@@ -46,18 +49,20 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
                     .GetWorkCycleByWorkCycleName(WorkCycle.Name, true);
 
                 if (workCycleWithLines != null)
-                    WorkCycle.Lines =
-                        RestproMapper.MapWorkCycleLinesToWpfWorkCycleList(workCycleWithLines.WorkCycleLines.ToList());
+                    WorkCycle.Lines = new BindingList<WpfWorkCycleLines>(
+                        RestproMapper.MapWorkCycleLinesToWpfWorkCycleList(workCycleWithLines
+                        .WorkCycleLines.ToList()));
             }
             else
             {
-                WorkCycle.Lines = new List<WpfWorkCycleLines>();
+                WorkCycle.Lines = new BindingList<WpfWorkCycleLines>();
             } 
 
             if (WorkCycle != null)
                 WorkCycle.ErrorsChanged -= RaiseCanExecuteChanged;
-            WorkCycle.ErrorsChanged += RaiseCanExecuteChanged;
 
+            WorkCycle.ErrorsChanged += RaiseCanExecuteChanged;
+            this.WorkCycle.Lines.ListChanged += this.OnListChanged;
         }
 
         private void RaiseCanExecuteChanged(object sender, DataErrorsChangedEventArgs e)
@@ -81,7 +86,12 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
         public WpfWorkCycle WorkCycle
         {
             get { return _wpfWorkCycle; }
-            set { SetProperty(ref _wpfWorkCycle, value); }
+            set
+            {
+                if (WorkCycle != null)
+                    WorkCycle.UpdateSubTotalSection();
+                SetProperty(ref _wpfWorkCycle, value);
+            }
         }
 
         #endregion
@@ -93,6 +103,12 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
         public event Action<WpfUser> ManageWorkCyclesRequsted = delegate { };
 
         public event Action<WpfUser> Done = delegate { };
+
+        public event ListChangedEventHandler ListChanged;
+        void OnListChanged(object sender, ListChangedEventArgs e)
+        {
+            WorkCycle.UpdateSubTotalSection();
+        }
 
         #endregion
 
@@ -151,13 +167,5 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
 
         #endregion
 
-        #region Event Implementations
-
-        private void UpdateSubTotalSection(object sender, EventArgs e)
-        {
-            WorkCycle.CalculateSubTotal();
-        }
-
-        #endregion
     }
 }

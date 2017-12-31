@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using RestaurantPro.Annotations;
 
@@ -34,7 +35,7 @@ namespace RestaurantPro
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
+        }        
 
         /// <summary>
         /// Property Changed Event Handler

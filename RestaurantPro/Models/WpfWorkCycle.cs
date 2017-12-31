@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using RestaurantPro.Core;
@@ -61,11 +64,15 @@ namespace RestaurantPro.Models
             set { SetProperty(ref _userId, value); }
         }
 
-        private List<WpfWorkCycleLines> _workCycleLines;
-        public List<WpfWorkCycleLines> Lines
+        private BindingList<WpfWorkCycleLines> _workCycleLines;
+        public BindingList<WpfWorkCycleLines> Lines
         {
             get { return _workCycleLines; }
-            set {  SetProperty(ref _workCycleLines, value);}
+            set
+            {
+                SetProperty(ref _workCycleLines, value);
+                UpdateSubTotalSection();
+            }
         }
 
         #region Fields for Working Cycle Datagrid View 
@@ -101,11 +108,7 @@ namespace RestaurantPro.Models
         private double _subTotal;
         public double SubTotal
         {
-            get
-            {
-                CalculateSubTotal();
-                return _subTotal;
-            }
+            get { return _subTotal; }
             set { SetProperty(ref _subTotal, value); }
         }
 
@@ -114,11 +117,7 @@ namespace RestaurantPro.Models
         private double _total;
         public double Total
         {
-            get
-            {
-                CalculateTotal();
-                return _total;
-            }
+            get { return _total; }
             set { SetProperty(ref _total, value); }
         }
 
@@ -126,12 +125,19 @@ namespace RestaurantPro.Models
 
         #region Private Calculation Methods
 
-        public void CalculateSubTotal()
+        public void UpdateSubTotalSection()
+        {
+            CalculateSubTotal();
+            CalculateTotal();
+        }
+
+
+        private void CalculateSubTotal()
         {
             SubTotal = Lines.Sum(a => a.GetLineTotal());
         }
 
-        public void CalculateTotal()
+        private void CalculateTotal()
         {
             Total = SubTotal + SubTotal * Tax;
         }

@@ -226,7 +226,6 @@
         	</DataGrid.Columns>
         </DataGrid>
         
-        
         <!--Add/Edit Controls-->
         <Grid x:Name="AddEditFormControls" 
             Grid.Column="1"
@@ -265,7 +264,6 @@
                     Margin="0"/>
 
         </Grid>
-        
         
         <!--SubTotal and Taxes-->
         <Grid x:Name="SubTotalSection" 
