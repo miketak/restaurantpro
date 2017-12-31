@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using RestaurantPro.Core.Domain;
 
@@ -40,6 +41,28 @@ namespace RestaurantPro.Models
             IMapper iMapper = config.CreateMapper();
 
             return iMapper.Map<WpfWorkCycle, WorkCycle>(source);
+        }        
+        
+        /// <summary>
+        /// Maps WpfWorkCycle Type to WorkCycle
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static WorkCycle MapWpfWorkCycleToWorkCycleAndHandleLines(WpfWorkCycle source)
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<WpfWorkCycle, WorkCycle>()
+                    .ForMember(dest => dest.Lines, opt => opt.Ignore());
+            });
+
+            IMapper iMapper = config.CreateMapper();
+
+            var domainWorkCycle =  iMapper.Map<WpfWorkCycle, WorkCycle>(source);
+
+            domainWorkCycle.Lines = MapWpfWorkCycleLinesToWorkCycleLinesList(source.Lines.ToList());
+
+            return domainWorkCycle;
         }
 
         /// <summary>
@@ -90,7 +113,11 @@ namespace RestaurantPro.Models
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<WpfWorkCycleLines, WorkCycleLines>();
+                cfg.CreateMap<WpfWorkCycleLines, WorkCycleLines>()
+                    .ForMember(dest => dest.RawMaterial, opt => opt.Ignore())
+                    .ForMember(dest => dest.WorkCycle, opt => opt.Ignore())
+                    .ForMember(dest => dest.Supplier, opt => opt.Ignore())
+                    .ForMember(dest => dest.Location, opt => opt.Ignore());
             });
 
             IMapper iMapper = config.CreateMapper();

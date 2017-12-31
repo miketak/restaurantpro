@@ -140,7 +140,7 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
         private void OnSave()
         {
             WorkCycle = AppendCurrentUser(WorkCycle);
-            var workCycleEntity = RestproMapper.MapWpfWorkCycleToWorkCycle(WorkCycle);
+            var workCycleEntity = RestproMapper.MapWpfWorkCycleToWorkCycleAndHandleLines(WorkCycle);
 
             if (_editMode)
             {
