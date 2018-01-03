@@ -16,6 +16,10 @@ namespace RestaurantPro.Infrastructure.EntityConfigurations
 
             Property(u => u.MoveDate)
                 .IsOptional();
+
+            Ignore(str1 => str1.RawMaterialStringTemp);
+            Ignore(str2 => str2.SupplierStringTemp);
+
         }
         
     }

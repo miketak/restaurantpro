@@ -26,6 +26,14 @@ namespace RestaurantPro.Core.Domain
 
         public string LocationId { get; set; }
 
+        #region Temporary Storage Fields
+
+        public string RawMaterialStringTemp { get; set; }
+        public string SupplierStringTemp { get; set; }
+
+        #endregion
+
+
 
         #region Navigation Properties
 

@@ -82,7 +82,14 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
                 cfg.CreateMap<WorkCycle, WpfWorkCycle>()
                     .ForMember(dest => dest.SubTotal, opt => opt.Ignore())
                     .ForMember(dest => dest.Tax, opt => opt.Ignore())
-                    .ForMember(dest => dest.Total, opt => opt.Ignore());
+                    .ForMember(dest => dest.Total, opt => opt.Ignore())
+                    .ForMember(dest => dest.FullName, opt => opt.Ignore())
+                    .ForMember(dest => dest.DateBeginForView, opt => opt.Ignore())
+                    .ForMember(dest => dest.DateEndForView, opt => opt.Ignore())
+                    .ForMember(dest => dest.ActiveForView, opt => opt.Ignore())
+                    .ForMember(dest => dest.FirstName, opt => opt.Ignore())
+                    .ForMember(dest => dest.LastName, opt => opt.Ignore())
+                    .ForMember(dest => dest.Lines, opt => opt.Ignore());
             });
 
             IMapper iMapper = config.CreateMapper();
@@ -154,7 +161,7 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
 
         #endregion
 
-        #region Command Implementations
+        #region Event Handling Implementations
 
         private void OnBackToInventoryInventoryClick()
         {

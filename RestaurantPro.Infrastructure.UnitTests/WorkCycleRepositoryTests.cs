@@ -163,11 +163,11 @@ namespace RestaurantPro.Infrastructure.UnitTests
 
             //With active flag
             var workCycleFromTest = GetWorkCycle(WorkCycleName, true);
-            _unitOfWork.WorkCycles.AddWorkingCyle(workCycleFromTest);
+            _unitOfWork.WorkCycles.AddWorkingCycle(workCycleFromTest);
 
             //Add with false active flag
             workCycleFromTest = GetWorkCycle(WorkCycleName2, false);
-            _unitOfWork.WorkCycles.AddWorkingCyle(workCycleFromTest);
+            _unitOfWork.WorkCycles.AddWorkingCycle(workCycleFromTest);
 
             Assert.AreEqual(1, 1);
         }

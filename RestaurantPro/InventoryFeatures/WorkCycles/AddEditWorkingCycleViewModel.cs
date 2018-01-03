@@ -49,9 +49,12 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
                     .GetWorkCycleByWorkCycleName(WorkCycle.Name, true);
 
                 if (workCycleWithLines != null)
+                {
                     WorkCycle.Lines = new BindingList<WpfWorkCycleLines>(
                         RestproMapper.MapWorkCycleLinesToWpfWorkCycleList(workCycleWithLines
-                        .WorkCycleLines.ToList()));
+                            .WorkCycleLines.ToList()));
+                }
+
             }
             else
             {
@@ -140,6 +143,7 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
         private void OnSave()
         {
             WorkCycle = AppendCurrentUser(WorkCycle);
+
             var workCycleEntity = RestproMapper.MapWpfWorkCycleToWorkCycleAndHandleLines(WorkCycle);
 
             if (_editMode)
@@ -148,7 +152,8 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
             }
             else
             {
-                _unitOfWork.WorkCycles.Add(workCycleEntity);
+                workCycleEntity.Active = true;
+                _unitOfWork.WorkCycles.AddWorkingCycle(workCycleEntity);
                 _unitOfWork.Complete();
             }
             Done(CurrentUser);

@@ -5,6 +5,9 @@ using RestaurantPro.Core.Domain;
 
 namespace RestaurantPro.Models
 {
+    /// <summary>
+    /// AutoMapper Class
+    /// </summary>
     public static class RestproMapper
     {
         /// <summary>
@@ -44,7 +47,7 @@ namespace RestaurantPro.Models
         }        
         
         /// <summary>
-        /// Maps WpfWorkCycle Type to WorkCycle
+        /// Maps WpfWorkCycle Type to WorkCycle and Handle Lines
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
@@ -117,7 +120,9 @@ namespace RestaurantPro.Models
                     .ForMember(dest => dest.RawMaterial, opt => opt.Ignore())
                     .ForMember(dest => dest.WorkCycle, opt => opt.Ignore())
                     .ForMember(dest => dest.Supplier, opt => opt.Ignore())
-                    .ForMember(dest => dest.Location, opt => opt.Ignore());
+                    .ForMember(dest => dest.Location, opt => opt.Ignore())
+                    .ForMember(dest => dest.RawMaterialStringTemp, opt => opt.MapFrom(src => src.NewRawMaterial))
+                    .ForMember(dest => dest.SupplierStringTemp, opt => opt.MapFrom(src => src.NewSupplier));
             });
 
             IMapper iMapper = config.CreateMapper();

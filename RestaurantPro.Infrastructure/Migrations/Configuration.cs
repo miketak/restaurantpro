@@ -94,6 +94,7 @@ namespace RestaurantPro.Infrastructure.Migrations
 
             var categories = new List<RawMaterialCategory>
             {
+                new RawMaterialCategory { Name = "Uncategorized", Description = "Category Not Assigned Yet."},
                 new RawMaterialCategory { Name = "Vegetables", Description = "Vegetable Desc"},
                 new RawMaterialCategory { Name = "Fruits", Description = "Fruits Desc"},
                 new RawMaterialCategory { Name = "Condiments", Description = "Condiments Desc"},

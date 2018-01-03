@@ -19,7 +19,6 @@
         <ColumnDefinition Width="40"/>
         <ColumnDefinition Width="*"/>
         <ColumnDefinition Width="40"/>
-
     </Grid.ColumnDefinitions>
 
     <!--Left Pane-->
@@ -41,6 +40,8 @@
 
 
     </Grid>
+        
+    <!--Functions Section-->
     <WrapPanel x:Name="FunctionsWrapPanel" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0" Grid.Column="1" Grid.Row="3">
 				<Button x:Name ="MangeWorkCycleList" 
         		Style="{DynamicResource MetroTileStyle}"
@@ -57,6 +58,8 @@
         	</Button> 
 
     </WrapPanel>
+
+
     <StackPanel x:Name="NavigationPanel" Grid.Column="1" Margin="0" Orientation="Horizontal" Grid.Row="1">
     	<Button x:Name="BackHome" Content="Back Home"
     		Command="{Binding BackHomeCommand}" Margin="0" 

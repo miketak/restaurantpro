@@ -69,9 +69,10 @@ namespace RestaurantPro.Models
             {
                 var rawMatFromDataGrid = _unitOfWork
                 .RawMaterials
-                .SingleOrDefault(raw => raw.Name == value);
+                .SingleOrDefault(raw => raw.Name.ToLower() == value.ToLower());
 
                 RawMaterialId = rawMatFromDataGrid != null ? rawMatFromDataGrid.Id : 0;
+                NewRawMaterial = rawMatFromDataGrid == null ? value : null;
             }
         }
 
@@ -86,13 +87,21 @@ namespace RestaurantPro.Models
             {
                 var supFromDataGrid = _unitOfWork
                     .Suppliers
-                    .SingleOrDefault(sp => sp.Name == value);
+                    .SingleOrDefault(sp => sp.Name.ToLower() == value.ToLower());
 
                 SupplierId = supFromDataGrid != null ? supFromDataGrid.Id : 0;
+                NewSupplier = supFromDataGrid == null ? value : null;
             }
         }
 
         #endregion
+
+        #region For Persistence
+        public string NewSupplier { get; set; }
+        public string NewRawMaterial { get; set; }
+
+        #endregion
+
 
         #region CalculatedFields
 

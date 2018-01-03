@@ -54,9 +54,6 @@ namespace RestaurantPro.Models
             set { SetProperty(ref _active, value); }
         }
 
-        public virtual User User { get; set; }
-
-
         private int _userId;
         public int UserId
         {
@@ -130,7 +127,6 @@ namespace RestaurantPro.Models
             CalculateSubTotal();
             CalculateTotal();
         }
-
 
         private void CalculateSubTotal()
         {
