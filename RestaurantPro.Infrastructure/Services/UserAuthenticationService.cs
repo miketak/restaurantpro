@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Threading.Tasks;
 using RestaurantPro.Core.Domain;
 using RestaurantPro.Core.Repositories;
 using RestaurantPro.Core.Services;
@@ -16,7 +17,7 @@ namespace RestaurantPro.Infrastructure.Services
             _userRepository = userRepository;
         }
 
-        public User AuthenticateUser(string username, SecureString password)
+        public async Task<User> AuthenticateUser(string username, SecureString password)
         {
             User user = null;
 
@@ -27,10 +28,12 @@ namespace RestaurantPro.Infrastructure.Services
             if (password.Length < 3) // to future mike - use some regex complexity
                 throw new ApplicationException("Invalid Password");
 
-            if (VerifyUsernameAndPassword(username, password))
+            var isVerified = await VerifyUsernameAndPassword(username, password);
+
+            if (isVerified)
             {
                 password = null;
-                user = RetrieveUserByUsername(username);
+                user = await RetrieveUserByUsername(username);
             }
             else
             {
@@ -40,10 +43,10 @@ namespace RestaurantPro.Infrastructure.Services
             return user;
         }
 
-        private bool VerifyUsernameAndPassword(string username, SecureString password)
+        private async Task<bool> VerifyUsernameAndPassword(string username, SecureString password)
         {
             //might change implementation to stored procedure implementation
-            var user = _userRepository.SingleOrDefault(u => u.Username == username);
+            var user = await _userRepository.SingleOrDefaultAsync(u => u.Username == username);
 
             if (user == null)
                 return false;
@@ -98,9 +101,9 @@ namespace RestaurantPro.Infrastructure.Services
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
-        public User RetrieveUserByUsername(string username)
+        public Task<User> RetrieveUserByUsername(string username)
         {
-            return _userRepository.SingleOrDefault(u => u.Username == username);
+            return _userRepository.SingleOrDefaultAsync(u => u.Username == username);
         }
     }
 }

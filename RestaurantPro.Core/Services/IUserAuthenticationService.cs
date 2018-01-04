@@ -10,6 +10,6 @@ namespace RestaurantPro.Core.Services
 {
     public interface IUserAuthenticationService
     {
-        User AuthenticateUser(string username, SecureString password);
+        Task<User> AuthenticateUser(string username, SecureString password);
     }
 }

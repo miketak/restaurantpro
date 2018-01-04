@@ -5,39 +5,62 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using MahApps.Metro.Controls.Dialogs;
 using RestaurantPro.Core;
 using RestaurantPro.Core.Domain;
 using RestaurantPro.Models;
 
 namespace RestaurantPro.InventoryFeatures.WorkCycles
 {
+    /// <inheritdoc />
+    /// <summary>
+    /// AddEditView View Model
+    /// </summary>
     public class AddEditWorkingCycleViewModel : BindableBase
     {
         private bool _editMode;
         private readonly IUnitOfWork _unitOfWork;
+        private IDialogCoordinator dialogCoordinator;
 
-        public AddEditWorkingCycleViewModel(IUnitOfWork unitOfWork)
+        /// <summary>
+        /// Constructor to initialize Events and Unit of Work
+        /// </summary>
+        /// <param name="unitOfWork"></param>
+        public AddEditWorkingCycleViewModel(IUnitOfWork unitOfWork, IDialogCoordinator instance)
         {
             _unitOfWork = unitOfWork;
+            dialogCoordinator = instance;
+
             LogoutCommand = new RelayCommand(OnLogout);
             BackToWorkCycleListCommand = new RelayCommand(OnManageCyclesListClick);
             CancelCommand = new RelayCommand(OnManageCyclesListClick);
             SaveCommand = new RelayCommand(OnSave, CanSave);
         }
 
-        #region Initial Setting
+        #region Initialization Methods
 
+        /// <summary>
+        /// Sets Current User
+        /// </summary>
+        /// <param name="user">Current User</param>
         public void SetCurrentUser(WpfUser user)
         {
             CurrentUser = user;
         }
 
+        /// <summary>
+        /// Edit Mode Flag
+        /// </summary>
         public bool EditMode
         {
             get { return _editMode; }
             set { SetProperty(ref _editMode, value); }
         }
 
+        /// <summary>
+        /// Sets Working Cycle
+        /// </summary>
+        /// <param name="wCycle">Work Cycle Passed</param>
         public void SetWorkingCycle(WpfWorkCycle wCycle)
         {
             WorkCycle = wCycle;
@@ -48,13 +71,12 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
                     .WorkCycles
                     .GetWorkCycleByWorkCycleName(WorkCycle.Name, true);
 
-                if (workCycleWithLines != null)
-                {
-                    WorkCycle.Lines = new BindingList<WpfWorkCycleLines>(
-                        RestproMapper.MapWorkCycleLinesToWpfWorkCycleList(workCycleWithLines
-                            .WorkCycleLines.ToList()));
-                }
+                if(workCycleWithLines == null)
+                    throw new ApplicationException("Work Cycle is currently inactive");
 
+                WorkCycle.Lines = new BindingList<WpfWorkCycleLines>(
+                    RestproMapper.MapWorkCycleLinesToWpfWorkCycleList(workCycleWithLines
+                        .WorkCycleLines.ToList()));
             }
             else
             {
@@ -79,6 +101,9 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
 
         private WpfUser _CurrentUser;
 
+        /// <summary>
+        /// Current User
+        /// </summary>
         public WpfUser CurrentUser
         {
             get { return _CurrentUser; }
@@ -86,6 +111,10 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
         }
 
         private WpfWorkCycle _wpfWorkCycle;
+
+        /// <summary>
+        /// Current Work Cycle
+        /// </summary>
         public WpfWorkCycle WorkCycle
         {
             get { return _wpfWorkCycle; }
@@ -108,10 +137,6 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
         public event Action<WpfUser> Done = delegate { };
 
         public event ListChangedEventHandler ListChanged;
-        void OnListChanged(object sender, ListChangedEventArgs e)
-        {
-            WorkCycle.UpdateSubTotalSection();
-        }
 
         #endregion
 
@@ -127,7 +152,7 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
 
         #endregion
 
-        #region Command Implementations
+        #region Event Handling
 
         private void OnLogout()
         {
@@ -140,7 +165,7 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
             ManageWorkCyclesRequsted(CurrentUser);
         }
 
-        private void OnSave()
+        private async void OnSave()
         {
             WorkCycle = AppendCurrentUser(WorkCycle);
 
@@ -156,7 +181,11 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
                 _unitOfWork.WorkCycles.AddWorkingCycle(workCycleEntity);
                 _unitOfWork.Complete();
             }
-            Done(CurrentUser);
+
+            var controller = await dialogCoordinator.ShowMessageAsync(this, "Success", "Items Saved Successfully. You Rock!");
+
+            if (controller == MessageDialogResult.Affirmative)
+                Done(CurrentUser);
         }
 
         private WpfWorkCycle AppendCurrentUser(WpfWorkCycle w)
@@ -168,6 +197,11 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
         private bool CanSave()
         {
             return !WorkCycle.HasErrors;
+        }
+
+        private void OnListChanged(object sender, ListChangedEventArgs e)
+        {
+            WorkCycle.UpdateSubTotalSection();
         }
 
         #endregion

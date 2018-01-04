@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:conv="clr-namespace:RestaurantPro.Auxilliary.Converters"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             dialogs:DialogParticipation.Register="{Binding}" 
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1000">
 
@@ -62,6 +64,8 @@
 
 
         </Grid>
+        
+        <!--Navigation Panel-->
         <StackPanel x:Name="NavigationPanel" Margin="0,0,0,1" Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
         	<Button x:Name="BackHome" Content="Home /"
         		Command="{Binding BackHomeCommand}" Margin="0,5" 

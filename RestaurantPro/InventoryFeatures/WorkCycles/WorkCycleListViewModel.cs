@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using MahApps.Metro.Controls.Dialogs;
 using System.Data;
 using System.Linq;
 using System.Windows;
@@ -9,17 +10,23 @@ using Microsoft.Windows.Controls;
 using RestaurantPro.Core;
 using RestaurantPro.Core.Domain;
 using RestaurantPro.Models;
+using Unity.ObjectBuilder.BuildPlan.Selection;
 
 namespace RestaurantPro.InventoryFeatures.WorkCycles
 {
     public class WorkCycleListViewModel : BindableBase
     {
         private IUnitOfWork _unitOfWork;
+        private IDialogCoordinator dialogCoordinator;
         
-
-        public WorkCycleListViewModel(IUnitOfWork unitOfWork)
+        /// <summary>
+        /// Initialized events and commands
+        /// </summary>
+        /// <param name="unitOfWork">Unit Of Work</param>
+        public WorkCycleListViewModel(IUnitOfWork unitOfWork, IDialogCoordinator instance)
         {
             _unitOfWork = unitOfWork;
+            dialogCoordinator = instance;
 
             BackToInventoryCommand = new RelayCommand(OnBackToInventoryInventoryClick);
             LogoutCommand = new RelayCommand(OnLogout);
@@ -29,6 +36,7 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
             EditWorkCycleCommand = new RelayCommand<WpfWorkCycle>(OnEditWorkCycle);
         }
 
+        #region Initialization Methods
 
         /// <summary>
         /// Initialize View Model Commands for View and sets
@@ -40,75 +48,50 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
             CurrentUser = user;
         }
 
-        #region DataGrid Functionality
-
-        private List<WpfWorkCycle> _allWorkCycles;
-
+        /// <summary>
+        /// Loads Work Cycles with true flag from database
+        /// </summary>
         public void LoadWorkCycles()
         {
-            var workCycleEntity = _unitOfWork.WorkCycles.GetAll().ToList();
+            var workCyclesInDb = _unitOfWork.WorkCycles
+                .GetAll()
+                .Where(t => t.Active).ToList();
 
-            var wpfWorkCycles = MapWorkCycleListToWpfWorkCycleList(workCycleEntity);
+            var wpfWorkCycles = RestproMapper.MapWorkCycleListToWpfWorkCycleList(workCyclesInDb);
 
             wpfWorkCycles = AppendCreatedByUsers(wpfWorkCycles);
 
             WorkCycles = new ObservableCollection<WpfWorkCycle>(wpfWorkCycles);
         }
 
-        private List<WpfWorkCycle> AppendCreatedByUsers(List<WpfWorkCycle> wpfWorkCycles)
-        {
-            foreach (var workCycle in wpfWorkCycles)
-            {
-                workCycle.FirstName = _unitOfWork.Users
-                    .SingleOrDefault(user => user.Id == workCycle.UserId)
-                    .FirstName;
-
-                workCycle.LastName = _unitOfWork.Users
-                    .SingleOrDefault(user => user.Id == workCycle.UserId)
-                    .LastName;
-            }
-
-            return wpfWorkCycles;
-        }
-
+ 
         #endregion
 
-        #region  Automapper ---move to RestPro Mapper Class
+        #region Datagrid Event Handling
 
-        private List<WpfWorkCycle> MapWorkCycleListToWpfWorkCycleList(List<WorkCycle> workCyclesEntity)
+        private void DeactivateWorkCycle(WpfWorkCycle wpfWorkCycle)
         {
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<WorkCycle, WpfWorkCycle>()
-                    .ForMember(dest => dest.SubTotal, opt => opt.Ignore())
-                    .ForMember(dest => dest.Tax, opt => opt.Ignore())
-                    .ForMember(dest => dest.Total, opt => opt.Ignore())
-                    .ForMember(dest => dest.FullName, opt => opt.Ignore())
-                    .ForMember(dest => dest.DateBeginForView, opt => opt.Ignore())
-                    .ForMember(dest => dest.DateEndForView, opt => opt.Ignore())
-                    .ForMember(dest => dest.ActiveForView, opt => opt.Ignore())
-                    .ForMember(dest => dest.FirstName, opt => opt.Ignore())
-                    .ForMember(dest => dest.LastName, opt => opt.Ignore())
-                    .ForMember(dest => dest.Lines, opt => opt.Ignore());
-            });
-
-            IMapper iMapper = config.CreateMapper();
-
-            _allWorkCycles = iMapper.Map<List<WorkCycle>, List<WpfWorkCycle>>(workCyclesEntity);
-
-            return _allWorkCycles;
+            _unitOfWork.WorkCycles.DeactivateWorkCycle(wpfWorkCycle.Id);
+            LoadWorkCycles();
         }
 
-        private WorkCycle MapWorkCycleToWpfWorkCycle( WpfWorkCycle wpfWorkCyclesEntity)
+        private async void DeleteWorkCycle(WpfWorkCycle wpfWorkCycle)
         {
-            var config = new MapperConfiguration(cfg =>
+            var workCycleEntity = RestproMapper.MapWpfWorkCycleToWorkCycle(wpfWorkCycle);
+
+            if (workCycleEntity == null)
             {
-                cfg.CreateMap<WpfWorkCycle, WorkCycle>();
-            });
+                await dialogCoordinator.ShowMessageAsync(this, "WARNING", "KINDLY SELECT A WORK CYCLE");
+                return;
+            }
 
-            IMapper iMapper = config.CreateMapper();
+            workCycleEntity = _unitOfWork.WorkCycles.SingleOrDefault(
+                w => w.Id == workCycleEntity.Id);
 
-            return  iMapper.Map<WpfWorkCycle, WorkCycle>(wpfWorkCyclesEntity);
+            _unitOfWork.WorkCycles.Remove(workCycleEntity);
+            _unitOfWork.Complete();
+
+            WorkCycles.Remove(wpfWorkCycle);
         }
 
         #endregion
@@ -174,32 +157,6 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
             LogoutRequested(new WpfUser());
         }
 
-        private void DeactivateWorkCycle(WpfWorkCycle wpfWorkCycle)
-        {
-            _unitOfWork.WorkCycles.DeactivateWorkCycle(wpfWorkCycle.Id);
-            LoadWorkCycles();
-        }
-
-        private void DeleteWorkCycle(WpfWorkCycle wpfWorkCycle)
-        {
-            var workCycleEntity = MapWorkCycleToWpfWorkCycle(wpfWorkCycle);
-
-            if (workCycleEntity == null)
-            {
-                MessageBox.Show("Kindly select a work cycle");
-                return;
-            }
-
-            workCycleEntity = _unitOfWork.WorkCycles.SingleOrDefault(
-                w => w.Id == workCycleEntity.Id);
-
-            _unitOfWork.WorkCycles.Remove(workCycleEntity);
-
-            _unitOfWork.Complete();
-
-            LoadWorkCycles();
-        }
-
         private void OnAddWorkCycle()
         {
             AddWorkCycleRequested(new WpfWorkCycle(), CurrentUser);
@@ -208,6 +165,26 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
         private void OnEditWorkCycle(WpfWorkCycle wpfWorkCycle)
         {
             EditWorkCycleRequested(wpfWorkCycle, CurrentUser);
+        }
+
+        #endregion
+
+        #region Private Helper Methods
+
+        private List<WpfWorkCycle> AppendCreatedByUsers(List<WpfWorkCycle> wpfWorkCycles)
+        {
+            foreach (var workCycle in wpfWorkCycles)
+            {
+                workCycle.FirstName = _unitOfWork.Users
+                    .SingleOrDefault(user => user.Id == workCycle.UserId)
+                    .FirstName;
+
+                workCycle.LastName = _unitOfWork.Users
+                    .SingleOrDefault(user => user.Id == workCycle.UserId)
+                    .LastName;
+            }
+
+            return wpfWorkCycles;
         }
 
         #endregion

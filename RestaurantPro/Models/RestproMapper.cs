@@ -10,6 +10,8 @@ namespace RestaurantPro.Models
     /// </summary>
     public static class RestproMapper
     {
+        #region Work Cycle Mappings
+
         /// <summary>
         /// Maps WpfWorkCycle List to WorkCycle List
         /// </summary>
@@ -19,7 +21,17 @@ namespace RestaurantPro.Models
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<WorkCycle, WpfWorkCycle>();
+                cfg.CreateMap<WorkCycle, WpfWorkCycle>()
+                    .ForMember(dest => dest.SubTotal, opt => opt.Ignore())
+                    .ForMember(dest => dest.Tax, opt => opt.Ignore())
+                    .ForMember(dest => dest.Total, opt => opt.Ignore())
+                    .ForMember(dest => dest.FullName, opt => opt.Ignore())
+                    .ForMember(dest => dest.DateBeginForView, opt => opt.Ignore())
+                    .ForMember(dest => dest.DateEndForView, opt => opt.Ignore())
+                    .ForMember(dest => dest.ActiveForView, opt => opt.Ignore())
+                    .ForMember(dest => dest.FirstName, opt => opt.Ignore())
+                    .ForMember(dest => dest.LastName, opt => opt.Ignore())
+                    .ForMember(dest => dest.Lines, opt => opt.Ignore());
             });
 
             IMapper iMapper = config.CreateMapper();
@@ -44,8 +56,8 @@ namespace RestaurantPro.Models
             IMapper iMapper = config.CreateMapper();
 
             return iMapper.Map<WpfWorkCycle, WorkCycle>(source);
-        }        
-        
+        }
+
         /// <summary>
         /// Maps WpfWorkCycle Type to WorkCycle and Handle Lines
         /// </summary>
@@ -61,7 +73,7 @@ namespace RestaurantPro.Models
 
             IMapper iMapper = config.CreateMapper();
 
-            var domainWorkCycle =  iMapper.Map<WpfWorkCycle, WorkCycle>(source);
+            var domainWorkCycle = iMapper.Map<WpfWorkCycle, WorkCycle>(source);
 
             domainWorkCycle.Lines = MapWpfWorkCycleLinesToWorkCycleLinesList(source.Lines.ToList());
 
@@ -131,6 +143,10 @@ namespace RestaurantPro.Models
 
             return target;
         }
+
+        #endregion
+
+       
         
     }
 }

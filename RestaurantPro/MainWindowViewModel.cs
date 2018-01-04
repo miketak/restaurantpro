@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using MahApps.Metro.Controls.Dialogs;
 using RestaurantPro.Core;
 using RestaurantPro.Core.Services;
 using RestaurantPro.HomeDashboard;
@@ -15,6 +16,7 @@ using RestaurantPro.Models;
 
 namespace RestaurantPro
 {
+    /// <inheritdoc />
     /// <summary>
     /// View Model for Generic Window Container
     /// </summary>
@@ -36,11 +38,11 @@ namespace RestaurantPro
             NavCommand = new RelayCommand<string>(OnNav);
 
             //View Model Initializations
-            _loginViewModel = new LoginViewModel(unitOfWork);
+            _loginViewModel = new LoginViewModel(unitOfWork, DialogCoordinator.Instance);
             _homeDashboardViewModel = new HomeDashboardViewModel();
             _inventoryDashboardViewModel = new InventoryDashboardViewModel();
-            _workCycleListViewModel = new WorkCycleListViewModel(unitOfWork);
-            _addEditWorkingCycleViewModel = new AddEditWorkingCycleViewModel(unitOfWork);
+            _workCycleListViewModel = new WorkCycleListViewModel(unitOfWork, DialogCoordinator.Instance);
+            _addEditWorkingCycleViewModel = new AddEditWorkingCycleViewModel(unitOfWork, DialogCoordinator.Instance);
 
             //Set Login context
             SetLoginContext();
@@ -122,7 +124,7 @@ namespace RestaurantPro
 
         private void NavigateToInventoryDashboard(WpfUser currentUser)
         {
-            _inventoryDashboardViewModel.SetCurrentUserAndInitializeCommands(currentUser);
+            _inventoryDashboardViewModel.SetCurrentUser(currentUser);
             CurrentViewModel = _inventoryDashboardViewModel;
         }
 

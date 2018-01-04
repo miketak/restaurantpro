@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             dialogs:DialogParticipation.Register="{Binding}"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="525">
 
@@ -33,9 +35,6 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-        <!--Static Label-->
-        <!--End of Static Label-->
         
         <!--User Form-->
         <Grid DataContext="{Binding CurrentUser}"
@@ -51,7 +50,6 @@
             </Grid.RowDefinitions>
 
             <!--Username-->
-
             <TextBox controls:TextBoxHelper.Watermark="Username" 
                      controls:TextBoxHelper.ClearTextButton="True"
                         Grid.Row="0"

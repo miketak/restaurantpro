@@ -21,7 +21,7 @@
 
         </Grid.ColumnDefinitions>
 
-        <!--Left Pane-->
+        <!--Top Panel-->
         <Grid x:Name="TopBar" Grid.Column="1" Margin="0">
         	<Grid.ColumnDefinitions>
         		<ColumnDefinition/>
@@ -31,7 +31,9 @@
         		<TextBlock x:Name="userName" VerticalAlignment="Center"
         			DataContext="{Binding CurrentUser}"
         			Text="{Binding FullName}" 
-        			FontSize="18.667" FontWeight="ExtraBold" FontFamily="Adobe Fan Heiti Std B"
+        			FontSize="18.667" 
+        		    FontWeight="ExtraBold" 
+        		    FontFamily="Adobe Fan Heiti Std B"
     			Width="Auto"/>
         	</StackPanel>
     		<Button x:Name="logout" Content="Log Out"
@@ -44,6 +46,37 @@
                     FontSize="16" 
                     FontFamily="Arial Black"/>
     	</Grid>
+
+        <!--Search Function-->
+        <TextBox controls:TextBoxHelper.Watermark="Search"
+                 controls:TextBoxHelper.ClearTextButton="True"
+                 Grid.Row="1" Grid.Column="1"
+                 Name="SearchTextBox"
+                 Height="36"
+                 FontSize="18"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Bottom" 
+                 VerticalContentAlignment="Center"
+                 HorizontalContentAlignment="Center"
+                 Margin="0,0,-105,0" Width="285">
+            <TextBox.Style>
+                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MetroTextBox}" >
+                    <Setter Property="Foreground" Value="{DynamicResource MainForeground}"/>
+                    <Setter Property="BorderBrush" Value="{DynamicResource MainBorderColor}"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="controls:TextBoxHelper.ClearTextButton" Value="True"/>
+                    <Setter Property="Padding" Value="0,1,0,0" />
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="Orange"/>
+                            <Setter Property="controls:TextBoxHelper.ClearTextButton" Value="True"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+
+        <!--User Functions-->
         <WrapPanel x:Name="MainContentWrapPanel" Orientation="Horizontal" 
                    HorizontalAlignment="Center" Grid.Column="1" Margin="60,0" 
                    Grid.Row="2">
@@ -132,32 +165,5 @@
         			FontFamily="Arial" FontWeight="DemiBold"/>
         	</Button>
         </WrapPanel>
-                    <TextBox controls:TextBoxHelper.Watermark="Search"
-                     controls:TextBoxHelper.ClearTextButton="True"
-                        Grid.Row="1" Grid.Column="1"
-						Name="SearchTextBox"
-                        Height="36"
-                        FontSize="18"
-						HorizontalAlignment="Center"
-						VerticalAlignment="Bottom" 
-						VerticalContentAlignment="Center"
-                        HorizontalContentAlignment="Center"
-						Margin="0,0,-105,0" Width="285">
-                <TextBox.Style>
-                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MetroTextBox}" >
-                        <Setter Property="Foreground" Value="{DynamicResource MainForeground}"/>
-                        <Setter Property="BorderBrush" Value="{DynamicResource MainBorderColor}"/>
-                        <Setter Property="BorderThickness" Value="1"/>
-                        <Setter Property="controls:TextBoxHelper.ClearTextButton" Value="True"/>
-                        <Setter Property="Padding" Value="0,1,0,0" />
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Foreground" Value="Orange"/>
-                                <Setter Property="controls:TextBoxHelper.ClearTextButton" Value="True"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBox.Style>
-        </TextBox>
     </Grid>
 </UserControl>

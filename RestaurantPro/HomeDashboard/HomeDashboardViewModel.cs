@@ -21,8 +21,9 @@ namespace RestaurantPro.HomeDashboard
             InventoryDashboardCommand = new RelayCommand(OnInventoryMgtClick);
         }
 
-        #region Object Binding
+        #region Current User Binding
         private WpfUser _CurrentUser;
+
         /// <summary>
         /// Current User
         /// </summary>
@@ -33,16 +34,15 @@ namespace RestaurantPro.HomeDashboard
         }
         #endregion
 
-        #region Relay Events
+        #region Events
+
         public event Action<WpfUser> LogoutRequested = delegate { };
 
         public event Action<WpfUser> InventoryDashboardRequested = delegate { };
 
-        
-
         #endregion
 
-        #region Command Declarations
+        #region Commands
 
         public RelayCommand LogoutCommand { get; private set; }
 
@@ -52,7 +52,7 @@ namespace RestaurantPro.HomeDashboard
         
         #endregion
 
-        #region Command Implementations
+        #region Event Handling
 
         private void OnLogout()
         {

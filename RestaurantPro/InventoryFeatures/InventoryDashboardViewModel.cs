@@ -3,16 +3,34 @@ using RestaurantPro.Models;
 
 namespace RestaurantPro.InventoryFeatures
 {
+    /// <summary>
+    /// Inventory Dashboard View View Model
+    /// </summary>
     public class InventoryDashboardViewModel : BindableBase
     {
-        public void SetCurrentUserAndInitializeCommands(WpfUser user)
+        /// <summary>
+        /// Initializes events
+        /// </summary>
+        public InventoryDashboardViewModel()
         {
-            CurrentUser = user;
             LogoutCommand = new RelayCommand(OnLogout);
             BackHomeCommand = new RelayCommand(OnHomeClick);
             ManageWorkCyclesCommand = new RelayCommand(OnManageCyclesClick);
         }
 
+        #region Initialization Methods
+
+        /// <summary>
+        /// Sets Current User
+        /// </summary>
+        /// <param name="user">Current User</param>
+        public void SetCurrentUser(WpfUser user)
+        {
+            CurrentUser = user;
+        }
+        
+
+        #endregion
 
         #region Bindable Objects
 
@@ -47,7 +65,7 @@ namespace RestaurantPro.InventoryFeatures
 
         #endregion
 
-        #region Command Implementations
+        #region Event Handling Implementations
 
         private void OnLogout()
         {

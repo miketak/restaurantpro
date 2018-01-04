@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace RestaurantPro.Core.Repositories
 {
@@ -11,6 +12,7 @@ namespace RestaurantPro.Core.Repositories
         IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
 
         TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
 
         void Add(TEntity entity);
         void AddRange(IEnumerable<TEntity> entities);

@@ -5,13 +5,28 @@ using System.Windows.Data;
 
 namespace RestaurantPro.Auxilliary.Converters
 {
+    /// <summary>
+    /// Controls the visibility of the 
+    /// Add/Save Button on the Add/Edit View for WorkCycles
+    /// </summary>
     public class NegatableBooleanToVisibilityConverter : IValueConverter
     {
+        /// <summary>
+        /// Initializes False Visibility
+        /// </summary>
         public NegatableBooleanToVisibilityConverter()
         {
             FalseVisibility = Visibility.Collapsed;
         }
 
+        /// <summary>
+        /// Covnerter Logic
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             bool bVal;

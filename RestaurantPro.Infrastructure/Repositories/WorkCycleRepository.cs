@@ -17,13 +17,25 @@ namespace RestaurantPro.Infrastructure.Repositories
             _context = (RestProContext) context;
         }
 
+        /// <summary>
+        /// Deactivates work cycle active flag
+        /// </summary>
+        /// <param name="id">Work Cycle Id</param>
         public void DeactivateWorkCycle(int id)
         {
             var a = SingleOrDefault(x => x.Id == id);
+
+            if ( a == null)
+                throw new ApplicationException("Database Error: Item not found");
+
             a.Active = false;
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Updates Work Cycle and associated lines
+        /// </summary>
+        /// <param name="workCycle">Work Cycle to be edited</param>
         public void UpdateWorkCycle(WorkCycle workCycle)
         {
             var workCycleInDb = SingleOrDefault(x => x.Id == workCycle.Id);
@@ -38,12 +50,10 @@ namespace RestaurantPro.Infrastructure.Repositories
             AddOrUpdateWorkingCycleLines(workCycle);
         }
 
-
-
         /// <summary>
-        ///     Adds Working Cycles with lines
+        ///  Adds Working Cycles with lines
         /// </summary>
-        /// <param name="workCycle"></param>
+        /// <param name="workCycle">Work Cycle to be added</param>
         public void AddWorkingCycle(WorkCycle workCycle)
         {
             _context.WorkCycles.Add(workCycle);
@@ -51,12 +61,6 @@ namespace RestaurantPro.Infrastructure.Repositories
 
             var workCycleInDb = _context.WorkCycles
                 .SingleOrDefault(wc => wc.Name == workCycle.Name);
-            //if (workCycleInDb != null)
-            //    workCycle.Lines
-            //        .ToList()
-            //        .ForEach(w => w.WorkCycleId = workCycleInDb.Id);
-
-            //workCycle.Lines.ToList().ForEach(w => _context.WorkCycleLines.Add(w));
 
             try
             {
@@ -64,20 +68,18 @@ namespace RestaurantPro.Infrastructure.Repositories
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.Message);
-
                 if (workCycleInDb != null)
                 {
                     _context.WorkCycles.Remove(workCycleInDb);
                     _context.SaveChanges();
                 }
 
-                throw e;
+                throw new ApplicationException("Database Error: " + e.Message);
             }
         }
 
         /// <summary>
-        ///     Retrieve Work Cycles by Work Cycle Name
+        ///     Retrieve Work Cycles by Work Cycle Name with lines
         /// </summary>
         /// <param name="workCycleName"></param>
         /// <param name="isActive"></param>
@@ -91,7 +93,7 @@ namespace RestaurantPro.Infrastructure.Repositories
         }
 
         /// <summary>
-        ///     Retrieve Work Cycles by Work Cycle Id
+        ///     Retrieve Work Cycles by Work Cycle Id with lines
         /// </summary>
         /// <param name="workCycleId"></param>
         /// <param name="isActive"></param>

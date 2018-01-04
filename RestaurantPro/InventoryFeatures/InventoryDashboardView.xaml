@@ -21,7 +21,7 @@
         <ColumnDefinition Width="40"/>
     </Grid.ColumnDefinitions>
 
-    <!--Left Pane-->
+    <!--Standard Grid-->
     <Grid x:Name="StandardGrid" Margin="0" Grid.ColumnSpan="3" Background="White">
     	<Grid.ColumnDefinitions>
     		<ColumnDefinition Width="40"/>
@@ -59,7 +59,7 @@
 
     </WrapPanel>
 
-
+    <!--Navigation-->
     <StackPanel x:Name="NavigationPanel" Grid.Column="1" Margin="0" Orientation="Horizontal" Grid.Row="1">
     	<Button x:Name="BackHome" Content="Back Home"
     		Command="{Binding BackHomeCommand}" Margin="0" 
@@ -67,6 +67,8 @@
 			VerticalAlignment="Center" HorizontalAlignment="Left" 
 			Background="#00F7F7F7" BorderBrush="#00F7F7F7" Width="97"/>
 	</StackPanel>
+        
+    <!--Search Function-->
 	<TextBox controls:TextBoxHelper.Watermark="Search"
                      controls:TextBoxHelper.ClearTextButton="True"
                         Grid.Row="2" Grid.Column="1"
@@ -94,7 +96,6 @@
                     </Style>
                 </TextBox.Style>
         </TextBox>
-
 
     </Grid>
 </UserControl>

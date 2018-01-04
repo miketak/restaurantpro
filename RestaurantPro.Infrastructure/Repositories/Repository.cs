@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using RestaurantPro.Core.Repositories;
 
 namespace RestaurantPro.Infrastructure.Repositories
@@ -34,6 +35,11 @@ namespace RestaurantPro.Infrastructure.Repositories
         public TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate)
         {
             return Context.Set<TEntity>().SingleOrDefault(predicate);
+        }
+
+        public Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return Context.Set<TEntity>().SingleOrDefaultAsync(predicate);
         }
 
         public void Add(TEntity entity)
