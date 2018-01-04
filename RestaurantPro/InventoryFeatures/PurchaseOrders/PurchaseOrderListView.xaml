@@ -9,11 +9,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1000">
     <Grid>
-        <!--<i:Interaction.Triggers>
+        <i:Interaction.Triggers>
             <i:EventTrigger EventName="Loaded">
                 <ei:CallMethodAction TargetObject="{Binding}" MethodName="LoadPurchaseOrders"/>
             </i:EventTrigger>
-        </i:Interaction.Triggers>-->
+        </i:Interaction.Triggers>
 
         <Grid>
             <Grid.ColumnDefinitions>
@@ -82,7 +82,7 @@
                 </TextBox.Style>
             </TextBox>
 
-            <!--Working Cycle Data Grid-->
+            <!--Purchase Order Data Grid-->
             <DataGrid x:Name="PurchaseOrderDataGrid"
 				  ItemsSource="{Binding PurchaseOrders}"
 				  Grid.Column="1"
@@ -100,9 +100,11 @@
                 </i:Interaction.Triggers>
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding PurchaseOrderNumber}" Header="Purchase Order Number" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding Status}" Header="Status" Width="*"/>
                     <DataGridTextColumn Binding="{Binding DateCreatedForView}" Header="Date Created" Width="*"/>
                     <DataGridTextColumn Binding="{Binding WorkCycleName}" Header="Work Cycle Name" Width="*"/>
                     <DataGridTextColumn Binding="{Binding FullName}" Header="Created By" Width="*"/>
+                    
 
                     <!--Edit Work Cycle Template-->
                     <DataGridTemplateColumn Width="80" MinWidth="80" MaxWidth="80">
@@ -176,6 +178,7 @@
 				VerticalAlignment="Center" HorizontalAlignment="Left" 
 				Background="#00F7F7F7" BorderBrush="#00F7F7F7"/>
             </StackPanel>
+
         </Grid>
 
     </Grid>

@@ -17,7 +17,7 @@ namespace RestaurantPro.Models
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static List<WpfWorkCycle> MapWorkCycleListToWpfWorkCycleList(List<WorkCycle> source)
+        internal static List<WpfWorkCycle> MapWorkCycleListToWpfWorkCycleList(List<WorkCycle> source)
         {
             var config = new MapperConfiguration(cfg =>
             {
@@ -46,7 +46,7 @@ namespace RestaurantPro.Models
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static WorkCycle MapWpfWorkCycleToWorkCycle(WpfWorkCycle source)
+        internal static WorkCycle MapWpfWorkCycleToWorkCycle(WpfWorkCycle source)
         {
             var config = new MapperConfiguration(cfg =>
             {
@@ -63,7 +63,7 @@ namespace RestaurantPro.Models
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static WorkCycle MapWpfWorkCycleToWorkCycleAndHandleLines(WpfWorkCycle source)
+        internal static WorkCycle MapWpfWorkCycleToWorkCycleAndHandleLines(WpfWorkCycle source)
         {
             var config = new MapperConfiguration(cfg =>
             {
@@ -85,7 +85,7 @@ namespace RestaurantPro.Models
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static WpfWorkCycle MapWorkCycleToWpfWorkCycle(WorkCycle source)
+        internal static WpfWorkCycle MapWorkCycleToWpfWorkCycle(WorkCycle source)
         {
             var config = new MapperConfiguration(cfg =>
             {
@@ -102,7 +102,7 @@ namespace RestaurantPro.Models
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static List<WpfWorkCycleLines> MapWorkCycleLinesToWpfWorkCycleList(List<WorkCycleLines> source)
+        internal static List<WpfWorkCycleLines> MapWorkCycleLinesToWpfWorkCycleList(List<WorkCycleLines> source)
         {
             var config = new MapperConfiguration(cfg =>
             {
@@ -124,7 +124,7 @@ namespace RestaurantPro.Models
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static List<WorkCycleLines> MapWpfWorkCycleLinesToWorkCycleLinesList(List<WpfWorkCycleLines> source)
+        internal static List<WorkCycleLines> MapWpfWorkCycleLinesToWorkCycleLinesList(List<WpfWorkCycleLines> source)
         {
             var config = new MapperConfiguration(cfg =>
             {
@@ -146,7 +146,40 @@ namespace RestaurantPro.Models
 
         #endregion
 
-       
-        
+        #region Purchase Order Mappings
+
+        /// <summary>
+        /// Maps Purchase Order to Wpf Purchase Order
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        internal static WpfPurchaseOrder MapPurchaseOrderToWpfPurchaseOrder(PurchaseOrder source)
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<PurchaseOrder, WpfPurchaseOrder>()
+                    .ForMember(dest => dest.DateCreatedForView, opt => opt.Ignore())
+                    .ForMember(dest => dest.Status, opt => opt.Ignore())
+                    .ForMember(dest => dest.FullName, opt => opt.Ignore())
+                    .ForMember(dest => dest.WorkCycleName, opt => opt.Ignore())
+                    .ForMember(dest => dest.Lines, opt => opt.Ignore()); //will be handled by Future Michael
+            });
+
+            IMapper iMapper = config.CreateMapper();
+
+            return iMapper.Map<PurchaseOrder, WpfPurchaseOrder>(source);
+        }
+
+        internal static List<WpfPurchaseOrder> MapPurchaseOrderListToWpfPurchaseOrderList(List<PurchaseOrder> purchaseOrders)
+        {
+            return purchaseOrders
+                .Select(MapPurchaseOrderToWpfPurchaseOrder)
+                .ToList();
+        }
+
+        #endregion
+
+
+ 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using MahApps.Metro.Controls.Dialogs;
 using RestaurantPro.Core;
 using RestaurantPro.Models;
@@ -32,6 +33,17 @@ namespace RestaurantPro.InventoryFeatures.PurchaseOrders
             CurrentUser = user;
         }
 
+        public void LoadPurchaseOrders()
+        {
+            var purchaseOrders = _unitOfWork.PurchaseOrders
+                .GetAll()
+                .Where(u => u.Active = true).ToList();
+
+            var wpfPurchaseOrders = RestproMapper.MapPurchaseOrderListToWpfPurchaseOrderList(purchaseOrders);
+
+            PurchaseOrders = new ObservableCollection<WpfPurchaseOrder>(wpfPurchaseOrders);
+        }
+
         #endregion
 
         #region Object Bindings
@@ -43,6 +55,13 @@ namespace RestaurantPro.InventoryFeatures.PurchaseOrders
             set { SetProperty(ref _CurrentUser, value); }
         }
 
+        private ObservableCollection<WpfPurchaseOrder> _purchaseOrders;
+
+        public ObservableCollection<WpfPurchaseOrder> PurchaseOrders
+        {
+            get { return _purchaseOrders; }
+            set { SetProperty(ref _purchaseOrders, value);}
+        }
         #endregion
 
         #region Events
