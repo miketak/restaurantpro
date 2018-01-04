@@ -20,7 +20,7 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
     {
         private bool _editMode;
         private readonly IUnitOfWork _unitOfWork;
-        private IDialogCoordinator dialogCoordinator;
+        private readonly IDialogCoordinator dialogCoordinator;
 
         /// <summary>
         /// Constructor to initialize Events and Unit of Work

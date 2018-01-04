@@ -9,7 +9,8 @@
 		xmlns:inventdash="clr-namespace:RestaurantPro.InventoryFeatures"
 		xmlns:workcyclelist="clr-namespace:RestaurantPro.InventoryFeatures.WorkCycles"
 		xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
-		xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
+		xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+		xmlns:polist="clr-namespace:RestaurantPro.InventoryFeatures.PurchaseOrders"
 		mc:Ignorable="d" 
 		x:Class="RestaurantPro.MainWindow"
 		Title="Restaurant Pro"
@@ -48,6 +49,9 @@
 		</DataTemplate>		
 		<DataTemplate DataType="{x:Type workcyclelist:AddEditWorkingCycleViewModel}">
 			<workcyclelist:AddEditWorkingCycleView/>
+		</DataTemplate>
+        <DataTemplate DataType="{x:Type polist:PurchaseOrderListViewModel}">
+            <polist:PurchaseOrderListView/>
 		</DataTemplate>
 	</Window.Resources>
 	<!--End of Window Reousrces-->

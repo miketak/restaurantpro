@@ -16,6 +16,7 @@ namespace RestaurantPro.InventoryFeatures
             LogoutCommand = new RelayCommand(OnLogout);
             BackHomeCommand = new RelayCommand(OnHomeClick);
             ManageWorkCyclesCommand = new RelayCommand(OnManageCyclesClick);
+            PurchaseOrdersListViewCommand = new RelayCommand(OnPurchaseOrdersListViewClick);
         }
 
         #region Initialization Methods
@@ -52,6 +53,8 @@ namespace RestaurantPro.InventoryFeatures
 
         public event Action<WpfUser> ManageWorkCyclesRequsted = delegate { };
 
+        public event Action<WpfUser> PurchaseOrdersListsViewRequested = delegate { };
+
         #endregion
 
         #region Commands
@@ -61,6 +64,8 @@ namespace RestaurantPro.InventoryFeatures
         public RelayCommand BackHomeCommand { get; private set; }
 
         public RelayCommand ManageWorkCyclesCommand { get; private set; }
+
+        public RelayCommand PurchaseOrdersListViewCommand { get; private set; }
 
 
         #endregion
@@ -81,6 +86,11 @@ namespace RestaurantPro.InventoryFeatures
         private void OnManageCyclesClick()
         {
             ManageWorkCyclesRequsted(CurrentUser);
+        }
+
+        private void OnPurchaseOrdersListViewClick()
+        {
+            PurchaseOrdersListsViewRequested(CurrentUser);
         }
 
         #endregion

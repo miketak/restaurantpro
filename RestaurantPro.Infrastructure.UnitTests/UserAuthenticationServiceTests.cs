@@ -19,14 +19,14 @@ namespace RestaurantPro.Infrastructure.UnitTests
         }
 
         [TestMethod]
-        public void AuthenticateUserWithCorrectNameCorrectPassword()
+        public async void AuthenticateUserWithCorrectNameCorrectPassword()
         {
             //Arrange
             string expectedUsername = "rkpadi";
             string password = "password";
 
             //Act
-            var user = _userAuthenticationService.AuthenticateUser(expectedUsername, 
+            var user = await _userAuthenticationService.AuthenticateUser(expectedUsername, 
                 ConvertToSecureString(password));
 
             //Assert

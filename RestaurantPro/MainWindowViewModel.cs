@@ -10,6 +10,7 @@ using RestaurantPro.Core;
 using RestaurantPro.Core.Services;
 using RestaurantPro.HomeDashboard;
 using RestaurantPro.InventoryFeatures;
+using RestaurantPro.InventoryFeatures.PurchaseOrders;
 using RestaurantPro.InventoryFeatures.WorkCycles;
 using RestaurantPro.Login;
 using RestaurantPro.Models;
@@ -29,6 +30,7 @@ namespace RestaurantPro
         private InventoryDashboardViewModel _inventoryDashboardViewModel;
         private WorkCycleListViewModel _workCycleListViewModel;
         private AddEditWorkingCycleViewModel _addEditWorkingCycleViewModel;
+        private PurchaseOrderListViewModel _purchaseOrderListViewModel;
 
         /// <summary>
         /// Constructor to subscription of events for overall program navigation.
@@ -43,6 +45,7 @@ namespace RestaurantPro
             _inventoryDashboardViewModel = new InventoryDashboardViewModel();
             _workCycleListViewModel = new WorkCycleListViewModel(unitOfWork, DialogCoordinator.Instance);
             _addEditWorkingCycleViewModel = new AddEditWorkingCycleViewModel(unitOfWork, DialogCoordinator.Instance);
+            _purchaseOrderListViewModel = new PurchaseOrderListViewModel(unitOfWork, DialogCoordinator.Instance);
 
             //Set Login context
             SetLoginContext();
@@ -56,6 +59,7 @@ namespace RestaurantPro
 
             _inventoryDashboardViewModel.LogoutRequested += NavToLoginView;
             _inventoryDashboardViewModel.ManageWorkCyclesRequsted += NavToManageWorkCycles;
+            _inventoryDashboardViewModel.PurchaseOrdersListsViewRequested += NavToPurchaseOrdersListView;
 
             _workCycleListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
             _workCycleListViewModel.LogoutRequested += NavToLoginView;
@@ -65,6 +69,10 @@ namespace RestaurantPro
             _addEditWorkingCycleViewModel.LogoutRequested += NavToLoginView;
             _addEditWorkingCycleViewModel.ManageWorkCyclesRequsted += NavToManageWorkCycles;
             _addEditWorkingCycleViewModel.Done += NavToManageWorkCycles;
+
+            _purchaseOrderListViewModel.LogoutRequested += NavToLoginView;
+            _purchaseOrderListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
+            _purchaseOrderListViewModel.HomeViewRequested += NavToHomeDashboard;
 
 
         }
@@ -148,6 +156,12 @@ namespace RestaurantPro
             _addEditWorkingCycleViewModel.SetCurrentUser(currentUser);
             _addEditWorkingCycleViewModel.SetWorkingCycle(workCycle);
             CurrentViewModel = _addEditWorkingCycleViewModel;
+        }
+
+        private void NavToPurchaseOrdersListView(WpfUser currentUser)
+        {
+            _purchaseOrderListViewModel.SetCurrentUser(currentUser);
+            CurrentViewModel = _purchaseOrderListViewModel;
         }
 
 

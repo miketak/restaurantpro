@@ -16,8 +16,8 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
 {
     public class WorkCycleListViewModel : BindableBase
     {
-        private IUnitOfWork _unitOfWork;
-        private IDialogCoordinator dialogCoordinator;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IDialogCoordinator dialogCoordinator;
         
         /// <summary>
         /// Initialized events and commands
