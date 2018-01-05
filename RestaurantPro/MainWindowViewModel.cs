@@ -31,6 +31,7 @@ namespace RestaurantPro
         private WorkCycleListViewModel _workCycleListViewModel;
         private AddEditWorkingCycleViewModel _addEditWorkingCycleViewModel;
         private PurchaseOrderListViewModel _purchaseOrderListViewModel;
+        private AddEditPurchaseOrderViewModel _addEditPurchaseOrderListViewModel;
 
         /// <summary>
         /// Constructor to subscription of events for overall program navigation.
@@ -46,6 +47,7 @@ namespace RestaurantPro
             _workCycleListViewModel = new WorkCycleListViewModel(unitOfWork, DialogCoordinator.Instance);
             _addEditWorkingCycleViewModel = new AddEditWorkingCycleViewModel(unitOfWork, DialogCoordinator.Instance);
             _purchaseOrderListViewModel = new PurchaseOrderListViewModel(unitOfWork, DialogCoordinator.Instance);
+            _addEditPurchaseOrderListViewModel = new AddEditPurchaseOrderViewModel(unitOfWork, DialogCoordinator.Instance);
 
             //Set Login context
             SetLoginContext();
@@ -73,6 +75,13 @@ namespace RestaurantPro
             _purchaseOrderListViewModel.LogoutRequested += NavToLoginView;
             _purchaseOrderListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
             _purchaseOrderListViewModel.HomeViewRequested += NavToHomeDashboard;
+            _purchaseOrderListViewModel.AddPurchaseOrderRequested += NavToAddPurchaseOrder;
+            _purchaseOrderListViewModel.EditPurchaseOrderRequested += NavToEditPurchaseOrder;
+
+            _addEditPurchaseOrderListViewModel.LogoutRequested += NavToLoginView;
+            _addEditPurchaseOrderListViewModel.HomeViewRequested += NavToHomeDashboard;
+            _addEditPurchaseOrderListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
+            _addEditPurchaseOrderListViewModel.PurchaseOrderListRequested += NavToPurchaseOrdersListView;
 
 
         }
@@ -162,6 +171,22 @@ namespace RestaurantPro
         {
             _purchaseOrderListViewModel.SetCurrentUser(currentUser);
             CurrentViewModel = _purchaseOrderListViewModel;
+        }
+
+        private void NavToAddPurchaseOrder(WpfPurchaseOrder wpfPurchaseOrder, WpfUser currentUser)
+        {
+            _addEditPurchaseOrderListViewModel.EditMode = false;
+            _addEditPurchaseOrderListViewModel.SetCurrentUser(currentUser);
+            //_addEditPurchaseOrderListViewModel.SetPurchaseOrder(wpfPurchaseOrder);
+            CurrentViewModel = _addEditPurchaseOrderListViewModel;
+        }
+
+        private void NavToEditPurchaseOrder(WpfPurchaseOrder wpfPurchaseOrder, WpfUser currentUser)
+        {
+            _addEditPurchaseOrderListViewModel.EditMode = false;
+            _addEditPurchaseOrderListViewModel.SetCurrentUser(currentUser);
+            //_addEditPurchaseOrderListViewModel.SetPurchaseOrder(wpfPurchaseOrder);
+            CurrentViewModel = _addEditPurchaseOrderListViewModel;
         }
 
 

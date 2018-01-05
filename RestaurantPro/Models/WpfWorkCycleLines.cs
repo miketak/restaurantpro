@@ -5,6 +5,9 @@ using RestaurantPro.Infrastructure;
 
 namespace RestaurantPro.Models
 {
+    /// <summary>
+    /// Work Cycle Lines
+    /// </summary>
     public class WpfWorkCycleLines : ValidatableBindableBase
     {
         private readonly IUnitOfWork _unitOfWork = new UnitOfWork(new RestProContext()); //shall be taken out
@@ -67,12 +70,12 @@ namespace RestaurantPro.Models
             }
             set
             {
-                var rawMatFromDataGrid = _unitOfWork
+                var rawMaterialInDb = _unitOfWork
                 .RawMaterials
                 .SingleOrDefault(raw => raw.Name.ToLower() == value.ToLower());
 
-                RawMaterialId = rawMatFromDataGrid != null ? rawMatFromDataGrid.Id : 0;
-                NewRawMaterial = rawMatFromDataGrid == null ? value : null;
+                RawMaterialId = rawMaterialInDb != null ? rawMaterialInDb.Id : 0;
+                NewRawMaterial = rawMaterialInDb == null ? value : null;
             }
         }
 
@@ -81,16 +84,16 @@ namespace RestaurantPro.Models
             get
             {
                 var supplier = _unitOfWork.Suppliers.Get(SupplierId);
-                return supplier != null ? supplier.Name : null;
+                return supplier != null ? supplier.Name : "";
             }
             set
             {
-                var supFromDataGrid = _unitOfWork
+                var supplierInDb = _unitOfWork
                     .Suppliers
                     .SingleOrDefault(sp => sp.Name.ToLower() == value.ToLower());
 
-                SupplierId = supFromDataGrid != null ? supFromDataGrid.Id : 0;
-                NewSupplier = supFromDataGrid == null ? value : null;
+                SupplierId = supplierInDb != null ? supplierInDb.Id : 0;
+                NewSupplier = supplierInDb == null ? value : null;
             }
         }
 

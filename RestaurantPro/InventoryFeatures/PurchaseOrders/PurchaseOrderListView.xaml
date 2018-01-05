@@ -1,60 +1,60 @@
 ﻿<UserControl x:Class="RestaurantPro.InventoryFeatures.PurchaseOrders.PurchaseOrderListView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
-             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-             mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="1000">
-    <Grid>
-        <i:Interaction.Triggers>
-            <i:EventTrigger EventName="Loaded">
-                <ei:CallMethodAction TargetObject="{Binding}" MethodName="LoadPurchaseOrders"/>
-            </i:EventTrigger>
-        </i:Interaction.Triggers>
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+			 xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+			 xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+			 mc:Ignorable="d" 
+			 d:DesignHeight="800" d:DesignWidth="1000">
+	<Grid>
+		<i:Interaction.Triggers>
+			<i:EventTrigger EventName="Loaded">
+				<ei:CallMethodAction TargetObject="{Binding}" MethodName="LoadPurchaseOrders"/>
+			</i:EventTrigger>
+		</i:Interaction.Triggers>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="40" />
-            </Grid.ColumnDefinitions>
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="40" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="40" />
+			</Grid.ColumnDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="15"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="40"/>
+				<RowDefinition Height="40"/>
+				<RowDefinition Height="40"/>
+				<RowDefinition Height="15"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="40"/>
+				<RowDefinition Height="40"/>
+				<RowDefinition/>
+			</Grid.RowDefinitions>
 
-            <!--Standard Grid-->
-            <Grid x:Name="StandardGrid" Margin="0" Grid.ColumnSpan="3" Background="White">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="40"/>
-                    <ColumnDefinition Width="120"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="120"/>
-                    <ColumnDefinition Width="40"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock x:Name="currentUser"
+			<!--Standard Grid-->
+			<Grid x:Name="StandardGrid" Margin="0" Grid.ColumnSpan="3" Background="White">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="40"/>
+					<ColumnDefinition Width="120"/>
+					<ColumnDefinition/>
+					<ColumnDefinition Width="120"/>
+					<ColumnDefinition Width="40"/>
+				</Grid.ColumnDefinitions>
+				<TextBlock x:Name="currentUser"
 				DataContext="{Binding CurrentUser}"
 				Text="{Binding FullName}" 
 				FontSize="16" FontWeight="ExtraBold" FontFamily="Adobe Caslon Pro Bold"
 				Margin="0" Grid.Column="1" VerticalAlignment="Center"/>
-                <Button x:Name="logout" Content="Log Out"
+				<Button x:Name="logout" Content="Log Out"
 				Command="{Binding LogoutCommand}" Grid.Column="3" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" FontSize="14.667" Margin="0"/>
 
 
-            </Grid>
+			</Grid>
 
-            <!--Search Control-->
-            <TextBox controls:TextBoxHelper.Watermark="Search"
+			<!--Search Control-->
+			<TextBox controls:TextBoxHelper.Watermark="Search"
 			controls:TextBoxHelper.ClearTextButton="True"
 			Grid.Row="2" Grid.Column="1"
 			x:Name="SearchTextBox"
@@ -65,85 +65,85 @@
 			VerticalContentAlignment="Center"
 			HorizontalContentAlignment="Center"
 			Margin="0,2" Width="285">
-                <TextBox.Style>
-                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MetroTextBox}" >
-                        <Setter Property="Foreground" Value="{DynamicResource MainForeground}"/>
-                        <Setter Property="BorderBrush" Value="{DynamicResource MainBorderColor}"/>
-                        <Setter Property="BorderThickness" Value="1"/>
-                        <Setter Property="controls:TextBoxHelper.ClearTextButton" Value="True"/>
-                        <Setter Property="Padding" Value="0,1,0,0" />
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Foreground" Value="Orange"/>
-                                <Setter Property="controls:TextBoxHelper.ClearTextButton" Value="True"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBox.Style>
-            </TextBox>
+				<TextBox.Style>
+					<Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MetroTextBox}" >
+						<Setter Property="Foreground" Value="{DynamicResource MainForeground}"/>
+						<Setter Property="BorderBrush" Value="{DynamicResource MainBorderColor}"/>
+						<Setter Property="BorderThickness" Value="1"/>
+						<Setter Property="controls:TextBoxHelper.ClearTextButton" Value="True"/>
+						<Setter Property="Padding" Value="0,1,0,0" />
+						<Style.Triggers>
+							<Trigger Property="IsMouseOver" Value="True">
+								<Setter Property="Foreground" Value="Orange"/>
+								<Setter Property="controls:TextBoxHelper.ClearTextButton" Value="True"/>
+							</Trigger>
+						</Style.Triggers>
+					</Style>
+				</TextBox.Style>
+			</TextBox>
 
-            <!--Purchase Order Data Grid-->
-            <DataGrid x:Name="PurchaseOrderDataGrid"
+			<!--Purchase Order Data Grid-->
+			<DataGrid x:Name="PurchaseOrderDataGrid"
 				  ItemsSource="{Binding PurchaseOrders}"
 				  Grid.Column="1"
 				  AutoGenerateColumns ="False"
-                  Style="{StaticResource AzureDataGrid}"
+				  Style="{StaticResource AzureDataGrid}"
 				  CanUserAddRows="False"
 				  Grid.Row="4" Background="{x:Null}" 
-                  ColumnHeaderStyle="{DynamicResource DataGridStyle}" 
-                  RowBackground="#00000000">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseDoubleClick">
-                        <i:InvokeCommandAction Command="{Binding EditPurchaseOrderCommand}"
-                                           CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding PurchaseOrderNumber}" Header="Purchase Order Number" Width="*"/>
-                    <DataGridTextColumn Binding="{Binding Status}" Header="Status" Width="*"/>
-                    <DataGridTextColumn Binding="{Binding DateCreatedForView}" Header="Date Created" Width="*"/>
-                    <DataGridTextColumn Binding="{Binding WorkCycleName}" Header="Work Cycle Name" Width="*"/>
-                    <DataGridTextColumn Binding="{Binding FullName}" Header="Created By" Width="*"/>
-                    
+				  ColumnHeaderStyle="{DynamicResource DataGridStyle}" 
+				  RowBackground="#00000000">
+				<i:Interaction.Triggers>
+					<i:EventTrigger EventName="MouseDoubleClick">
+						<i:InvokeCommandAction Command="{Binding EditPurchaseOrderCommand}"
+										   CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+					</i:EventTrigger>
+				</i:Interaction.Triggers>
+				<DataGrid.Columns>
+					<DataGridTextColumn Binding="{Binding PurchaseOrderNumber}" Header="Purchase Order Number" Width="*"/>
+					<DataGridTextColumn Binding="{Binding StatusId}" Header="Status" Width="*"/>
+					<DataGridTextColumn Binding="{Binding DateCreatedForView}" Header="Date Created" Width="*"/>
+					<DataGridTextColumn Binding="{Binding WorkCycleName}" Header="Work Cycle Name" Width="*"/>
+					<DataGridTextColumn Binding="{Binding FullName}" Header="Created By" Width="*"/>
+					
 
-                    <!--Edit Work Cycle Template-->
-                    <DataGridTemplateColumn Width="80" MinWidth="80" MaxWidth="80">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Content="Edit Cycle"
+					<!--Edit Work Cycle Template-->
+					<DataGridTemplateColumn Width="80" MinWidth="80" MaxWidth="80">
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<Button Content="Edit Cycle"
 									Command="{Binding DataContext.EditPurchaseOrderCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
 									Style="{StaticResource AccentedSquareButtonStyle}"
 									Foreground="{DynamicResource MainForeground}" Background="Transparent" BorderBrush="Orange"
 									CommandParameter="{Binding}"
 									Margin="5"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <!--End of Edit Work Cycle Template-->
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
+					<!--End of Edit Work Cycle Template-->
 
-                    <!--Deactivate Customer Template-->
-                    <DataGridTemplateColumn Width="80" MinWidth="80" MaxWidth="80">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Content="Deactivate"
+					<!--Deactivate Customer Template-->
+					<DataGridTemplateColumn Width="80" MinWidth="80" MaxWidth="80">
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<Button Content="Deactivate"
 									Style="{StaticResource AccentedSquareButtonStyle}"
 									Foreground="{DynamicResource MainForeground}" Background="Transparent" BorderBrush="Orange"
 									Command="{Binding DataContext.DeactivatePurchaseOrderCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
 									CommandParameter="{Binding}"
 									Margin="5"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <!--End of Deactivate Customer Template-->
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
+					<!--End of Deactivate Customer Template-->
 
-                </DataGrid.Columns>
-            </DataGrid>
+				</DataGrid.Columns>
+			</DataGrid>
 
-            <!--Purchase Order Controls-->
-            <Grid x:Name="PurchaseOrderControls"  Grid.Row="6" Grid.Column="1">
-                <StackPanel Orientation="Horizontal"
+			<!--Purchase Order Controls-->
+			<Grid x:Name="PurchaseOrderControls"  Grid.Row="6" Grid.Column="1">
+				<StackPanel Orientation="Horizontal"
 						Height="30" HorizontalAlignment="Right">
-                    <Button x:Name="DeleteWc"
+					<Button x:Name="DeleteWc"
 					Style="{StaticResource AccentedSquareButtonStyle}" 
 					Command="{Binding DeletePurchaseOrderCommand}"
 					CommandParameter="{Binding SelectedItem, ElementName=PurchaseOrderDataGrid}"
@@ -151,35 +151,35 @@
 					IsDefault="True" 
 					Foreground="{DynamicResource MainForeground}" Background="White" BorderBrush="Orange" HorizontalAlignment="Center" 
 					VerticalAlignment="Bottom" Width="120" Height="30" Margin="0,0,10,0"/>
-                    <Button x:Name="AddWc"
+					<Button x:Name="AddWc"
 					Style="{StaticResource AccentedSquareButtonStyle}" 
 					Command="{Binding AddPurchaseOrderCommand}"
 					Content="ADD"
 					IsDefault="True" 
 					Foreground="{DynamicResource MainForeground}" Background="White" BorderBrush="Orange" HorizontalAlignment="Center" 
 					VerticalAlignment="Bottom" Width="120" Height="30" Margin="0"/>
-                </StackPanel>
-            </Grid>
+				</StackPanel>
+			</Grid>
 
-            <!--Navigation Controls-->
-            <StackPanel x:Name="NavigationPanel" Grid.Column="1" Margin="0" Orientation="Horizontal" Grid.Row="1">
-                <Button x:Name="BackHome" Content="Home /"
+			<!--Navigation Controls-->
+			<StackPanel x:Name="NavigationPanel" Grid.Column="1" Margin="0" Orientation="Horizontal" Grid.Row="1">
+				<Button x:Name="BackHome" Content="Home /"
 				Command="{Binding BackHomeCommand}" Margin="0,5" 
 				FontSize="13.333" FontFamily="Adobe Caslon Pro Bold" 
 				VerticalAlignment="Center" HorizontalAlignment="Left" 
 				Background="#00F7F7F7" BorderBrush="#00F7F7F7" Width="68"/>
-                <Button x:Name="Inventory" Content="Inventory /"
+				<Button x:Name="Inventory" Content="Inventory /"
 				Command="{Binding BackToInventoryCommand}" Margin="0" 
 				FontSize="13.333" FontFamily="Adobe Caslon Pro Bold" 
 				VerticalAlignment="Center" HorizontalAlignment="Left" 
 				Background="#00F7F7F7" BorderBrush="#00F7F7F7"/>
-                <Button x:Name="PurchaseOrders" Content="Purchase Orders" Margin="0,5" 
+				<Button x:Name="PurchaseOrders" Content="Purchase Orders" Margin="0,5" 
 				FontSize="13.333" FontFamily="Adobe Caslon Pro Bold" 
 				VerticalAlignment="Center" HorizontalAlignment="Left" 
 				Background="#00F7F7F7" BorderBrush="#00F7F7F7"/>
-            </StackPanel>
+			</StackPanel>
 
-        </Grid>
+		</Grid>
 
-    </Grid>
+	</Grid>
 </UserControl>

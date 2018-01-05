@@ -22,28 +22,34 @@ namespace RestaurantPro.Models
             set { SetProperty(ref _purchaseOrderNumber, value); }
         }
 
-        public DateTime DateCreated { get; set; }
+
+        private DateTime _dateCreated;
+        public DateTime DateCreated
+        {
+            get { return _dateCreated; }
+            set { SetProperty(ref _dateCreated, value); }
+        }
 
         public int CreatedBy { get; set; }
 
-        public string StatusId { get; set; }
+        private string _statusId;
+        public string StatusId
+        {
+            get { return _statusId; }
+            set { SetProperty(ref _statusId, value); }
+        }
 
         public int WorkCycleId { get; set; }
 
         public bool Active { get; set; }
 
-        public IEnumerable<PurchaseOrderLine> Lines { get; set; }
+        public IEnumerable<WpfPurchaseOrderLine> Lines { get; set; }
 
         #region Purchase Order List View Properties
 
         public string DateCreatedForView
         {
             get { return DateCreated .ToShortDateString(); }
-        }
-
-        public string Status
-        {
-            get { return StatusId;  }
         }
 
         public string FullName

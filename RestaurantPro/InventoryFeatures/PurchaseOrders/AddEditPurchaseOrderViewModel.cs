@@ -1,22 +1,20 @@
 ﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
 using MahApps.Metro.Controls.Dialogs;
 using RestaurantPro.Core;
 using RestaurantPro.Models;
 
 namespace RestaurantPro.InventoryFeatures.PurchaseOrders
 {
-    /// <inheritdoc />
     /// <summary>
-    /// Purchase Order View Model Class
+    /// View Model for Add/Edit Purchase Order View
     /// </summary>
-    public class PurchaseOrderListViewModel : BindableBase
+    public class AddEditPurchaseOrderViewModel : BindableBase
     {
+        private bool _editMode;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IDialogCoordinator dialogCoordinator;
 
-        public PurchaseOrderListViewModel(IUnitOfWork unitOfWork, IDialogCoordinator instance)
+        public AddEditPurchaseOrderViewModel(IUnitOfWork unitOfWork, IDialogCoordinator instance)
         {
             _unitOfWork = unitOfWork;
             dialogCoordinator = instance;
@@ -24,8 +22,7 @@ namespace RestaurantPro.InventoryFeatures.PurchaseOrders
             BackToInventoryCommand = new RelayCommand(OnBackToInventoryInventoryClick);
             LogoutCommand = new RelayCommand(OnLogout);
             BackHomeCommand = new RelayCommand(OnHomeClick);
-            AddPurchaseOrderCommand = new RelayCommand(OnAddPurchaseOrderClick);
-            EditPurchaseOrderCommand = new RelayCommand<WpfPurchaseOrder>(OnEditPurchaseOrderClick);
+            BackToPurchaseOrderListCommand = new RelayCommand(OnPurchaseOrderListClick);
         }
 
         #region Initialization methods
@@ -33,17 +30,6 @@ namespace RestaurantPro.InventoryFeatures.PurchaseOrders
         public void SetCurrentUser(WpfUser user)
         {
             CurrentUser = user;
-        }
-
-        public void LoadPurchaseOrders()
-        {
-            var purchaseOrders = _unitOfWork.PurchaseOrders
-                .GetAll()
-                .Where(u => u.Active = true).ToList();
-
-            var wpfPurchaseOrders = RestproMapper.MapPurchaseOrderListToWpfPurchaseOrderList(purchaseOrders);
-
-            PurchaseOrders = new ObservableCollection<WpfPurchaseOrder>(wpfPurchaseOrders);
         }
 
         #endregion
@@ -57,13 +43,12 @@ namespace RestaurantPro.InventoryFeatures.PurchaseOrders
             set { SetProperty(ref _CurrentUser, value); }
         }
 
-        private ObservableCollection<WpfPurchaseOrder> _purchaseOrders;
-
-        public ObservableCollection<WpfPurchaseOrder> PurchaseOrders
+        public bool EditMode
         {
-            get { return _purchaseOrders; }
-            set { SetProperty(ref _purchaseOrders, value);}
+            get { return _editMode; }
+            set { SetProperty(ref _editMode, value); }
         }
+
         #endregion
 
         #region Events
@@ -74,10 +59,8 @@ namespace RestaurantPro.InventoryFeatures.PurchaseOrders
 
         public event Action<WpfUser> HomeViewRequested = delegate { };
 
-        public event Action<WpfPurchaseOrder, WpfUser> AddPurchaseOrderRequested = delegate { };
-
-        public event Action<WpfPurchaseOrder, WpfUser> EditPurchaseOrderRequested = delegate { };
-
+        public event Action<WpfUser> PurchaseOrderListRequested = delegate { };
+        
         #endregion
 
         #region Commands
@@ -88,13 +71,11 @@ namespace RestaurantPro.InventoryFeatures.PurchaseOrders
 
         public RelayCommand BackHomeCommand { get; private set; }
 
-        public RelayCommand<WpfPurchaseOrder> EditPurchaseOrderCommand { get; private set; }
-
-        public RelayCommand AddPurchaseOrderCommand { get; private set; }
+        public RelayCommand BackToPurchaseOrderListCommand { get; private set; }
 
         #endregion
 
-        #region Event Handling Implementations
+        #region Event Handlings
 
         private void OnBackToInventoryInventoryClick()
         {
@@ -112,19 +93,16 @@ namespace RestaurantPro.InventoryFeatures.PurchaseOrders
             HomeViewRequested(CurrentUser);
         }
 
-        private void OnEditPurchaseOrderClick(WpfPurchaseOrder wpfPurchaseOrder)
+        private void OnPurchaseOrderListClick()
         {
-            EditPurchaseOrderRequested(wpfPurchaseOrder, CurrentUser);
-        }
-
-        private void OnAddPurchaseOrderClick()
-        {
-            AddPurchaseOrderRequested(new WpfPurchaseOrder(), CurrentUser);
+            PurchaseOrderListRequested(CurrentUser);
         }
 
         #endregion
 
+        public void SetPurchaseOrder(WpfPurchaseOrder wpfPurchaseOrder)
+        {
+            throw new NotImplementedException();
+        }
     }
-
-
 }

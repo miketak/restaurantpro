@@ -159,15 +159,19 @@ namespace RestaurantPro.Models
             {
                 cfg.CreateMap<PurchaseOrder, WpfPurchaseOrder>()
                     .ForMember(dest => dest.DateCreatedForView, opt => opt.Ignore())
-                    .ForMember(dest => dest.Status, opt => opt.Ignore())
                     .ForMember(dest => dest.FullName, opt => opt.Ignore())
                     .ForMember(dest => dest.WorkCycleName, opt => opt.Ignore())
-                    .ForMember(dest => dest.Lines, opt => opt.Ignore()); //will be handled by Future Michael
+                    .ForMember(dest => dest.Lines, opt => opt.Ignore());
             });
 
             IMapper iMapper = config.CreateMapper();
 
-            return iMapper.Map<PurchaseOrder, WpfPurchaseOrder>(source);
+            var target =  iMapper.Map<PurchaseOrder, WpfPurchaseOrder>(source);
+
+            if ( source.Lines != null)
+                target.Lines = MapPurchaseOrderLineListToWpfPUrchaseOrderLineList(source.Lines.ToList());
+
+            return target;
         }
 
         internal static List<WpfPurchaseOrder> MapPurchaseOrderListToWpfPurchaseOrderList(List<PurchaseOrder> purchaseOrders)
@@ -177,9 +181,29 @@ namespace RestaurantPro.Models
                 .ToList();
         }
 
+        private static WpfPurchaseOrderLine MapPurchaseOrderLineToWpfPurchaseOrderLine(PurchaseOrderLine source)
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<PurchaseOrderLine, WpfPurchaseOrderLine>()
+                    .ForMember(dest => dest.RawMaterial, opt => opt.Ignore())
+                    .ForMember(dest => dest.TotalPrice, opt => opt.Ignore())
+                    .ForMember(dest => dest.Supplier, opt => opt.Ignore());
+            });
+
+            IMapper iMapper = config.CreateMapper();
+
+            return iMapper.Map<PurchaseOrderLine, WpfPurchaseOrderLine>(source);
+        }
+
+        private static IEnumerable<WpfPurchaseOrderLine> MapPurchaseOrderLineListToWpfPUrchaseOrderLineList(IEnumerable<PurchaseOrderLine> source)
+        {
+            return source
+                .Select(MapPurchaseOrderLineToWpfPurchaseOrderLine)
+                .ToList();
+        }
+
         #endregion
-
-
  
     }
 }

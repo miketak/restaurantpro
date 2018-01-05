@@ -155,6 +155,10 @@
       <DependentUpon>InventoryDashboardView.xaml</DependentUpon>
     </Compile>
     <Compile Include="InventoryFeatures\InventoryDashboardViewModel.cs" />
+    <Compile Include="InventoryFeatures\PurchaseOrders\AddEditPurchaseOrderView.xaml.cs">
+      <DependentUpon>AddEditPurchaseOrderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="InventoryFeatures\PurchaseOrders\AddEditPurchaseOrderViewModel.cs" />
     <Compile Include="InventoryFeatures\PurchaseOrders\PurchaseOrderListView.xaml.cs">
       <DependentUpon>PurchaseOrderListView.xaml</DependentUpon>
     </Compile>
@@ -200,6 +204,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="InventoryFeatures\InventoryDashboardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InventoryFeatures\PurchaseOrders\AddEditPurchaseOrderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
