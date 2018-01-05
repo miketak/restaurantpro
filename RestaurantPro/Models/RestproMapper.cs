@@ -246,7 +246,51 @@ namespace RestaurantPro.Models
             return source.Select(MapWpfPurchaseOrderLineToPurchaseOrderLine)
                 .ToList();
         }
+
         #endregion
- 
+
+        #region Supplier Mappings
+
+        internal static WpfSupplier MapSupplierToWpfSupplier(Supplier source)
+        {
+            var config = new MapperConfiguration(cfg =>
+                cfg.CreateMap<Supplier, WpfSupplier>());
+
+            IMapper iMapper = config.CreateMapper();
+
+            var target = iMapper.Map<Supplier, WpfSupplier>(source);
+
+            return target;
+        }
+
+        internal static List<WpfSupplier> MapSupplierListToWpfSupplierList(List<Supplier> source)
+        {
+            return source
+                .Select(MapSupplierToWpfSupplier)
+                .ToList();
+        }
+
+        internal static Supplier MapWpfSupplierToSupplier(WpfSupplier source)
+        {
+            var config = new MapperConfiguration(cfg =>
+                cfg.CreateMap<WpfSupplier, Supplier>()
+                .ForMember(dest => dest.Active, opt => opt.Ignore()));
+
+            IMapper iMapper = config.CreateMapper();
+
+            var target = iMapper.Map<WpfSupplier, Supplier>(source);
+
+            return target;
+        }
+
+        internal static List<Supplier> MapWpfSupplierListToSupplierList(List<WpfSupplier> source)
+        {
+            return source
+                .Select(MapWpfSupplierToSupplier)
+                .ToList();
+        }
+
+        #endregion
+
     }
 }
