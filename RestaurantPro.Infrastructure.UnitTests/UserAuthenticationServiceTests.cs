@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Security;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RestaurantPro.Core.Services;
 using RestaurantPro.Infrastructure.Repositories;
@@ -19,7 +20,7 @@ namespace RestaurantPro.Infrastructure.UnitTests
         }
 
         [TestMethod]
-        public async void AuthenticateUserWithCorrectNameCorrectPassword()
+        public async Task AuthenticateUserWithCorrectNameCorrectPassword()
         {
             //Arrange
             string expectedUsername = "rkpadi";
@@ -35,40 +36,40 @@ namespace RestaurantPro.Infrastructure.UnitTests
 
         [TestMethod]
         [ExpectedException(typeof(ApplicationException), FailedAuthenticationMessage)]
-        public void AuthenticateUserWithCorrectNameWrongPassword()
+        public async Task AuthenticateUserWithCorrectNameWrongPassword()
         {
             //Arrange
             string expectedUsername = "rkpadi";
             string password = "pass";
 
             //Act
-            var user = _userAuthenticationService.AuthenticateUser(expectedUsername,
+            var user = await _userAuthenticationService.AuthenticateUser(expectedUsername,
                 ConvertToSecureString(password));
         }
 
         [TestMethod]
         [ExpectedException(typeof(ApplicationException), FailedAuthenticationMessage)]
-        public void AuthenticateUserWithWrongNameCorrectPassword()
+        public async Task AuthenticateUserWithWrongNameCorrectPassword()
         {
             //Arrange
             string expectedUsername = "rkgoat";
             string password = "password";
 
             //Act
-            var user = _userAuthenticationService.AuthenticateUser(expectedUsername,
+            var user = await _userAuthenticationService.AuthenticateUser(expectedUsername,
                 ConvertToSecureString(password));
         }
 
         [TestMethod]
         [ExpectedException(typeof(ApplicationException), FailedAuthenticationMessage)]
-        public void AuthenticateUserWithWrongNameWrongPassword()
+        public async Task AuthenticateUserWithWrongNameWrongPassword()
         {
             //Arrange
             string expectedUsername = "zigi";
             string password = "pass";
 
             //Act
-            var user = _userAuthenticationService.AuthenticateUser(expectedUsername,
+            var user = await _userAuthenticationService.AuthenticateUser(expectedUsername,
                 ConvertToSecureString(password));
         }
 

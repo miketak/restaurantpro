@@ -91,7 +91,7 @@ namespace RestaurantPro.Models
             {
                 var workCycle =  _unitOfWork.WorkCycles.SingleOrDefault(wc => wc.Id == WorkCycleId);
 
-                return workCycle == null ? "Not found" : workCycle.Name;
+                return workCycle == null ? "N/A" : workCycle.Name;
             }
         }
 

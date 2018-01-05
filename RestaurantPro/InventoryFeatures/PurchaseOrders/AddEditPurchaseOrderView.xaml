@@ -152,7 +152,7 @@
                             Width="225"
                             VerticalAlignment="Center"
                             ItemsSource="{Binding StatusForCombo}"
-                            SelectedValue="{Binding StatusId}"
+                            SelectedItem="{Binding StatusId, UpdateSourceTrigger=PropertyChanged}"
                             Grid.Row="2"
                             HorizontalAlignment="Left" 
                             Grid.Column="1" />

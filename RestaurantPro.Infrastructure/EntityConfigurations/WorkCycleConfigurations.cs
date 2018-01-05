@@ -16,7 +16,7 @@ namespace RestaurantPro.Infrastructure.EntityConfigurations
                     new IndexAnnotation(new IndexAttribute("IX_WorkCycleName", 1) {IsUnique = true}));
 
             HasMany(t => t.PurchaseOrders)
-                .WithRequired(k => k.WorkCycle)
+                .WithOptional(k => k.WorkCycle)
                 .HasForeignKey(p => p.WorkCycleId)
                 .WillCascadeOnDelete(false);
 

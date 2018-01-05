@@ -24,11 +24,18 @@ namespace RestaurantPro.Infrastructure.Repositories
         /// <param name="purchaseOrder"></param>
         public void AddPurchaseOrder(PurchaseOrder purchaseOrder)
         {
-            _context.PurchaseOrders.Add(purchaseOrder);
-            _context.SaveChanges();
+            if (purchaseOrder.WorkCycleId == 0)
+                purchaseOrder.WorkCycleId = null;
 
             var purchaseOrderInDb = _context.PurchaseOrders
                 .SingleOrDefault(po => po.PurchaseOrderNumber == purchaseOrder.PurchaseOrderNumber);
+
+            if ( purchaseOrderInDb != null)
+                purchaseOrderInDb.StatusId = purchaseOrder.StatusId;
+
+            _context.PurchaseOrders.Add(purchaseOrder);
+            _context.SaveChanges();
+            
 
             try
             {
@@ -49,7 +56,7 @@ namespace RestaurantPro.Infrastructure.Repositories
         public void UpdatePurchaseOrder(PurchaseOrder purchaseOrder)
         {
             var purchaseOrderInDb = SingleOrDefault(x => x.PurchaseOrderNumber == purchaseOrder.PurchaseOrderNumber);
-            purchaseOrderInDb.StatusId = purchaseOrderInDb.StatusId;
+            purchaseOrderInDb.StatusId = purchaseOrder.StatusId;
             _context.SaveChanges();
 
             AddOrUpdateWorkingCycleLines(purchaseOrder);
@@ -89,6 +96,9 @@ namespace RestaurantPro.Infrastructure.Repositories
         {
             if (!purchaseOrder.Lines.Any())
                 return;
+
+            if (purchaseOrder.WorkCycleId == 0)
+                purchaseOrder.WorkCycleId = null;
 
             FlushWorkCycleLines(purchaseOrder);
 

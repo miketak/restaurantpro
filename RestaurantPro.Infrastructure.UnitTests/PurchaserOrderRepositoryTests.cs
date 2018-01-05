@@ -11,8 +11,8 @@ namespace RestaurantPro.Infrastructure.UnitTests
     public class PurchaserOrderRepositoryTests
     {
         private readonly IUnitOfWork _unitOfWork;
-        private const string PurchaseOrderNumber = "105-K1";
-        private const string PurchaseOrderNumber2 = "105-K2";
+        private const string PurchaseOrderNumber = "100";
+        private const string PurchaseOrderNumber2 = "101";
 
 
 

@@ -15,7 +15,7 @@ namespace RestaurantPro.Core.Domain
 
         public string StatusId { get; set; }
 
-        public int WorkCycleId { get; set; }
+        public int? WorkCycleId { get; set; }
 
         public bool Active { get; set; }
 

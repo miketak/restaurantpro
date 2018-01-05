@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using MahApps.Metro.Controls.Dialogs;
@@ -50,10 +51,26 @@ namespace RestaurantPro.InventoryFeatures.PurchaseOrders
                     throw new ApplicationException("Invalid Purchase Order");
 
                 PurchaseOrder.Lines = new BindingList<WpfPurchaseOrderLine>(
-                    RestproMapper.MapPurchaseOrderLineListToWpfPurchaseOrderLineList(purchaseOrderWithLines.PurchaseOrderLines.ToList()));
+                    RestproMapper.MapPurchaseOrderLineListToWpfPurchaseOrderLineList(purchaseOrderWithLines
+                        .PurchaseOrderLines.ToList()));
             }
             else
+            {
                 PurchaseOrder.Lines = new BindingList<WpfPurchaseOrderLine>();
+                PurchaseOrder.CreatedBy = _unitOfWork.Users.SingleOrDefault(x => x.Id == CurrentUser.Id).Id;
+                PurchaseOrder.PurchaseOrderNumber = GenerateNewPurchaseOrderNumber().ToString();
+                PurchaseOrder.StatusId = Statuses.New.ToString();
+                PurchaseOrder.Active = true;
+                PurchaseOrder.DateCreated = DateTime.Today;
+
+                _unitOfWork.PurchaseOrders
+                    .AddPurchaseOrder(
+                    RestproMapper.MapWpfPurchaseOrderToPurchaseOrderWithLines(PurchaseOrder));
+
+                PurchaseOrder.Id = _unitOfWork.PurchaseOrders
+                    .SingleOrDefault(p => p.PurchaseOrderNumber == PurchaseOrder.PurchaseOrderNumber).Id;
+            }
+                
 
             if (PurchaseOrder != null)
                 PurchaseOrder.ErrorsChanged -= RaiseCanExecuteChanged;
@@ -62,6 +79,20 @@ namespace RestaurantPro.InventoryFeatures.PurchaseOrders
             this.PurchaseOrder.Lines.ListChanged += this.OnListChanged;
 
         }
+
+        private int GenerateNewPurchaseOrderNumber()
+        {
+            var poNumbers = _unitOfWork
+                .PurchaseOrders.GetAll()
+                .Select(a => int.Parse(a.PurchaseOrderNumber)).ToList();
+
+            if (poNumbers.Count != 0)
+                return poNumbers.Max() + 1;
+
+            return 9999;
+        }
+
+ 
 
         private void RaiseCanExecuteChanged(object sender, DataErrorsChangedEventArgs e)
         {
@@ -163,8 +194,7 @@ namespace RestaurantPro.InventoryFeatures.PurchaseOrders
             }
             else
             {
-                purchaseOrderEntity.Active = true;
-                _unitOfWork.PurchaseOrders.AddPurchaseOrder(purchaseOrderEntity);
+                _unitOfWork.PurchaseOrders.UpdatePurchaseOrder(purchaseOrderEntity);
                 _unitOfWork.Complete();
             }
 
@@ -187,5 +217,16 @@ namespace RestaurantPro.InventoryFeatures.PurchaseOrders
         #endregion
 
 
+    }
+
+
+    enum Statuses
+    {
+        Canceled,
+        Changed,
+        Closed,
+        InProgress,
+        New,
+        Received
     }
 }
