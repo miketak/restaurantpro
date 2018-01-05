@@ -22,6 +22,8 @@
         public virtual RawMaterial RawMaterial { get; set; }
 
         public virtual Supplier Supplier { get; set; }
+        public string SupplierStringTemp { get; set; }
+        public string RawMaterialStringTemp { get; set; }
 
         #endregion
 

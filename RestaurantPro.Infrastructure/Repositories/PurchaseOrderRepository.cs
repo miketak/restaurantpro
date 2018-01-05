@@ -30,32 +30,29 @@ namespace RestaurantPro.Infrastructure.Repositories
             var purchaseOrderInDb = _context.PurchaseOrders
                 .SingleOrDefault(po => po.PurchaseOrderNumber == purchaseOrder.PurchaseOrderNumber);
 
-            if (purchaseOrderInDb != null)
-            {
-                purchaseOrder.Lines
-                    .ToList()
-                    .ForEach(p => p.PurchaseOrderId = purchaseOrderInDb.Id);
-            }
-
-            purchaseOrder.Lines.ToList().ForEach(p => _context.PurchaseOrderLines.Add(p));
-
             try
             {
-                _context.SaveChanges();
+                AddOrUpdateWorkingCycleLines(purchaseOrder);
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.Message);
-
-                //Remove Purchase Order
                 if (purchaseOrderInDb != null)
                 {
                     _context.PurchaseOrders.Remove(purchaseOrderInDb);
                     _context.SaveChanges();
                 }
-                throw e;
+                throw new ApplicationException("Database Error: " + e.Message);
             }
             
+        }
+
+        public void UpdatePurchaseOrder(PurchaseOrder purchaseOrder)
+        {
+            var purchaseOrderInDb = SingleOrDefault(x => x.PurchaseOrderNumber == purchaseOrder.PurchaseOrderNumber);
+            purchaseOrderInDb.StatusId = purchaseOrderInDb.StatusId;
+            _context.SaveChanges();
+
+            AddOrUpdateWorkingCycleLines(purchaseOrder);
         }
 
         /// <summary>
@@ -85,5 +82,55 @@ namespace RestaurantPro.Infrastructure.Repositories
                     .Where(c => c.Active == isActive)
                     .SingleOrDefault(c => c.Id == purchaseOrderId);
         }
+
+        #region Private Helper Methods
+
+        private void AddOrUpdateWorkingCycleLines(PurchaseOrder purchaseOrder)
+        {
+            if (!purchaseOrder.Lines.Any())
+                return;
+
+            FlushWorkCycleLines(purchaseOrder);
+
+            foreach (var line in purchaseOrder.Lines)
+            {
+                line.PurchaseOrderId = purchaseOrder.Id;
+
+                if (line.RawMaterialId == 0)
+                    line.RawMaterialId = AddNewRawMaterialToRawMaterialTable(line);
+
+                if (line.SupplierId == 0)
+                    line.SupplierId = AddNewSupplierToSupplierTable(line);
+
+                _context.PurchaseOrderLines.Add(line);
+
+                _context.SaveChanges();
+            }
+        }
+
+        private int AddNewSupplierToSupplierTable(PurchaseOrderLine line)
+        {
+            _context.Suppliers.Add(new Supplier { Name = line.SupplierStringTemp, Active = true });
+            _context.SaveChanges();
+            return _context.Suppliers.SingleOrDefault(s => s.Name == line.SupplierStringTemp).Id;
+        }
+
+        private int AddNewRawMaterialToRawMaterialTable(PurchaseOrderLine line)
+        {
+            _context.RawMaterials.Add(new RawMaterial { Name = line.RawMaterialStringTemp, RawMaterialCategoryId = 1 });
+            _context.SaveChanges();
+            return _context.RawMaterials.SingleOrDefault(r => r.Name == line.RawMaterialStringTemp).Id;
+        }
+
+        private void FlushWorkCycleLines(PurchaseOrder purchaseOrder)
+        {
+            var linesToBeFlushed = _context.PurchaseOrderLines.Where(wc => wc.PurchaseOrderId == purchaseOrder.Id).ToList();
+            _context.PurchaseOrderLines.RemoveRange(linesToBeFlushed);
+            _context.SaveChanges();
+        }
+
+
+
+        #endregion
     }
 }

@@ -8,5 +8,6 @@ namespace RestaurantPro.Core.Repositories
 
         PurchaseOrder GetPurchaseOrderByPurchaseOrderNumber(string purchaseOrderNumber, bool isActive);
         PurchaseOrder GetPurchaseOrderById(int purchaseOrderId, bool isActive);
+        void UpdatePurchaseOrder(PurchaseOrder purchaseOrder);
     }
 }

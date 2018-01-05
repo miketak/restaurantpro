@@ -72,7 +72,7 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
                     .GetWorkCycleByWorkCycleName(WorkCycle.Name, true);
 
                 if(workCycleWithLines == null)
-                    throw new ApplicationException("Work Cycle is currently inactive");
+                    throw new ApplicationException("Invalid Work Cycle");
 
                 WorkCycle.Lines = new BindingList<WpfWorkCycleLines>(
                     RestproMapper.MapWorkCycleLinesToWpfWorkCycleList(workCycleWithLines

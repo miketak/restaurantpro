@@ -66,7 +66,7 @@ namespace RestaurantPro.Models
             get
             {
                 var rawMaterial = _unitOfWork.RawMaterials.Get(RawMaterialId);
-                return rawMaterial != null ? rawMaterial.Name : null;
+                return rawMaterial != null ? rawMaterial.Name : NewRawMaterial;
             }
             set
             {
@@ -84,7 +84,7 @@ namespace RestaurantPro.Models
             get
             {
                 var supplier = _unitOfWork.Suppliers.Get(SupplierId);
-                return supplier != null ? supplier.Name : "";
+                return supplier != null ? supplier.Name : NewSupplier;
             }
             set
             {

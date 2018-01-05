@@ -13,6 +13,9 @@ namespace RestaurantPro.Infrastructure.EntityConfigurations
                 table.SupplierId,
                 table.RawMaterialId
             });
+
+            Ignore(a => a.SupplierStringTemp);
+            Ignore(a => a.RawMaterialStringTemp);
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Linq;
 using MahApps.Metro.Controls.Dialogs;
 using RestaurantPro.Core;
 using RestaurantPro.Models;
@@ -19,10 +21,12 @@ namespace RestaurantPro.InventoryFeatures.PurchaseOrders
             _unitOfWork = unitOfWork;
             dialogCoordinator = instance;
 
+
             BackToInventoryCommand = new RelayCommand(OnBackToInventoryInventoryClick);
             LogoutCommand = new RelayCommand(OnLogout);
             BackHomeCommand = new RelayCommand(OnHomeClick);
             BackToPurchaseOrderListCommand = new RelayCommand(OnPurchaseOrderListClick);
+            SaveCommand = new RelayCommand(OnSave, CanSave);
         }
 
         #region Initialization methods
@@ -30,6 +34,38 @@ namespace RestaurantPro.InventoryFeatures.PurchaseOrders
         public void SetCurrentUser(WpfUser user)
         {
             CurrentUser = user;
+        }
+
+        public void SetPurchaseOrder(WpfPurchaseOrder wpfPurchaseOrder)
+        {
+            PurchaseOrder = wpfPurchaseOrder;
+
+            if (EditMode)
+            {
+                var purchaseOrderWithLines = _unitOfWork
+                    .PurchaseOrders
+                    .GetPurchaseOrderByPurchaseOrderNumber(wpfPurchaseOrder.PurchaseOrderNumber, true);
+
+                if (purchaseOrderWithLines == null)
+                    throw new ApplicationException("Invalid Purchase Order");
+
+                PurchaseOrder.Lines = new BindingList<WpfPurchaseOrderLine>(
+                    RestproMapper.MapPurchaseOrderLineListToWpfPurchaseOrderLineList(purchaseOrderWithLines.PurchaseOrderLines.ToList()));
+            }
+            else
+                PurchaseOrder.Lines = new BindingList<WpfPurchaseOrderLine>();
+
+            if (PurchaseOrder != null)
+                PurchaseOrder.ErrorsChanged -= RaiseCanExecuteChanged;
+
+            PurchaseOrder.ErrorsChanged += RaiseCanExecuteChanged;
+            this.PurchaseOrder.Lines.ListChanged += this.OnListChanged;
+
+        }
+
+        private void RaiseCanExecuteChanged(object sender, DataErrorsChangedEventArgs e)
+        {
+            SaveCommand.RaiseCanExecuteChanged();
         }
 
         #endregion
@@ -49,6 +85,19 @@ namespace RestaurantPro.InventoryFeatures.PurchaseOrders
             set { SetProperty(ref _editMode, value); }
         }
 
+        private WpfPurchaseOrder _purchaseOrder;
+
+        public WpfPurchaseOrder PurchaseOrder
+        {
+            get { return _purchaseOrder; }
+            set
+            {
+                if (PurchaseOrder != null)
+                    PurchaseOrder.UpdateSubTotalSection();
+                SetProperty(ref _purchaseOrder, value);
+            }
+        }
+
         #endregion
 
         #region Events
@@ -60,6 +109,10 @@ namespace RestaurantPro.InventoryFeatures.PurchaseOrders
         public event Action<WpfUser> HomeViewRequested = delegate { };
 
         public event Action<WpfUser> PurchaseOrderListRequested = delegate { };
+
+        public event Action<WpfUser> Done = delegate { };
+
+        public event ListChangedEventHandler ListChanged;
         
         #endregion
 
@@ -72,6 +125,8 @@ namespace RestaurantPro.InventoryFeatures.PurchaseOrders
         public RelayCommand BackHomeCommand { get; private set; }
 
         public RelayCommand BackToPurchaseOrderListCommand { get; private set; }
+
+        public RelayCommand SaveCommand { get; private set; }
 
         #endregion
 
@@ -98,11 +153,39 @@ namespace RestaurantPro.InventoryFeatures.PurchaseOrders
             PurchaseOrderListRequested(CurrentUser);
         }
 
+        private async void OnSave()
+        {
+            var purchaseOrderEntity = RestproMapper.MapWpfPurchaseOrderToPurchaseOrderWithLines(PurchaseOrder);
+
+            if (_editMode)
+            {
+                _unitOfWork.PurchaseOrders.UpdatePurchaseOrder(purchaseOrderEntity);
+            }
+            else
+            {
+                purchaseOrderEntity.Active = true;
+                _unitOfWork.PurchaseOrders.AddPurchaseOrder(purchaseOrderEntity);
+                _unitOfWork.Complete();
+            }
+
+            var controller = await dialogCoordinator.ShowMessageAsync(this, "Success", "Items Saved Successfully. You Rock!");
+
+            if (controller == MessageDialogResult.Affirmative)
+                Done(CurrentUser);
+        }
+
+        private bool CanSave()
+        {
+            return !PurchaseOrder.HasErrors;
+        }
+
+        private void OnListChanged(object sender, ListChangedEventArgs e)
+        {
+            PurchaseOrder.UpdateSubTotalSection();
+        }
+
         #endregion
 
-        public void SetPurchaseOrder(WpfPurchaseOrder wpfPurchaseOrder)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }

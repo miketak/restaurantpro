@@ -82,6 +82,7 @@ namespace RestaurantPro
             _addEditPurchaseOrderListViewModel.HomeViewRequested += NavToHomeDashboard;
             _addEditPurchaseOrderListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
             _addEditPurchaseOrderListViewModel.PurchaseOrderListRequested += NavToPurchaseOrdersListView;
+            _addEditPurchaseOrderListViewModel.Done += NavToPurchaseOrdersListView;
 
 
         }
@@ -177,15 +178,15 @@ namespace RestaurantPro
         {
             _addEditPurchaseOrderListViewModel.EditMode = false;
             _addEditPurchaseOrderListViewModel.SetCurrentUser(currentUser);
-            //_addEditPurchaseOrderListViewModel.SetPurchaseOrder(wpfPurchaseOrder);
+            _addEditPurchaseOrderListViewModel.SetPurchaseOrder(wpfPurchaseOrder);
             CurrentViewModel = _addEditPurchaseOrderListViewModel;
         }
 
         private void NavToEditPurchaseOrder(WpfPurchaseOrder wpfPurchaseOrder, WpfUser currentUser)
         {
-            _addEditPurchaseOrderListViewModel.EditMode = false;
+            _addEditPurchaseOrderListViewModel.EditMode = true;
             _addEditPurchaseOrderListViewModel.SetCurrentUser(currentUser);
-            //_addEditPurchaseOrderListViewModel.SetPurchaseOrder(wpfPurchaseOrder);
+            _addEditPurchaseOrderListViewModel.SetPurchaseOrder(wpfPurchaseOrder);
             CurrentViewModel = _addEditPurchaseOrderListViewModel;
         }
 

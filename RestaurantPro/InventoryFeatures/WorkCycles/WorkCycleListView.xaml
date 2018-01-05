@@ -5,37 +5,37 @@
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 			 xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
-             xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-             xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-             dialogs:DialogParticipation.Register="{Binding}"
+			 xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+			 xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+			 dialogs:DialogParticipation.Register="{Binding}"
 			 mc:Ignorable="d" 
 			 d:DesignHeight="800" d:DesignWidth="1000">
 
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <ei:CallMethodAction TargetObject="{Binding}" MethodName="LoadWorkCycles"/>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
+	<i:Interaction.Triggers>
+		<i:EventTrigger EventName="Loaded">
+			<ei:CallMethodAction TargetObject="{Binding}" MethodName="LoadWorkCycles"/>
+		</i:EventTrigger>
+	</i:Interaction.Triggers>
 
-    <Grid>
+	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="40" />
 			<ColumnDefinition Width="*" />
 			<ColumnDefinition Width="40" />
 		</Grid.ColumnDefinitions>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="15"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="40"/>
+			<RowDefinition Height="40"/>
+			<RowDefinition Height="40"/>
+			<RowDefinition Height="15"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="40"/>
+			<RowDefinition Height="40"/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
 
-        <!--Standard Grid-->
+		<!--Standard Grid-->
 		<Grid x:Name="StandardGrid" Margin="0" Grid.ColumnSpan="3" Background="White">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="40"/>
@@ -54,8 +54,8 @@
 
 
 		</Grid>
-        
-        <!--Search Control-->
+		
+		<!--Search Control-->
 		<TextBox controls:TextBoxHelper.Watermark="Search"
 			controls:TextBoxHelper.ClearTextButton="True"
 			Grid.Row="2" Grid.Column="1"
@@ -85,29 +85,29 @@
 		</TextBox>
 
 		<!--Working Cycle Data Grid-->
-        <DataGrid x:Name="WorkingCycleDataGrid"
+		<DataGrid x:Name="WorkingCycleDataGrid"
 				  ItemsSource="{Binding WorkCycles}"
 				  Grid.Column="1"
 				  AutoGenerateColumns ="False"
-                  Style="{StaticResource AzureDataGrid}"
+				  Style="{StaticResource AzureDataGrid}"
 				  CanUserAddRows="False"
 				  Grid.Row="4" Background="{x:Null}" 
-                  ColumnHeaderStyle="{DynamicResource DataGridStyle}" 
-                  RowBackground="#00000000">
-        	<i:Interaction.Triggers>
-        		<i:EventTrigger EventName="MouseDoubleClick">
-                    <i:InvokeCommandAction Command="{Binding EditWorkCycleCommand}"
-                                           CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
-        		</i:EventTrigger>
-        	</i:Interaction.Triggers>
-            <DataGrid.Columns>
+				  ColumnHeaderStyle="{DynamicResource DataGridStyle}" 
+				  RowBackground="#00000000">
+			<i:Interaction.Triggers>
+				<i:EventTrigger EventName="MouseDoubleClick">
+					<i:InvokeCommandAction Command="{Binding EditWorkCycleCommand}"
+										   CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+				</i:EventTrigger>
+			</i:Interaction.Triggers>
+			<DataGrid.Columns>
 				<DataGridTextColumn Binding="{Binding Name}" Header="Cycle Name" Width="*"/>
 				<DataGridTextColumn Binding="{Binding DateBeginForView}" Header="Beginning Date" Width="*"/>
 				<DataGridTextColumn Binding="{Binding DateEndForView}" Header="Ending Date" Width="*"/>
 				<DataGridTextColumn Binding="{Binding ActiveForView}" Header="Activity Status" Width="*"/>
-                <DataGridTextColumn Binding="{Binding FullName}" Header="Created By" Width="*"/>
+				<DataGridTextColumn Binding="{Binding FullName}" Header="Created By" Width="*"/>
 
-                <!--Edit Work Cycle Template-->
+				<!--Edit Work Cycle Template-->
 				<DataGridTemplateColumn Width="80" MinWidth="80" MaxWidth="80">
 					<DataGridTemplateColumn.CellTemplate>
 						<DataTemplate>
@@ -161,23 +161,23 @@
 					VerticalAlignment="Bottom" Width="120" Height="30" Margin="0"/>
 			</StackPanel>
 		</Grid>
-        
-        <!--Navigation Controls-->
-        <StackPanel x:Name="NavigationPanel" Grid.Column="1" Margin="0" Orientation="Horizontal" Grid.Row="1">
-            <Button x:Name="BackHome" Content="Home /"
+		
+		<!--Navigation Controls-->
+		<StackPanel x:Name="NavigationPanel" Grid.Column="1" Margin="0" Orientation="Horizontal" Grid.Row="1">
+			<Button x:Name="BackHome" Content="Home /"
 				Command="{Binding BackHomeCommand}" Margin="0,5" 
 				FontSize="13.333" FontFamily="Adobe Caslon Pro Bold" 
 				VerticalAlignment="Center" HorizontalAlignment="Left" 
 				Background="#00F7F7F7" BorderBrush="#00F7F7F7" Width="68"/>
-            <Button x:Name="Inventory" Content="Inventory /"
+			<Button x:Name="Inventory" Content="Inventory /"
 				Command="{Binding BackToInventoryCommand}" Margin="0" 
 				FontSize="13.333" FontFamily="Adobe Caslon Pro Bold" 
 				VerticalAlignment="Center" HorizontalAlignment="Left" 
 				Background="#00F7F7F7" BorderBrush="#00F7F7F7"/>
-            <Button x:Name="WorkingCycles" Content="Work Cycles" Margin="0,5" 
+			<Button x:Name="WorkingCycles" Content="Work Cycles" Margin="0,5" 
 				FontSize="13.333" FontFamily="Adobe Caslon Pro Bold" 
 				VerticalAlignment="Center" HorizontalAlignment="Left" 
 				Background="#00F7F7F7" BorderBrush="#00F7F7F7"/>
-        </StackPanel>
-    </Grid>
+		</StackPanel>
+	</Grid>
 </UserControl>

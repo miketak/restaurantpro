@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using AutoMapper;
 using RestaurantPro.Core.Domain;
@@ -169,7 +170,7 @@ namespace RestaurantPro.Models
             var target =  iMapper.Map<PurchaseOrder, WpfPurchaseOrder>(source);
 
             if ( source.Lines != null)
-                target.Lines = MapPurchaseOrderLineListToWpfPUrchaseOrderLineList(source.Lines.ToList());
+                target.Lines = new BindingList<WpfPurchaseOrderLine>(MapPurchaseOrderLineListToWpfPurchaseOrderLineList(source.Lines.ToList()));
 
             return target;
         }
@@ -196,13 +197,55 @@ namespace RestaurantPro.Models
             return iMapper.Map<PurchaseOrderLine, WpfPurchaseOrderLine>(source);
         }
 
-        private static IEnumerable<WpfPurchaseOrderLine> MapPurchaseOrderLineListToWpfPUrchaseOrderLineList(IEnumerable<PurchaseOrderLine> source)
+        public static List<WpfPurchaseOrderLine> MapPurchaseOrderLineListToWpfPurchaseOrderLineList(List<PurchaseOrderLine> source)
         {
             return source
                 .Select(MapPurchaseOrderLineToWpfPurchaseOrderLine)
                 .ToList();
         }
 
+        internal static PurchaseOrder MapWpfPurchaseOrderToPurchaseOrderWithLines(WpfPurchaseOrder source)
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<WpfPurchaseOrder, PurchaseOrder>()
+                    .ForMember(dest => dest.Lines, opt => opt.Ignore());
+            });
+
+            IMapper iMapper = config.CreateMapper();
+
+            var target = iMapper.Map<WpfPurchaseOrder, PurchaseOrder>(source);
+
+            target.Lines = MapWpfPurchaseOrderLineListToPurchaseOrderLineList(source.Lines.ToList());
+
+            return target;
+        }
+
+        private static PurchaseOrderLine MapWpfPurchaseOrderLineToPurchaseOrderLine(WpfPurchaseOrderLine source)
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<WpfPurchaseOrderLine, PurchaseOrderLine>()
+                    .ForMember(dest => dest.RawMaterial, opt => opt.Ignore())
+                    .ForMember(dest => dest.PurchaseOrder, opt => opt.Ignore())
+                    .ForMember(dest => dest.Supplier, opt => opt.Ignore())
+                    .ForMember(dest => dest.RawMaterialStringTemp, opt => opt.MapFrom(src => src.NewRawMaterial))
+                    .ForMember(dest => dest.SupplierStringTemp, opt => opt.MapFrom(src => src.NewSupplier));
+            });
+
+            IMapper iMapper = config.CreateMapper();
+
+            var target = iMapper.Map<WpfPurchaseOrderLine, PurchaseOrderLine>(source);
+
+            return target;
+        }
+
+        private static List<PurchaseOrderLine> MapWpfPurchaseOrderLineListToPurchaseOrderLineList(
+            List<WpfPurchaseOrderLine> source)
+        {
+            return source.Select(MapWpfPurchaseOrderLineToPurchaseOrderLine)
+                .ToList();
+        }
         #endregion
  
     }

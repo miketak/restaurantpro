@@ -39,7 +39,7 @@ namespace RestaurantPro.InventoryFeatures.PurchaseOrders
         {
             var purchaseOrders = _unitOfWork.PurchaseOrders
                 .GetAll()
-                .Where(u => u.Active = true).ToList();
+                .Where(u => u.Active).ToList();
 
             var wpfPurchaseOrders = RestproMapper.MapPurchaseOrderListToWpfPurchaseOrderList(purchaseOrders);
 
