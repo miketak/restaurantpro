@@ -11,6 +11,7 @@
 		xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
 		xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
 		xmlns:polist="clr-namespace:RestaurantPro.InventoryFeatures.PurchaseOrders"
+		xmlns:supplier="clr-namespace:RestaurantPro.InventoryFeatures.Suppliers"
 		mc:Ignorable="d" 
 		x:Class="RestaurantPro.MainWindow"
 		Title="Restaurant Pro"
@@ -55,6 +56,9 @@
 		</DataTemplate>		
 		<DataTemplate DataType="{x:Type polist:AddEditPurchaseOrderViewModel}">
 			<polist:AddEditPurchaseOrderView/>
+		</DataTemplate>		
+	    <DataTemplate DataType="{x:Type supplier:SupplierListViewModel}">
+            <supplier:SupplierListView/>
 		</DataTemplate>
 	</Window.Resources>
 	<!--End of Window Reousrces-->

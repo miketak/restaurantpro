@@ -179,5 +179,6 @@
 				VerticalAlignment="Center" HorizontalAlignment="Left" 
 				Background="#00F7F7F7" BorderBrush="#00F7F7F7"/>
 		</StackPanel>
+
 	</Grid>
 </UserControl>

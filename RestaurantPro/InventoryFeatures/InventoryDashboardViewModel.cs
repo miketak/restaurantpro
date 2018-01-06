@@ -17,6 +17,7 @@ namespace RestaurantPro.InventoryFeatures
             BackHomeCommand = new RelayCommand(OnHomeClick);
             ManageWorkCyclesCommand = new RelayCommand(OnManageCyclesClick);
             PurchaseOrdersListViewCommand = new RelayCommand(OnPurchaseOrdersListViewClick);
+            SupplierListViewCommand = new RelayCommand(OnSupplierListViewClick);
         }
 
         #region Initialization Methods
@@ -29,7 +30,7 @@ namespace RestaurantPro.InventoryFeatures
         {
             CurrentUser = user;
         }
-        
+
 
         #endregion
 
@@ -47,13 +48,15 @@ namespace RestaurantPro.InventoryFeatures
 
         #region Events
 
-        public event Action<WpfUser> LogoutRequested = delegate { };
+        public event Action<WpfUser> LogoutRequested = delegate {};
 
-        public event Action<WpfUser> HomeDashboardRequested = delegate { };
+        public event Action<WpfUser> HomeDashboardRequested = delegate {};
 
-        public event Action<WpfUser> ManageWorkCyclesRequsted = delegate { };
+        public event Action<WpfUser> ManageWorkCyclesRequsted = delegate {};
 
-        public event Action<WpfUser> PurchaseOrdersListsViewRequested = delegate { };
+        public event Action<WpfUser> PurchaseOrdersListsViewRequested = delegate {};
+
+        public event Action<WpfUser> SupplierListViewRequested = delegate {};
 
         #endregion
 
@@ -66,6 +69,8 @@ namespace RestaurantPro.InventoryFeatures
         public RelayCommand ManageWorkCyclesCommand { get; private set; }
 
         public RelayCommand PurchaseOrdersListViewCommand { get; private set; }
+
+        public RelayCommand SupplierListViewCommand { get; private set; }
 
 
         #endregion
@@ -93,7 +98,11 @@ namespace RestaurantPro.InventoryFeatures
             PurchaseOrdersListsViewRequested(CurrentUser);
         }
 
-        #endregion
+        private void OnSupplierListViewClick()
+        {
+            SupplierListViewRequested(CurrentUser);
+        }
 
+        #endregion
     }
 }

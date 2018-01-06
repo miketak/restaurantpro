@@ -110,7 +110,7 @@
 					<DataGridTemplateColumn Width="80" MinWidth="80" MaxWidth="80">
 						<DataGridTemplateColumn.CellTemplate>
 							<DataTemplate>
-								<Button Content="Edit Cycle"
+								<Button Content="Edit Purchase Order"
 									Command="{Binding DataContext.EditPurchaseOrderCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
 									Style="{StaticResource AccentedSquareButtonStyle}"
 									Foreground="{DynamicResource MainForeground}" Background="Transparent" BorderBrush="Orange"

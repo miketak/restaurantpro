@@ -163,6 +163,10 @@
       <DependentUpon>PurchaseOrderListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="InventoryFeatures\PurchaseOrders\PurchaseOrderListViewModel.cs" />
+    <Compile Include="InventoryFeatures\Suppliers\SupplierListView.xaml.cs">
+      <DependentUpon>SupplierListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="InventoryFeatures\Suppliers\SupplierListViewModel.cs" />
     <Compile Include="InventoryFeatures\WorkCycles\AddEditWorkingCycleView.xaml.cs">
       <DependentUpon>AddEditWorkingCycleView.xaml</DependentUpon>
     </Compile>
@@ -179,6 +183,7 @@
     <Compile Include="Models\RestproMapper.cs" />
     <Compile Include="Models\WpfPurchaseOrder.cs" />
     <Compile Include="Models\WpfPurchaseOrderLine.cs" />
+    <Compile Include="Models\WpfSupplier.cs" />
     <Compile Include="Models\WpfUser.cs" />
     <Compile Include="Models\WpfWorkCycle.cs" />
     <Compile Include="Models\WpfWorkCycleLines.cs" />
@@ -212,6 +217,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="InventoryFeatures\PurchaseOrders\PurchaseOrderListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InventoryFeatures\Suppliers\SupplierListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

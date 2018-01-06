@@ -42,7 +42,9 @@
     </Grid>
         
     <!--Functions Section-->
-    <WrapPanel x:Name="FunctionsWrapPanel" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0" Grid.Column="1" Grid.Row="3">
+    <WrapPanel x:Name="FunctionsWrapPanel" 
+               Orientation="Horizontal" HorizontalAlignment="Left" 
+               Margin="0" Grid.Column="1" Grid.Row="3">
 		
         <!--Manage Work Cycles List View Function-->
         <Button x:Name ="MangeWorkCycleList" 
@@ -73,6 +75,21 @@
                        FontSize="15" TextAlignment="Center" 
                        FontFamily="Arial" FontWeight="DemiBold"/>
         </Button>
+        
+        <!--Supplier List View Function-->
+        <Button x:Name ="SupplierListView" 
+                Style="{DynamicResource MetroTileStyle}"
+                Command="{Binding SupplierListViewCommand}"
+                Height="120" Width="120"
+                Margin="20 20 20 20"
+                BorderBrush="#FFCA5502">
+                <Button.Effect>
+                    <DropShadowEffect BlurRadius="15"/>
+                </Button.Effect>
+                <TextBlock Text="Suppliers" TextWrapping="Wrap" 
+                       FontSize="15" TextAlignment="Center" 
+                       FontFamily="Arial" FontWeight="DemiBold"/>
+            </Button>
 
         </WrapPanel>
 

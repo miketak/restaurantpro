@@ -11,6 +11,7 @@ using RestaurantPro.Core.Services;
 using RestaurantPro.HomeDashboard;
 using RestaurantPro.InventoryFeatures;
 using RestaurantPro.InventoryFeatures.PurchaseOrders;
+using RestaurantPro.InventoryFeatures.Suppliers;
 using RestaurantPro.InventoryFeatures.WorkCycles;
 using RestaurantPro.Login;
 using RestaurantPro.Models;
@@ -32,6 +33,7 @@ namespace RestaurantPro
         private AddEditWorkingCycleViewModel _addEditWorkingCycleViewModel;
         private PurchaseOrderListViewModel _purchaseOrderListViewModel;
         private AddEditPurchaseOrderViewModel _addEditPurchaseOrderListViewModel;
+        private SupplierListViewModel _supplierListViewModel;
 
         /// <summary>
         /// Constructor to subscription of events for overall program navigation.
@@ -48,6 +50,7 @@ namespace RestaurantPro
             _addEditWorkingCycleViewModel = new AddEditWorkingCycleViewModel(unitOfWork, DialogCoordinator.Instance);
             _purchaseOrderListViewModel = new PurchaseOrderListViewModel(unitOfWork, DialogCoordinator.Instance);
             _addEditPurchaseOrderListViewModel = new AddEditPurchaseOrderViewModel(unitOfWork, DialogCoordinator.Instance);
+            _supplierListViewModel = new SupplierListViewModel(unitOfWork, DialogCoordinator.Instance);
 
             //Set Login context
             SetLoginContext();
@@ -62,6 +65,7 @@ namespace RestaurantPro
             _inventoryDashboardViewModel.LogoutRequested += NavToLoginView;
             _inventoryDashboardViewModel.ManageWorkCyclesRequsted += NavToManageWorkCycles;
             _inventoryDashboardViewModel.PurchaseOrdersListsViewRequested += NavToPurchaseOrdersListView;
+            _inventoryDashboardViewModel.SupplierListViewRequested += NavToSupplierListView;
 
             _workCycleListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
             _workCycleListViewModel.LogoutRequested += NavToLoginView;
@@ -83,6 +87,10 @@ namespace RestaurantPro
             _addEditPurchaseOrderListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
             _addEditPurchaseOrderListViewModel.PurchaseOrderListRequested += NavToPurchaseOrdersListView;
             _addEditPurchaseOrderListViewModel.Done += NavToPurchaseOrdersListView;
+
+            _supplierListViewModel.LogoutRequested += NavToLoginView;
+            _supplierListViewModel.HomeViewRequested += NavToHomeDashboard;
+            _supplierListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
 
 
         }
@@ -188,6 +196,12 @@ namespace RestaurantPro
             _addEditPurchaseOrderListViewModel.SetCurrentUser(currentUser);
             _addEditPurchaseOrderListViewModel.SetPurchaseOrder(wpfPurchaseOrder);
             CurrentViewModel = _addEditPurchaseOrderListViewModel;
+        }
+
+        private void NavToSupplierListView(WpfUser currentUser)
+        {
+            _supplierListViewModel.SetCurrentUser(currentUser);
+            CurrentViewModel = _supplierListViewModel;
         }
 
 
