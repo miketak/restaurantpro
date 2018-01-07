@@ -69,6 +69,7 @@ namespace RestaurantPro
 
             _workCycleListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
             _workCycleListViewModel.LogoutRequested += NavToLoginView;
+            _workCycleListViewModel.HomeViewRequested += NavToHomeDashboard;
             _workCycleListViewModel.AddWorkCycleRequested += NavToAddWorkCycleView;
             _workCycleListViewModel.EditWorkCycleRequested += NavToEditWorkCycleView;
 

@@ -137,6 +137,9 @@ namespace RestaurantPro.InventoryFeatures.Suppliers
 
         private async void OnDeleteClick(WpfSupplier supplier)
         {
+            if (supplier == null)
+                return;
+
             var supplierToDb = RestproMapper.MapWpfSupplierToSupplier(supplier);
             string errorMessage = null;
 

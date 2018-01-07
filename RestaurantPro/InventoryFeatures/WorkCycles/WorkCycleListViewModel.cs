@@ -18,7 +18,7 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IDialogCoordinator dialogCoordinator;
-        
+
         /// <summary>
         /// Initialized events and commands
         /// </summary>
@@ -30,10 +30,12 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
 
             BackToInventoryCommand = new RelayCommand(OnBackToInventoryInventoryClick);
             LogoutCommand = new RelayCommand(OnLogout);
+            BackHomeCommand = new RelayCommand(OnHomeClick);
             DeactivateWorkCycleCommand = new RelayCommand<WpfWorkCycle>(DeactivateWorkCycle);
             DeleteWorkingCycleCommand = new RelayCommand<WpfWorkCycle>(DeleteWorkCycle);
             AddWorkingCycleCommand = new RelayCommand(OnAddWorkCycle);
             EditWorkCycleCommand = new RelayCommand<WpfWorkCycle>(OnEditWorkCycle);
+
         }
 
         #region Initialization Methods
@@ -64,7 +66,7 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
             WorkCycles = new ObservableCollection<WpfWorkCycle>(wpfWorkCycles);
         }
 
- 
+
         #endregion
 
         #region Datagrid Event Handling
@@ -111,7 +113,7 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
         public ObservableCollection<WpfWorkCycle> WorkCycles
         {
             get { return _workCycles; }
-            set { SetProperty(ref _workCycles, value);}
+            set { SetProperty(ref _workCycles, value); }
         }
 
         #endregion
@@ -122,7 +124,9 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
 
         public event Action<WpfUser> InventoryDashboardRequested = delegate { };
 
-        public event Action<WpfWorkCycle, WpfUser> AddWorkCycleRequested = delegate { };
+        public event Action<WpfUser> HomeViewRequested = delegate { };
+
+    public event Action<WpfWorkCycle, WpfUser> AddWorkCycleRequested = delegate { };
 
         public event Action<WpfWorkCycle, WpfUser> EditWorkCycleRequested = delegate { };
 
@@ -133,6 +137,8 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
         public RelayCommand LogoutCommand { get; private set; }
 
         public RelayCommand BackToInventoryCommand { get; private set; }
+
+        public RelayCommand BackHomeCommand { get; private set; }
 
         public RelayCommand<WpfWorkCycle> DeactivateWorkCycleCommand { get; private set; }
 
@@ -165,6 +171,12 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
         private void OnEditWorkCycle(WpfWorkCycle wpfWorkCycle)
         {
             EditWorkCycleRequested(wpfWorkCycle, CurrentUser);
+        }
+
+
+        private void OnHomeClick()
+        {
+            HomeViewRequested(CurrentUser);
         }
 
         #endregion
