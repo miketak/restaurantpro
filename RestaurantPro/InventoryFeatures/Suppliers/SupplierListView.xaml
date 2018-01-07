@@ -1,73 +1,73 @@
 ﻿<UserControl x:Class="RestaurantPro.InventoryFeatures.Suppliers.SupplierListView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
-             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-             dialogs:DialogParticipation.Register="{Binding}" 
-             mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="1000">
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <ei:CallMethodAction TargetObject="{Binding}" MethodName="LoadSuppliers"/>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+			 xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+			 xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+			 xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+			 dialogs:DialogParticipation.Register="{Binding}" 
+			 mc:Ignorable="d" 
+			 d:DesignHeight="800" d:DesignWidth="1000">
+	<i:Interaction.Triggers>
+		<i:EventTrigger EventName="Loaded">
+			<ei:CallMethodAction TargetObject="{Binding}" MethodName="LoadSuppliers"/>
+		</i:EventTrigger>
+	</i:Interaction.Triggers>
 
-    <UserControl.Resources>
-        <Style TargetType="TextBox">
-            <Style.Triggers>
-                <Trigger Property="Validation.HasError"
-                         Value="true">
-                    <Setter Property="ToolTip"
-                            Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+	<UserControl.Resources>
+		<Style TargetType="TextBox">
+			<Style.Triggers>
+				<Trigger Property="Validation.HasError"
+						 Value="true">
+					<Setter Property="ToolTip"
+							Value="{Binding RelativeSource={x:Static RelativeSource.Self},
 						Path=(Validation.Errors).CurrentItem.ErrorContent}"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </UserControl.Resources>
+				</Trigger>
+			</Style.Triggers>
+		</Style>
+	</UserControl.Resources>
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="40" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="40" />
-        </Grid.ColumnDefinitions>
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="40" />
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="40" />
+		</Grid.ColumnDefinitions>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="15"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="40"/>
+			<RowDefinition Height="40"/>
+			<RowDefinition Height="40"/>
+			<RowDefinition Height="15"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="40"/>
+			<RowDefinition Height="40"/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
 
-        <!--Standard Grid-->
-        <Grid x:Name="StandardGrid" Margin="0" Grid.ColumnSpan="3" Background="White">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40"/>
-                <ColumnDefinition Width="120"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="120"/>
-                <ColumnDefinition Width="40"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock x:Name="currentUser"
+		<!--Standard Grid-->
+		<Grid x:Name="StandardGrid" Margin="0" Grid.ColumnSpan="3" Background="White">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="40"/>
+				<ColumnDefinition Width="120"/>
+				<ColumnDefinition/>
+				<ColumnDefinition Width="120"/>
+				<ColumnDefinition Width="40"/>
+			</Grid.ColumnDefinitions>
+			<TextBlock x:Name="currentUser"
 				DataContext="{Binding CurrentUser}"
 				Text="{Binding FullName}" 
 				FontSize="16" FontWeight="ExtraBold" FontFamily="Adobe Caslon Pro Bold"
 				Margin="0" Grid.Column="1" VerticalAlignment="Center"/>
-            <Button x:Name="logout" Content="Log Out"
+			<Button x:Name="logout" Content="Log Out"
 				Command="{Binding LogoutCommand}" Grid.Column="3" Background="{x:Null}" BorderBrush="{x:Null}"
-                    HorizontalAlignment="Right" FontSize="14.667" Margin="0"/>
-        </Grid>
+					HorizontalAlignment="Right" FontSize="14.667" Margin="0"/>
+		</Grid>
 
-        <!--Search Control-->
-        <TextBox controls:TextBoxHelper.Watermark="Search"
+		<!--Search Control-->
+		<TextBox controls:TextBoxHelper.Watermark="Search"
 			controls:TextBoxHelper.ClearTextButton="True"
 			Grid.Row="2" Grid.Column="1"
 			x:Name="SearchTextBox"
@@ -78,25 +78,25 @@
 			VerticalContentAlignment="Center"
 			HorizontalContentAlignment="Center"
 			Margin="0,2" Width="285">
-            <TextBox.Style>
-                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MetroTextBox}" >
-                    <Setter Property="Foreground" Value="{DynamicResource MainForeground}"/>
-                    <Setter Property="BorderBrush" Value="{DynamicResource MainBorderColor}"/>
-                    <Setter Property="BorderThickness" Value="1"/>
-                    <Setter Property="controls:TextBoxHelper.ClearTextButton" Value="True"/>
-                    <Setter Property="Padding" Value="0,1,0,0" />
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="Orange"/>
-                            <Setter Property="controls:TextBoxHelper.ClearTextButton" Value="True"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </TextBox.Style>
-        </TextBox>
+			<TextBox.Style>
+				<Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MetroTextBox}" >
+					<Setter Property="Foreground" Value="{DynamicResource MainForeground}"/>
+					<Setter Property="BorderBrush" Value="{DynamicResource MainBorderColor}"/>
+					<Setter Property="BorderThickness" Value="1"/>
+					<Setter Property="controls:TextBoxHelper.ClearTextButton" Value="True"/>
+					<Setter Property="Padding" Value="0,1,0,0" />
+					<Style.Triggers>
+						<Trigger Property="IsMouseOver" Value="True">
+							<Setter Property="Foreground" Value="Orange"/>
+							<Setter Property="controls:TextBoxHelper.ClearTextButton" Value="True"/>
+						</Trigger>
+					</Style.Triggers>
+				</Style>
+			</TextBox.Style>
+		</TextBox>
 
-        <!--Supplier Data Grid-->
-        <DataGrid x:Name="SupplierDataGrid"
+		<!--Supplier Data Grid-->
+		<DataGrid x:Name="SupplierDataGrid"
 				  ItemsSource="{Binding Suppliers, Mode=TwoWay}"
 				  Grid.Column="1"
 				  AutoGenerateColumns ="False"
@@ -105,84 +105,84 @@
 				  Grid.Row="4" Background="{x:Null}" 
 				  ColumnHeaderStyle="{DynamicResource DataGridStyle}" 
 				  RowBackground="#00000000">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseDoubleClick">
-                    <i:InvokeCommandAction Command="{Binding EditSupplierCommand}"
+			<i:Interaction.Triggers>
+				<i:EventTrigger EventName="MouseDoubleClick">
+					<i:InvokeCommandAction Command="{Binding EditSupplierCommand}"
 										   CommandParameter="{Binding SelectedItem, 
-                        RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Header="Name" Width="*"/>
-                <DataGridTextColumn Binding="{Binding Address, UpdateSourceTrigger=PropertyChanged}" Header="Address" Width="*"/>
-                <DataGridTextColumn Binding="{Binding Telephone, UpdateSourceTrigger=PropertyChanged}" Header="Telephone" Width="*"/>
-                <DataGridTextColumn Binding="{Binding Email, UpdateSourceTrigger=PropertyChanged}" Header="Email" Width="*"/>
+						RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+				</i:EventTrigger>
+			</i:Interaction.Triggers>
+			<DataGrid.Columns>
+				<DataGridTextColumn Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Header="Name" Width="*"/>
+				<DataGridTextColumn Binding="{Binding Address, UpdateSourceTrigger=PropertyChanged}" Header="Address" Width="*"/>
+				<DataGridTextColumn Binding="{Binding Telephone, UpdateSourceTrigger=PropertyChanged}" Header="Telephone" Width="*"/>
+				<DataGridTextColumn Binding="{Binding Email, UpdateSourceTrigger=PropertyChanged}" Header="Email" Width="*"/>
 
-                <!--Delete Supplier Template-->
-                <DataGridTemplateColumn Width="80" MinWidth="80" MaxWidth="80">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button Content="Delete"
+				<!--Delete Supplier Template-->
+				<DataGridTemplateColumn Width="80" MinWidth="80" MaxWidth="80">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<Button Content="Delete"
 									Style="{StaticResource AccentedSquareButtonStyle}"
 									Foreground="{DynamicResource MainForeground}" 
-                                    Background="Transparent" BorderBrush="Orange"
+									Background="Transparent" BorderBrush="Orange"
 									Command="{Binding DataContext.DeleteSupplierCommand, 
-                                RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+								RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
 									CommandParameter="{Binding}"
 									Margin="5"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <!--End of Delete Supplier Template-->
-            </DataGrid.Columns>
-        </DataGrid>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				<!--End of Delete Supplier Template-->
+			</DataGrid.Columns>
+		</DataGrid>
 
-        <!--Add/Edit Controls-->
-        <Grid x:Name="AddEditFormControls" 
-              Grid.Column="1"
-              Grid.Row="7">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="180"/>
-                <ColumnDefinition Width="180"/>
-            </Grid.ColumnDefinitions>
+		<!--Add/Edit Controls-->
+		<Grid x:Name="AddEditFormControls" 
+			  Grid.Column="1"
+			  Grid.Row="7">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition/>
+				<ColumnDefinition Width="180"/>
+				<ColumnDefinition Width="180"/>
+			</Grid.ColumnDefinitions>
 
-            <!--Save Command-->
-            <Button Content="Save"
-                    Command="{Binding SaveCommand}"
-                    Style="{StaticResource AccentedSquareButtonStyle}" 
-                    Foreground="{DynamicResource MainForeground}" Background="White" BorderBrush="Orange" HorizontalAlignment="Right" 
-                    VerticalAlignment="Top"
-                    Width="150" Height="35" Grid.Column="1" Margin="0"/>
+			<!--Save Command-->
+			<Button Content="Save"
+					Command="{Binding SaveCommand}"
+					Style="{StaticResource AccentedSquareButtonStyle}" 
+					Foreground="{DynamicResource MainForeground}" Background="White" BorderBrush="Orange" HorizontalAlignment="Right" 
+					VerticalAlignment="Top"
+					Width="150" Height="35" Grid.Column="1" Margin="0"/>
 
-            <!--Cancel Command-->
-            <Button Content="Cancel"
-                    Command="{Binding BackToInventoryCommand}"
-                    Style="{StaticResource AccentedSquareButtonStyle}" 
-                    Foreground="{DynamicResource MainForeground}" Background="White" BorderBrush="Orange" HorizontalAlignment="Right" 
-                    Grid.Column="2"
-                    VerticalAlignment="Top"
-                    Width="150" Height="35"
-                    Margin="0"/>
+			<!--Cancel Command-->
+			<Button Content="Cancel"
+					Command="{Binding BackToInventoryCommand}"
+					Style="{StaticResource AccentedSquareButtonStyle}" 
+					Foreground="{DynamicResource MainForeground}" Background="White" BorderBrush="Orange" HorizontalAlignment="Right" 
+					Grid.Column="2"
+					VerticalAlignment="Top"
+					Width="150" Height="35"
+					Margin="0"/>
 
-        </Grid>
+		</Grid>
 
-        <!--Navigation Controls-->
-        <StackPanel x:Name="NavigationPanel" Grid.Column="1" Margin="0" Orientation="Horizontal" Grid.Row="1">
-            <Button x:Name="BackHome" Content="Home /"
+		<!--Navigation Controls-->
+		<StackPanel x:Name="NavigationPanel" Grid.Column="1" Margin="0" Orientation="Horizontal" Grid.Row="1">
+			<Button x:Name="BackHome" Content="Home /"
 				Command="{Binding BackHomeCommand}" Margin="0,5" 
 				FontSize="13.333" FontFamily="Adobe Caslon Pro Bold" 
 				VerticalAlignment="Center" HorizontalAlignment="Left" 
 				Background="#00F7F7F7" BorderBrush="#00F7F7F7" Width="68"/>
-            <Button x:Name="Inventory" Content="Inventory /"
+			<Button x:Name="Inventory" Content="Inventory /"
 				Command="{Binding BackToInventoryCommand}" Margin="0" 
 				FontSize="13.333" FontFamily="Adobe Caslon Pro Bold" 
 				VerticalAlignment="Center" HorizontalAlignment="Left" 
 				Background="#00F7F7F7" BorderBrush="#00F7F7F7"/>
-            <Button x:Name="ManageSuppliers" Content="Manage Suppliers" Margin="0,5" 
+			<Button x:Name="ManageSuppliers" Content="Manage Suppliers" Margin="0,5" 
 				FontSize="13.333" FontFamily="Adobe Caslon Pro Bold" 
 				VerticalAlignment="Center" HorizontalAlignment="Left" 
 				Background="#00F7F7F7" BorderBrush="#00F7F7F7"/>
-        </StackPanel>
-    </Grid>
+		</StackPanel>
+	</Grid>
 </UserControl>

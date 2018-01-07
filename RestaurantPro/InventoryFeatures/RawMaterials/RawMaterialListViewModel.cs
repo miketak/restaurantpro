@@ -1,5 +1,4 @@
 ﻿using System;
-using System.CodeDom;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -7,17 +6,17 @@ using MahApps.Metro.Controls.Dialogs;
 using RestaurantPro.Core;
 using RestaurantPro.Models;
 
-namespace RestaurantPro.InventoryFeatures.Suppliers
+namespace RestaurantPro.InventoryFeatures.RawMaterials
 {
     /// <summary>
-    /// Supplier List View Model Class
+    /// Raw Material List View Model
     /// </summary>
-    public class SupplierListViewModel : BindableBase
+    public class RawMaterialListViewModel : BindableBase
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IDialogCoordinator dialogCoordinator;
 
-        public SupplierListViewModel(IUnitOfWork unitOfWork, IDialogCoordinator instance)
+        public RawMaterialListViewModel(IUnitOfWork unitOfWork, IDialogCoordinator instance)
         {
             _unitOfWork = unitOfWork;
             dialogCoordinator = instance;
@@ -26,7 +25,8 @@ namespace RestaurantPro.InventoryFeatures.Suppliers
             LogoutCommand = new RelayCommand(OnLogout);
             BackHomeCommand = new RelayCommand(OnHomeClick);
             SaveCommand = new RelayCommand(OnSave, CanSave);
-            DeleteSupplierCommand = new RelayCommand<WpfSupplier>(OnDeleteClick);
+            DeleteCommand = new RelayCommand<WpfRawMaterial>(OnDeleteClick);
+
         }
 
         #region Object Bindings
@@ -35,14 +35,14 @@ namespace RestaurantPro.InventoryFeatures.Suppliers
         public WpfUser CurrentUser
         {
             get { return _currentUser; }
-            set { SetProperty(ref _currentUser, value);}
+            set { SetProperty(ref _currentUser, value); }
         }
 
-        private BindingList<WpfSupplier> _suppliers;
-        public BindingList<WpfSupplier> Suppliers
+        private BindingList<WpfRawMaterial> _rawMaterials;
+        public BindingList<WpfRawMaterial> RawMaterials
         {
-            get { return _suppliers; }
-            set { SetProperty(ref _suppliers, value); }
+            get { return _rawMaterials; }
+            set { SetProperty(ref _rawMaterials, value); }
         }
 
         #endregion
@@ -54,15 +54,14 @@ namespace RestaurantPro.InventoryFeatures.Suppliers
             CurrentUser = user;
         }
 
-        public void LoadSuppliers()
+        public void LoadRawMaterials()
         {
-            var suppliers = _unitOfWork.Suppliers
-                .GetAll()
-                .Where(u => u.Active).ToList();
+            var rawMaterialsInDb = _unitOfWork.RawMaterials
+                .GetAll().ToList();
 
-            var wpfSuppliers = RestproMapper.MapSupplierListToWpfSupplierList(suppliers);
+            var rawMaterialsForView = RestproMapper.MapRawMaterialListToWpfRawMaterialList(rawMaterialsInDb);
 
-            Suppliers = new BindingList<WpfSupplier>(wpfSuppliers);
+            RawMaterials = new BindingList<WpfRawMaterial>(rawMaterialsForView);
         }
 
         #endregion
@@ -87,7 +86,7 @@ namespace RestaurantPro.InventoryFeatures.Suppliers
 
         public RelayCommand SaveCommand { get; private set; }
 
-        public RelayCommand<WpfSupplier> DeleteSupplierCommand { get; private set; }
+        public RelayCommand<WpfRawMaterial> DeleteCommand { get; private set; }
 
         #endregion
 
@@ -111,13 +110,13 @@ namespace RestaurantPro.InventoryFeatures.Suppliers
 
         private async void OnSave()
         {
-            var suppliersToDb = RestproMapper
-                .MapWpfSupplierListToSupplierList(Suppliers.ToList());
+            var rawMaterialsToDb = RestproMapper
+                .MapWpfRawMaterialLIstToRawMaterialList(RawMaterials.ToList());
             string errorMessage = null;
 
             try
             {
-                _unitOfWork.Suppliers.AddOrUpdateSuppliers(suppliersToDb);
+                _unitOfWork.RawMaterials.AddOrUpdateRawMaterials(rawMaterialsToDb);
                 await dialogCoordinator.ShowMessageAsync(this, "Success", "Items Saved Successfully. You Rock!");
             }
             catch (Exception e)
@@ -126,7 +125,7 @@ namespace RestaurantPro.InventoryFeatures.Suppliers
                 errorMessage = e.Message;
             }
 
-            if (errorMessage == null) 
+            if (errorMessage == null)
                 return;
 
             await dialogCoordinator
@@ -135,19 +134,19 @@ namespace RestaurantPro.InventoryFeatures.Suppliers
                       errorMessage);
         }
 
-        private async void OnDeleteClick(WpfSupplier supplier)
+        private async void OnDeleteClick(WpfRawMaterial wpfRawMaterial)
         {
-            if (supplier == null)
+            if (wpfRawMaterial == null)
                 return;
 
-            var supplierToDb = RestproMapper.MapWpfSupplierToSupplier(supplier);
+            var rawMaterialInDb = RestproMapper.MapWpfRawMaterialToRawMaterial(wpfRawMaterial);
             string errorMessage = null;
 
             try
             {
-                _unitOfWork.Suppliers.FakeDeleteSupplier(supplierToDb);
-                Suppliers.Remove(supplier);
-                await dialogCoordinator.ShowMessageAsync(this, "Success", "Supplier Deleted Successfully. We're so done with them!");
+                _unitOfWork.RawMaterials.FakeDeleteSupplier(rawMaterialInDb);
+                RawMaterials.Remove(wpfRawMaterial);
+                await dialogCoordinator.ShowMessageAsync(this, "Success", "Raw Material Deleted Successfully. Good Bye :(");
             }
             catch (Exception e)
             {
@@ -166,9 +165,10 @@ namespace RestaurantPro.InventoryFeatures.Suppliers
 
         private bool CanSave()
         {
-            return Suppliers == null || Suppliers.All(a => !a.HasErrors);
+            return RawMaterials == null || RawMaterials.All(a => !a.HasErrors);
         }
 
         #endregion
+
     }
 }

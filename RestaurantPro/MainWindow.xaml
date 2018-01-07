@@ -12,6 +12,7 @@
 		xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
 		xmlns:polist="clr-namespace:RestaurantPro.InventoryFeatures.PurchaseOrders"
 		xmlns:supplier="clr-namespace:RestaurantPro.InventoryFeatures.Suppliers"
+		xmlns:rawMaterials="clr-namespace:RestaurantPro.InventoryFeatures.RawMaterials"
 		mc:Ignorable="d" 
 		x:Class="RestaurantPro.MainWindow"
 		Title="Restaurant Pro"
@@ -60,6 +61,9 @@
 	    <DataTemplate DataType="{x:Type supplier:SupplierListViewModel}">
             <supplier:SupplierListView/>
 		</DataTemplate>
+        <DataTemplate DataType="{x:Type rawMaterials:RawMaterialListViewModel}">
+            <rawMaterials:RawMaterialListView/>
+        </DataTemplate>
 	</Window.Resources>
 	<!--End of Window Reousrces-->
 	

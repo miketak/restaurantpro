@@ -19,6 +19,8 @@ namespace RestaurantPro.Core
 
         IRawMaterialsRepository RawMaterials { get; }
 
+        IRawMaterialCategoryRepository RawMaterialCategories { get; }
+
         int Complete();
     }
 }

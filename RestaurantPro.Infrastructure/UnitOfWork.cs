@@ -20,6 +20,7 @@ namespace RestaurantPro.Infrastructure
             Statuses = new StatusRepository(_context);
             PurchaseOrders = new PurchaseOrderRepository(_context);
             RawMaterials = new RawMaterialsRepository(_context);
+            RawMaterialCategories = new RawMaterialCategoryRepository(_context);
         }
 
         public IUserRepository Users { get; private set; }
@@ -29,6 +30,7 @@ namespace RestaurantPro.Infrastructure
         public IStatusRepository Statuses { get; private set; }
         public IPurchaseOrderRepository PurchaseOrders { get; private set; }
         public IRawMaterialsRepository RawMaterials { get; private set; }
+        public IRawMaterialCategoryRepository RawMaterialCategories { get; private set; }
 
         public int Complete()
         {

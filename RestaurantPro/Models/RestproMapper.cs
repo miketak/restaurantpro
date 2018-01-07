@@ -7,14 +7,14 @@ using RestaurantPro.Core.Domain;
 namespace RestaurantPro.Models
 {
     /// <summary>
-    /// AutoMapper Class
+    ///     AutoMapper Class
     /// </summary>
     public static class RestproMapper
     {
         #region Work Cycle Mappings
 
         /// <summary>
-        /// Maps WpfWorkCycle List to WorkCycle List
+        ///     Maps WpfWorkCycle List to WorkCycle List
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
@@ -35,7 +35,7 @@ namespace RestaurantPro.Models
                     .ForMember(dest => dest.Lines, opt => opt.Ignore());
             });
 
-            IMapper iMapper = config.CreateMapper();
+            var iMapper = config.CreateMapper();
 
             var target = iMapper.Map<List<WorkCycle>, List<WpfWorkCycle>>(source);
 
@@ -43,24 +43,21 @@ namespace RestaurantPro.Models
         }
 
         /// <summary>
-        /// Maps WpfWorkCycle Type to WorkCycle
+        ///     Maps WpfWorkCycle Type to WorkCycle
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
         internal static WorkCycle MapWpfWorkCycleToWorkCycle(WpfWorkCycle source)
         {
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<WpfWorkCycle, WorkCycle>();
-            });
+            var config = new MapperConfiguration(cfg => { cfg.CreateMap<WpfWorkCycle, WorkCycle>(); });
 
-            IMapper iMapper = config.CreateMapper();
+            var iMapper = config.CreateMapper();
 
             return iMapper.Map<WpfWorkCycle, WorkCycle>(source);
         }
 
         /// <summary>
-        /// Maps WpfWorkCycle Type to WorkCycle and Handle Lines
+        ///     Maps WpfWorkCycle Type to WorkCycle and Handle Lines
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
@@ -72,7 +69,7 @@ namespace RestaurantPro.Models
                     .ForMember(dest => dest.Lines, opt => opt.Ignore());
             });
 
-            IMapper iMapper = config.CreateMapper();
+            var iMapper = config.CreateMapper();
 
             var domainWorkCycle = iMapper.Map<WpfWorkCycle, WorkCycle>(source);
 
@@ -82,24 +79,21 @@ namespace RestaurantPro.Models
         }
 
         /// <summary>
-        /// Maps WorkCycle type to WpfWorkCycle
+        ///     Maps WorkCycle type to WpfWorkCycle
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
         internal static WpfWorkCycle MapWorkCycleToWpfWorkCycle(WorkCycle source)
         {
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<WorkCycle, WpfWorkCycle>();
-            });
+            var config = new MapperConfiguration(cfg => { cfg.CreateMap<WorkCycle, WpfWorkCycle>(); });
 
-            IMapper iMapper = config.CreateMapper();
+            var iMapper = config.CreateMapper();
 
             return iMapper.Map<WorkCycle, WpfWorkCycle>(source);
         }
 
         /// <summary>
-        /// Maps WorkcycleLines to WpfWorkCycleLines
+        ///     Maps WorkcycleLines to WpfWorkCycleLines
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
@@ -113,7 +107,7 @@ namespace RestaurantPro.Models
                     .ForMember(dest => dest.Supplier, opt => opt.Ignore());
             });
 
-            IMapper iMapper = config.CreateMapper();
+            var iMapper = config.CreateMapper();
 
             var target = iMapper.Map<List<WorkCycleLines>, List<WpfWorkCycleLines>>(source);
 
@@ -121,7 +115,7 @@ namespace RestaurantPro.Models
         }
 
         /// <summary>
-        /// Maps WpfWorkcycleLines to WorkCycleLines
+        ///     Maps WpfWorkcycleLines to WorkCycleLines
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
@@ -138,7 +132,7 @@ namespace RestaurantPro.Models
                     .ForMember(dest => dest.SupplierStringTemp, opt => opt.MapFrom(src => src.NewSupplier));
             });
 
-            IMapper iMapper = config.CreateMapper();
+            var iMapper = config.CreateMapper();
 
             var target = iMapper.Map<List<WpfWorkCycleLines>, List<WorkCycleLines>>(source);
 
@@ -150,7 +144,7 @@ namespace RestaurantPro.Models
         #region Purchase Order Mappings
 
         /// <summary>
-        /// Maps Purchase Order to Wpf Purchase Order
+        ///     Maps Purchase Order to Wpf Purchase Order
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
@@ -165,17 +159,20 @@ namespace RestaurantPro.Models
                     .ForMember(dest => dest.Lines, opt => opt.Ignore());
             });
 
-            IMapper iMapper = config.CreateMapper();
+            var iMapper = config.CreateMapper();
 
-            var target =  iMapper.Map<PurchaseOrder, WpfPurchaseOrder>(source);
+            var target = iMapper.Map<PurchaseOrder, WpfPurchaseOrder>(source);
 
-            if ( source.Lines != null)
-                target.Lines = new BindingList<WpfPurchaseOrderLine>(MapPurchaseOrderLineListToWpfPurchaseOrderLineList(source.Lines.ToList()));
+            if (source.Lines != null)
+                target.Lines =
+                    new BindingList<WpfPurchaseOrderLine>(
+                        MapPurchaseOrderLineListToWpfPurchaseOrderLineList(source.Lines.ToList()));
 
             return target;
         }
 
-        internal static List<WpfPurchaseOrder> MapPurchaseOrderListToWpfPurchaseOrderList(List<PurchaseOrder> purchaseOrders)
+        internal static List<WpfPurchaseOrder> MapPurchaseOrderListToWpfPurchaseOrderList(
+            List<PurchaseOrder> purchaseOrders)
         {
             return purchaseOrders
                 .Select(MapPurchaseOrderToWpfPurchaseOrder)
@@ -192,12 +189,13 @@ namespace RestaurantPro.Models
                     .ForMember(dest => dest.Supplier, opt => opt.Ignore());
             });
 
-            IMapper iMapper = config.CreateMapper();
+            var iMapper = config.CreateMapper();
 
             return iMapper.Map<PurchaseOrderLine, WpfPurchaseOrderLine>(source);
         }
 
-        public static List<WpfPurchaseOrderLine> MapPurchaseOrderLineListToWpfPurchaseOrderLineList(List<PurchaseOrderLine> source)
+        public static List<WpfPurchaseOrderLine> MapPurchaseOrderLineListToWpfPurchaseOrderLineList(
+            List<PurchaseOrderLine> source)
         {
             return source
                 .Select(MapPurchaseOrderLineToWpfPurchaseOrderLine)
@@ -212,7 +210,7 @@ namespace RestaurantPro.Models
                     .ForMember(dest => dest.Lines, opt => opt.Ignore());
             });
 
-            IMapper iMapper = config.CreateMapper();
+            var iMapper = config.CreateMapper();
 
             var target = iMapper.Map<WpfPurchaseOrder, PurchaseOrder>(source);
 
@@ -233,7 +231,7 @@ namespace RestaurantPro.Models
                     .ForMember(dest => dest.SupplierStringTemp, opt => opt.MapFrom(src => src.NewSupplier));
             });
 
-            IMapper iMapper = config.CreateMapper();
+            var iMapper = config.CreateMapper();
 
             var target = iMapper.Map<WpfPurchaseOrderLine, PurchaseOrderLine>(source);
 
@@ -256,7 +254,7 @@ namespace RestaurantPro.Models
             var config = new MapperConfiguration(cfg =>
                 cfg.CreateMap<Supplier, WpfSupplier>());
 
-            IMapper iMapper = config.CreateMapper();
+            var iMapper = config.CreateMapper();
 
             var target = iMapper.Map<Supplier, WpfSupplier>(source);
 
@@ -274,9 +272,9 @@ namespace RestaurantPro.Models
         {
             var config = new MapperConfiguration(cfg =>
                 cfg.CreateMap<WpfSupplier, Supplier>()
-                .ForMember(dest => dest.Active, opt => opt.Ignore()));
+                    .ForMember(dest => dest.Active, opt => opt.Ignore()));
 
-            IMapper iMapper = config.CreateMapper();
+            var iMapper = config.CreateMapper();
 
             var target = iMapper.Map<WpfSupplier, Supplier>(source);
 
@@ -292,5 +290,51 @@ namespace RestaurantPro.Models
 
         #endregion
 
+        #region Raw Material Mappings
+
+        internal static WpfRawMaterial MapRawMaterialToWpfRawMaterial(RawMaterial source)
+        {
+            var config = new MapperConfiguration(cfg =>
+                cfg.CreateMap<RawMaterial, WpfRawMaterial>()
+                    .ForMember(dest => dest.Category, opt => opt.Ignore()));
+
+            var iMapper = config.CreateMapper();
+
+            var target = iMapper.Map<RawMaterial, WpfRawMaterial>(source);
+
+            return target;
+        }
+
+        internal static RawMaterial MapWpfRawMaterialToRawMaterial(WpfRawMaterial source)
+        {
+            var config = new MapperConfiguration(cfg =>
+                cfg.CreateMap<WpfRawMaterial, RawMaterial>()
+                    .ForMember(dest => dest.RawMaterialCategory, opt => opt.Ignore())
+                    .ForMember(dest => dest.RawMaterialCatalog, opt => opt.Ignore())
+                    .ForMember(dest => dest.PurchaseOrderLines, opt => opt.Ignore())
+                    .ForMember(dest => dest.WorkCycleLines, opt => opt.Ignore()));
+
+            var iMapper = config.CreateMapper();
+
+            var target = iMapper.Map<WpfRawMaterial, RawMaterial>(source);
+
+            return target;
+        }
+
+        internal static List<WpfRawMaterial> MapRawMaterialListToWpfRawMaterialList(List<RawMaterial> source)
+        {
+            return source
+                .Select(MapRawMaterialToWpfRawMaterial)
+                .ToList();
+        }
+
+        internal static List<RawMaterial> MapWpfRawMaterialLIstToRawMaterialList(List<WpfRawMaterial> source)
+        {
+            return source
+                .Select(MapWpfRawMaterialToRawMaterial)
+                .ToList();
+        }
+
+        #endregion
     }
 }

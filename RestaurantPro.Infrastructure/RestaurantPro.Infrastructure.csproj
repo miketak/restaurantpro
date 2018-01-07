@@ -69,6 +69,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\PurchaseOrderRepository.cs" />
+    <Compile Include="Repositories\RawMaterialCategoryRepository.cs" />
     <Compile Include="Repositories\RawMaterialsRepository.cs" />
     <Compile Include="Repositories\StatusRepository.cs" />
     <Compile Include="Repositories\SupplierRepository.cs" />

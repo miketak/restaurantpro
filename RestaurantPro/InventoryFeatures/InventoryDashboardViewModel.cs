@@ -18,6 +18,7 @@ namespace RestaurantPro.InventoryFeatures
             ManageWorkCyclesCommand = new RelayCommand(OnManageCyclesClick);
             PurchaseOrdersListViewCommand = new RelayCommand(OnPurchaseOrdersListViewClick);
             SupplierListViewCommand = new RelayCommand(OnSupplierListViewClick);
+            RawMaterialListViewCommand = new RelayCommand(OnRawMaterialListViewClick);
         }
 
         #region Initialization Methods
@@ -48,15 +49,17 @@ namespace RestaurantPro.InventoryFeatures
 
         #region Events
 
-        public event Action<WpfUser> LogoutRequested = delegate {};
+        public event Action<WpfUser> LogoutRequested = delegate { };
 
-        public event Action<WpfUser> HomeDashboardRequested = delegate {};
+        public event Action<WpfUser> HomeDashboardRequested = delegate { };
 
-        public event Action<WpfUser> ManageWorkCyclesRequsted = delegate {};
+        public event Action<WpfUser> ManageWorkCyclesRequsted = delegate { };
 
-        public event Action<WpfUser> PurchaseOrdersListsViewRequested = delegate {};
+        public event Action<WpfUser> PurchaseOrdersListsViewRequested = delegate { };
 
-        public event Action<WpfUser> SupplierListViewRequested = delegate {};
+        public event Action<WpfUser> SupplierListViewRequested = delegate { };
+
+        public event Action<WpfUser> RawMaterialListViewRequested = delegate { };
 
         #endregion
 
@@ -71,6 +74,8 @@ namespace RestaurantPro.InventoryFeatures
         public RelayCommand PurchaseOrdersListViewCommand { get; private set; }
 
         public RelayCommand SupplierListViewCommand { get; private set; }
+
+        public RelayCommand RawMaterialListViewCommand { get; private set; }
 
 
         #endregion
@@ -103,6 +108,11 @@ namespace RestaurantPro.InventoryFeatures
             SupplierListViewRequested(CurrentUser);
         }
 
-        #endregion
+        private void OnRawMaterialListViewClick()
+        {
+            RawMaterialListViewRequested(CurrentUser);
+        }
+
+    #endregion
     }
 }

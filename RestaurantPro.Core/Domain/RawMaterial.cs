@@ -9,12 +9,12 @@ namespace RestaurantPro.Core.Domain
 
         public string Name { get; set; }
 
-        public virtual RawMaterialCategory RawMaterialCategory { get; set; }
-
         public int RawMaterialCategoryId { get; set; }
 
 
         #region Navigation Properties
+
+        public virtual RawMaterialCategory RawMaterialCategory { get; set; }
 
         public virtual ICollection<RawMaterialCatalog> RawMaterialCatalog { get; set; }
 
