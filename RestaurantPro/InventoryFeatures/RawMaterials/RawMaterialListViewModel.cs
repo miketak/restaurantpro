@@ -117,6 +117,7 @@ namespace RestaurantPro.InventoryFeatures.RawMaterials
             try
             {
                 _unitOfWork.RawMaterials.AddOrUpdateRawMaterials(rawMaterialsToDb);
+                LoadRawMaterials();
                 await dialogCoordinator.ShowMessageAsync(this, "Success", "Items Saved Successfully. You Rock!");
             }
             catch (Exception e)
@@ -144,8 +145,9 @@ namespace RestaurantPro.InventoryFeatures.RawMaterials
 
             try
             {
-                _unitOfWork.RawMaterials.FakeDeleteSupplier(rawMaterialInDb);
                 RawMaterials.Remove(wpfRawMaterial);
+                if ( wpfRawMaterial.Id != 0 )
+                    _unitOfWork.RawMaterials.FakeDeleteSupplier(rawMaterialInDb);
                 await dialogCoordinator.ShowMessageAsync(this, "Success", "Raw Material Deleted Successfully. Good Bye :(");
             }
             catch (Exception e)

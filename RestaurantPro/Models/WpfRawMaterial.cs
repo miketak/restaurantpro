@@ -27,6 +27,9 @@ namespace RestaurantPro.Models
         {
             get
             {
+                if (RawMaterialCategoryId == 0)
+                    RawMaterialCategoryId = 1;
+
                 return _unitOfWork
                     .RawMaterialCategories
                     .SingleOrDefault(x => x.Id == RawMaterialCategoryId)
