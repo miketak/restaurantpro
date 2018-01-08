@@ -104,6 +104,21 @@
                 <TextBlock Text="Raw Materials" TextWrapping="Wrap" 
                        FontSize="15" TextAlignment="Center" 
                        FontFamily="Arial" FontWeight="DemiBold"/>
+            </Button>        
+        
+        <!--Raw Material Category List View Function-->
+        <Button x:Name ="RawMaterialCategoryListView" 
+                Style="{DynamicResource MetroTileStyle}"
+                Command="{Binding RawMaterialCategoryListViewCommand}"
+                Height="120" Width="120"
+                Margin="20 20 20 20"
+                BorderBrush="#FFCA5502">
+                <Button.Effect>
+                    <DropShadowEffect BlurRadius="15"/>
+                </Button.Effect>
+                <TextBlock Text="Raw Material Categories" TextWrapping="Wrap" 
+                       FontSize="15" TextAlignment="Center" 
+                       FontFamily="Arial" FontWeight="DemiBold"/>
             </Button>
 
         </WrapPanel>

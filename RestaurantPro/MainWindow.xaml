@@ -64,6 +64,9 @@
         <DataTemplate DataType="{x:Type rawMaterials:RawMaterialListViewModel}">
             <rawMaterials:RawMaterialListView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type rawMaterials:RawMaterialCategoryListViewModel}">
+            <rawMaterials:RawMaterialCategoryListView/>
+        </DataTemplate>
 	</Window.Resources>
 	<!--End of Window Reousrces-->
 	

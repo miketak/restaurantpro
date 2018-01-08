@@ -336,5 +336,50 @@ namespace RestaurantPro.Models
         }
 
         #endregion
+
+        #region Raw Material Categoies Mappings
+
+        internal static WpfRawMaterialCategory MapRawMaterialCategoryToWpfRawMaterialCategory(
+            RawMaterialCategory source)
+        {
+            var config = new MapperConfiguration(cfg =>
+            cfg.CreateMap<RawMaterialCategory, WpfRawMaterialCategory>());
+
+            var iMapper = config.CreateMapper();
+
+            var target = iMapper.Map<RawMaterialCategory, WpfRawMaterialCategory>(source);
+
+            return target;
+        }
+
+        internal static RawMaterialCategory MapWpfRawMaterialCategoryToRawMaterialCategory(WpfRawMaterialCategory source)
+        {
+            var config = new MapperConfiguration(cfg =>
+                cfg.CreateMap<WpfRawMaterialCategory, RawMaterialCategory>());
+
+            var iMapper = config.CreateMapper();
+
+            var target = iMapper.Map<WpfRawMaterialCategory, RawMaterialCategory>(source);
+
+            return target;
+        }
+
+        internal static List<WpfRawMaterialCategory> MapRawMaterialCategoryListToWpfRawMaterialCategoryList(List<RawMaterialCategory> source)
+        {
+            return source
+                .Select(MapRawMaterialCategoryToWpfRawMaterialCategory)
+                .ToList();
+        }        
+        
+        internal static List<RawMaterialCategory> MapWpfRawMaterialCategoryListToRawMaterialCategoryList(List<WpfRawMaterialCategory> source)
+        {
+            return source
+                .Select(MapWpfRawMaterialCategoryToRawMaterialCategory)
+                .ToList();
+        }
+
+        #endregion
+
+
     }
 }

@@ -39,7 +39,7 @@ namespace RestaurantPro.Infrastructure.Repositories
             if( rawMaterialInDb == null)
                 throw new ApplicationException("Illegal Operation");
 
-            _context.RawMaterials.Remove(rawMaterialInDb); //will be remove to active bit deactivation
+            _context.RawMaterials.Remove(rawMaterialInDb); //will be removed to active bit deactivation
             _context.SaveChanges();
         }
 

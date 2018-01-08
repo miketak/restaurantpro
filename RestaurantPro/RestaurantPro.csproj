@@ -163,6 +163,10 @@
       <DependentUpon>PurchaseOrderListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="InventoryFeatures\PurchaseOrders\PurchaseOrderListViewModel.cs" />
+    <Compile Include="InventoryFeatures\RawMaterials\RawMaterialCategoryListView.xaml.cs">
+      <DependentUpon>RawMaterialCategoryListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="InventoryFeatures\RawMaterials\RawMaterialCategoryListViewModel.cs" />
     <Compile Include="InventoryFeatures\RawMaterials\RawMaterialListView.xaml.cs">
       <DependentUpon>RawMaterialListView.xaml</DependentUpon>
     </Compile>
@@ -223,6 +227,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="InventoryFeatures\PurchaseOrders\PurchaseOrderListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InventoryFeatures\RawMaterials\RawMaterialCategoryListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

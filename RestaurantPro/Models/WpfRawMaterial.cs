@@ -30,18 +30,27 @@ namespace RestaurantPro.Models
                 if (RawMaterialCategoryId == 0)
                     RawMaterialCategoryId = 1;
 
-                return _unitOfWork
+                var category = _unitOfWork
                     .RawMaterialCategories
-                    .SingleOrDefault(x => x.Id == RawMaterialCategoryId)
-                    .Name;
+                    .SingleOrDefault(x => x.Id == RawMaterialCategoryId);
+
+                if (category != null)
+                    return category.Name;
+
+                RawMaterialCategoryId = 0;
+                _categories = null;
+                return Category;
             }
             set
             {
                 SetProperty(ref _rawMaterialCategory, value);
 
-                RawMaterialCategoryId = _unitOfWork
+                var categoryInDb = _unitOfWork
                     .RawMaterialCategories
-                    .SingleOrDefault(x => x.Name == value).Id;
+                    .SingleOrDefault(x => x.Name == value);
+
+                RawMaterialCategoryId = categoryInDb != null 
+                    ? categoryInDb.Id : 0;
             }
         }
         
