@@ -41,7 +41,7 @@
 			<RowDefinition Height="40"/>
 			<RowDefinition Height="40"/>
 			<RowDefinition Height="15"/>
-			<RowDefinition Height="Auto" MaxHeight="500"/>
+			<RowDefinition Height="Auto" MaxHeight="600"/>
 			<RowDefinition Height="40"/>
 			<RowDefinition Height="40"/>
 			<RowDefinition/>
@@ -123,7 +123,7 @@
 	              Grid.Row="4" Background="{x:Null}" 
 	              ColumnHeaderStyle="{DynamicResource DataGridStyle}" 
 	              RowBackground="#00000000"
-                  MaxHeight="500">
+                  MaxHeight="550">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Header="Name" Width="*"/>
                 <!--Category Combo Box Template-->
