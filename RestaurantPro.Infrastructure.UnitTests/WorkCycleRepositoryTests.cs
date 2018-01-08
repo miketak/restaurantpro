@@ -83,27 +83,36 @@ namespace RestaurantPro.Infrastructure.UnitTests
         [TestMethod]
         public void UpdateWorkCycleTest()
         {
-            _unitOfWork.WorkCycles.Add(testCycle1);
-            _unitOfWork.Complete();
-
             var workCycleInDb = _unitOfWork.WorkCycles.SingleOrDefault(w => w.Name == testCycle1.Name);
 
-            var newWorkCycle = new WorkCycle
+            if (workCycleInDb == null)
             {
-                Id = workCycleInDb.Id,
-                Name = "Lindador Cycle",
-                DateBegin = new DateTime(2017, 10, 05),
-                DateEnd = new DateTime(2018, 12, 15),
-                Active = true,
-                UserId = 2
-            };
-            _unitOfWork.WorkCycles.UpdateWorkCycle(newWorkCycle);
+                _unitOfWork.WorkCycles.Add(testCycle1);
+                _unitOfWork.Complete();
+            }
 
-            var workCycleToRemove = _unitOfWork.WorkCycles.SingleOrDefault(w => w.Id == workCycleInDb.Id);
+            const string searchName = "Lindador Cycle";
 
-            Assert.AreEqual(newWorkCycle.Name, workCycleToRemove.Name);
+            if (workCycleInDb != null)
+            {
+                var newWorkCycle = new WorkCycle
+                {
+                    Id = workCycleInDb.Id,
+                    Name = searchName,
+                    DateBegin = new DateTime(2017, 10, 05),
+                    DateEnd = new DateTime(2018, 12, 15),
+                    Active = true,
+                    UserId = 2
+                };
 
-            _unitOfWork.WorkCycles.Remove(workCycleToRemove);
+                _unitOfWork.WorkCycles.UpdateWorkCycle(newWorkCycle);
+
+                var workCycleToRemove = _unitOfWork.WorkCycles.SingleOrDefault(w => w.Id == workCycleInDb.Id);
+
+                Assert.AreEqual(newWorkCycle.Name, workCycleToRemove.Name);
+
+                _unitOfWork.WorkCycles.Remove(workCycleToRemove);
+            }
             _unitOfWork.Complete();
         }
 
