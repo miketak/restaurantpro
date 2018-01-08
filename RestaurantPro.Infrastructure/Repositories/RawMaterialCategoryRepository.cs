@@ -39,6 +39,7 @@ namespace RestaurantPro.Infrastructure.Repositories
             if (categoryInDb == null)
                 throw new ApplicationException("Illegal Operation");
 
+            FlipRawMaterialCategoriesToUncategrized(categoryInDb.Id);
             _context.RawMaterialCategories.Remove(categoryInDb); //will be removed to active bit deactivation
             _context.SaveChanges();
         }
@@ -52,6 +53,19 @@ namespace RestaurantPro.Infrastructure.Repositories
         {
             categoryInDb.Name = category.Name;
             categoryInDb.Description = category.Description;
+        }
+
+        private void FlipRawMaterialCategoriesToUncategrized(int categoryId)
+        {
+            var rawMaterialsInDb = _context.RawMaterials
+                .Where(x => x.RawMaterialCategoryId == categoryId)
+                .ToList();
+
+            foreach (var rawMaterial in rawMaterialsInDb)
+            {
+                rawMaterial.RawMaterialCategoryId = 1;
+                _context.SaveChanges();
+            }
         }
 
 
