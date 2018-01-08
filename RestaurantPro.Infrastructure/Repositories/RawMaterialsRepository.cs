@@ -32,7 +32,7 @@ namespace RestaurantPro.Infrastructure.Repositories
             }
         }
 
-        public void FakeDeleteSupplier(RawMaterial rawMaterial)
+        public void FakeDelete(RawMaterial rawMaterial)
         {
             var rawMaterialInDb = _context.RawMaterials.SingleOrDefault(s => s.Id == rawMaterial.Id);
 

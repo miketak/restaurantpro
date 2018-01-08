@@ -52,6 +52,7 @@
     <Compile Include="Domain\WorkCycleLines.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ILocationRepository.cs" />
     <Compile Include="Repositories\IPurchaseOrderRepository.cs" />
     <Compile Include="Repositories\IRawMaterialCatalogRepository.cs" />
     <Compile Include="Repositories\IRawMaterialsRepository.cs" />

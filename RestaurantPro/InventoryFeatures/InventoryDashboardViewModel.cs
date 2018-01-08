@@ -20,6 +20,7 @@ namespace RestaurantPro.InventoryFeatures
             SupplierListViewCommand = new RelayCommand(OnSupplierListViewClick);
             RawMaterialListViewCommand = new RelayCommand(OnRawMaterialListViewClick);
             RawMaterialCategoryListViewCommand = new RelayCommand(OnRawMaterialCategoryListViewClick);
+            LocationListViewCommand = new RelayCommand(OnLocationListViewClick);
             
         }
 
@@ -65,6 +66,8 @@ namespace RestaurantPro.InventoryFeatures
 
         public event Action<WpfUser> RawMaterialCategoryListViewRequested = delegate { };
 
+        public event Action<WpfUser> LocationListViewRequested = delegate { };
+
         #endregion
 
         #region Commands
@@ -82,6 +85,8 @@ namespace RestaurantPro.InventoryFeatures
         public RelayCommand RawMaterialListViewCommand { get; private set; }
 
         public RelayCommand RawMaterialCategoryListViewCommand { get; private set; }
+
+        public RelayCommand LocationListViewCommand { get; private set; }
 
 
         #endregion
@@ -122,6 +127,11 @@ namespace RestaurantPro.InventoryFeatures
         private void OnRawMaterialCategoryListViewClick()
         {
             RawMaterialCategoryListViewRequested(CurrentUser);
+        }
+
+        private void OnLocationListViewClick()
+        {
+            LocationListViewRequested(CurrentUser);
         }
 
     #endregion

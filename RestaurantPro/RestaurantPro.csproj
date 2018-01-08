@@ -155,6 +155,10 @@
       <DependentUpon>InventoryDashboardView.xaml</DependentUpon>
     </Compile>
     <Compile Include="InventoryFeatures\InventoryDashboardViewModel.cs" />
+    <Compile Include="InventoryFeatures\Locations\LocationListView.xaml.cs">
+      <DependentUpon>LocationListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="InventoryFeatures\Locations\LocationListViewModel.cs" />
     <Compile Include="InventoryFeatures\PurchaseOrders\AddEditPurchaseOrderView.xaml.cs">
       <DependentUpon>AddEditPurchaseOrderView.xaml</DependentUpon>
     </Compile>
@@ -189,6 +193,7 @@
     <Compile Include="Login\LoginViewModel.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Models\RestproMapper.cs" />
+    <Compile Include="Models\WpfLocation.cs" />
     <Compile Include="Models\WpfPurchaseOrder.cs" />
     <Compile Include="Models\WpfPurchaseOrderLine.cs" />
     <Compile Include="Models\WpfRawMaterial.cs" />
@@ -219,6 +224,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="InventoryFeatures\InventoryDashboardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InventoryFeatures\Locations\LocationListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

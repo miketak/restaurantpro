@@ -13,6 +13,7 @@
 		xmlns:polist="clr-namespace:RestaurantPro.InventoryFeatures.PurchaseOrders"
 		xmlns:supplier="clr-namespace:RestaurantPro.InventoryFeatures.Suppliers"
 		xmlns:rawMaterials="clr-namespace:RestaurantPro.InventoryFeatures.RawMaterials"
+		xmlns:locations="clr-namespace:RestaurantPro.InventoryFeatures.Locations"
 		mc:Ignorable="d" 
 		x:Class="RestaurantPro.MainWindow"
 		Title="Restaurant Pro"
@@ -66,6 +67,9 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type rawMaterials:RawMaterialCategoryListViewModel}">
             <rawMaterials:RawMaterialCategoryListView/>
+        </DataTemplate>        
+        <DataTemplate DataType="{x:Type locations:LocationListViewModel}">
+            <locations:LocationListView/>
         </DataTemplate>
 	</Window.Resources>
 	<!--End of Window Reousrces-->

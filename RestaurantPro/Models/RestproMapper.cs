@@ -380,6 +380,47 @@ namespace RestaurantPro.Models
 
         #endregion
 
+        #region Location Mappings
+
+        internal static WpfLocation MapLocationToWpfLocation(Location source)
+        {
+            var config = new MapperConfiguration(cfg =>
+            cfg.CreateMap<Location, WpfLocation>());
+
+            var iMapper = config.CreateMapper();
+
+            var target = iMapper.Map<Location, WpfLocation>(source);
+
+            return target;
+        }        
+        
+        internal static Location MapWpfLocationToLocation(WpfLocation source)
+        {
+            var config = new MapperConfiguration(cfg =>
+            cfg.CreateMap<WpfLocation, Location>());
+
+            var iMapper = config.CreateMapper();
+
+            var target = iMapper.Map<WpfLocation, Location>(source);
+
+            return target;
+        }
+
+        internal static List<WpfLocation> MapLocationListToWpfLocationList(List<Location> source)
+        {
+            return source
+                .Select(MapLocationToWpfLocation).ToList();
+        }
+
+        internal static List<Location> MapWpfLocationListToLocationList(List<WpfLocation> source)
+        {
+            return source
+                .Select(MapWpfLocationToLocation)
+                .ToList();
+        }
+
+        #endregion
+
 
     }
 }

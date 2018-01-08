@@ -1,165 +1,180 @@
 ﻿<UserControl x:Class="RestaurantPro.InventoryFeatures.InventoryDashboardView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-             mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="1000">
-    <Grid>
-    <Grid.RowDefinitions>
-        <RowDefinition Height="40"/>
-        <RowDefinition Height="40"/>
-        <RowDefinition Height="40"/>
-        <RowDefinition/>
-        <RowDefinition Height="40"/>
-    </Grid.RowDefinitions>
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+			 mc:Ignorable="d" 
+			 d:DesignHeight="800" d:DesignWidth="1000">
+	<Grid>
+	<Grid.RowDefinitions>
+		<RowDefinition Height="40"/>
+		<RowDefinition Height="40"/>
+		<RowDefinition Height="40"/>
+		<RowDefinition/>
+		<RowDefinition Height="40"/>
+	</Grid.RowDefinitions>
 
-    <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="40"/>
-        <ColumnDefinition Width="*"/>
-        <ColumnDefinition Width="40"/>
-    </Grid.ColumnDefinitions>
+	<Grid.ColumnDefinitions>
+		<ColumnDefinition Width="40"/>
+		<ColumnDefinition Width="*"/>
+		<ColumnDefinition Width="40"/>
+	</Grid.ColumnDefinitions>
 
-    <!--Standard Grid-->
-    <Grid x:Name="StandardGrid" Margin="0" Grid.ColumnSpan="3" Background="White">
-    	<Grid.ColumnDefinitions>
-    		<ColumnDefinition Width="40"/>
-    		<ColumnDefinition Width="120"/>
-    		<ColumnDefinition/>
-    		<ColumnDefinition Width="120"/>
-    		<ColumnDefinition Width="40"/>
-    	</Grid.ColumnDefinitions>
-    	<TextBlock x:Name="currentUser"
-    		DataContext="{Binding CurrentUser}"
-    		Text="{Binding FullName}" 
-    		FontSize="16" FontWeight="ExtraBold" FontFamily="Adobe Caslon Pro Bold"
-    		Margin="0" Grid.Column="1" VerticalAlignment="Center"/>
-    	<Button x:Name="logout" Content="Log Out"
-    		Command="{Binding LogoutCommand}" Grid.Column="3" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" FontSize="14.667" Margin="0"/>
+	<!--Standard Grid-->
+	<Grid x:Name="StandardGrid" Margin="0" Grid.ColumnSpan="3" Background="White">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="40"/>
+			<ColumnDefinition Width="120"/>
+			<ColumnDefinition/>
+			<ColumnDefinition Width="120"/>
+			<ColumnDefinition Width="40"/>
+		</Grid.ColumnDefinitions>
+		<TextBlock x:Name="currentUser"
+			DataContext="{Binding CurrentUser}"
+			Text="{Binding FullName}" 
+			FontSize="16" FontWeight="ExtraBold" FontFamily="Adobe Caslon Pro Bold"
+			Margin="0" Grid.Column="1" VerticalAlignment="Center"/>
+		<Button x:Name="logout" Content="Log Out"
+			Command="{Binding LogoutCommand}" Grid.Column="3" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Right" FontSize="14.667" Margin="0"/>
 
 
-    </Grid>
-        
-    <!--Functions Section-->
-    <WrapPanel x:Name="FunctionsWrapPanel" 
-               Orientation="Horizontal" HorizontalAlignment="Left" 
-               Margin="0" Grid.Column="1" Grid.Row="3">
+	</Grid>
 		
-        <!--Manage Work Cycles List View Function-->
-        <Button x:Name ="MangeWorkCycleList" 
-        		Style="{DynamicResource MetroTileStyle}"
-        		Command="{Binding ManageWorkCyclesCommand}"
-        		Height="120" Width="120"
-        		Margin="20 20 20 20"
-        		BorderBrush="#FFCA5502">
-        		<Button.Effect>
-        			<DropShadowEffect BlurRadius="15"/>
-        		</Button.Effect>
-        		<TextBlock Text="Work Cycles" TextWrapping="Wrap" 
-        			FontSize="15" TextAlignment="Center" 
-        			FontFamily="Arial" FontWeight="DemiBold"/>
-        	</Button> 
-        
-        <!--Purchase Orders List View Function-->
-        <Button x:Name ="PurchaseOrderListView" 
-                Style="{DynamicResource MetroTileStyle}"
-                Command="{Binding PurchaseOrdersListViewCommand}"
-                Height="120" Width="120"
-                Margin="20 20 20 20"
-                BorderBrush="#FFCA5502">
-            <Button.Effect>
-                <DropShadowEffect BlurRadius="15"/>
-            </Button.Effect>
-            <TextBlock Text="Purchase Orders" TextWrapping="Wrap" 
-                       FontSize="15" TextAlignment="Center" 
-                       FontFamily="Arial" FontWeight="DemiBold"/>
-        </Button>
-        
-        <!--Supplier List View Function-->
-        <Button x:Name ="SupplierListView" 
-                Style="{DynamicResource MetroTileStyle}"
-                Command="{Binding SupplierListViewCommand}"
-                Height="120" Width="120"
-                Margin="20 20 20 20"
-                BorderBrush="#FFCA5502">
-                <Button.Effect>
-                    <DropShadowEffect BlurRadius="15"/>
-                </Button.Effect>
-                <TextBlock Text="Suppliers" TextWrapping="Wrap" 
-                       FontSize="15" TextAlignment="Center" 
-                       FontFamily="Arial" FontWeight="DemiBold"/>
-            </Button>        
-        
-        <!--Raw Material List View Function-->
-        <Button x:Name ="RawMaterialListView" 
-                Style="{DynamicResource MetroTileStyle}"
-                Command="{Binding RawMaterialListViewCommand}"
-                Height="120" Width="120"
-                Margin="20 20 20 20"
-                BorderBrush="#FFCA5502">
-                <Button.Effect>
-                    <DropShadowEffect BlurRadius="15"/>
-                </Button.Effect>
-                <TextBlock Text="Raw Materials" TextWrapping="Wrap" 
-                       FontSize="15" TextAlignment="Center" 
-                       FontFamily="Arial" FontWeight="DemiBold"/>
-            </Button>        
-        
-        <!--Raw Material Category List View Function-->
-        <Button x:Name ="RawMaterialCategoryListView" 
-                Style="{DynamicResource MetroTileStyle}"
-                Command="{Binding RawMaterialCategoryListViewCommand}"
-                Height="120" Width="120"
-                Margin="20 20 20 20"
-                BorderBrush="#FFCA5502">
-                <Button.Effect>
-                    <DropShadowEffect BlurRadius="15"/>
-                </Button.Effect>
-                <TextBlock Text="Raw Material Categories" TextWrapping="Wrap" 
-                       FontSize="15" TextAlignment="Center" 
-                       FontFamily="Arial" FontWeight="DemiBold"/>
-            </Button>
+	<!--Functions Section-->
+	<WrapPanel x:Name="FunctionsWrapPanel" 
+			   Orientation="Horizontal" HorizontalAlignment="Left" 
+			   Margin="0" Grid.Column="1" Grid.Row="3">
+		
+		<!--Manage Work Cycles List View Function-->
+		<Button x:Name ="MangeWorkCycleList" 
+				Style="{DynamicResource MetroTileStyle}"
+				Command="{Binding ManageWorkCyclesCommand}"
+				Height="120" Width="120"
+				Margin="20 20 20 20"
+				BorderBrush="#FFCA5502">
+				<Button.Effect>
+					<DropShadowEffect BlurRadius="15"/>
+				</Button.Effect>
+				<TextBlock Text="Work Cycles" TextWrapping="Wrap" 
+					FontSize="15" TextAlignment="Center" 
+					FontFamily="Arial" FontWeight="DemiBold"/>
+			</Button> 
+		
+		<!--Purchase Orders List View Function-->
+		<Button x:Name ="PurchaseOrderListView" 
+				Style="{DynamicResource MetroTileStyle}"
+				Command="{Binding PurchaseOrdersListViewCommand}"
+				Height="120" Width="120"
+				Margin="20 20 20 20"
+				BorderBrush="#FFCA5502">
+			<Button.Effect>
+				<DropShadowEffect BlurRadius="15"/>
+			</Button.Effect>
+			<TextBlock Text="Purchase Orders" TextWrapping="Wrap" 
+					   FontSize="15" TextAlignment="Center" 
+					   FontFamily="Arial" FontWeight="DemiBold"/>
+		</Button>
+		
+		<!--Supplier List View Function-->
+		<Button x:Name ="SupplierListView" 
+				Style="{DynamicResource MetroTileStyle}"
+				Command="{Binding SupplierListViewCommand}"
+				Height="120" Width="120"
+				Margin="20 20 20 20"
+				BorderBrush="#FFCA5502">
+				<Button.Effect>
+					<DropShadowEffect BlurRadius="15"/>
+				</Button.Effect>
+				<TextBlock Text="Suppliers" TextWrapping="Wrap" 
+					   FontSize="15" TextAlignment="Center" 
+					   FontFamily="Arial" FontWeight="DemiBold"/>
+			</Button>        
+		
+		<!--Raw Material List View Function-->
+		<Button x:Name ="RawMaterialListView" 
+				Style="{DynamicResource MetroTileStyle}"
+				Command="{Binding RawMaterialListViewCommand}"
+				Height="120" Width="120"
+				Margin="20 20 20 20"
+				BorderBrush="#FFCA5502">
+				<Button.Effect>
+					<DropShadowEffect BlurRadius="15"/>
+				</Button.Effect>
+				<TextBlock Text="Raw Materials" TextWrapping="Wrap" 
+					   FontSize="15" TextAlignment="Center" 
+					   FontFamily="Arial" FontWeight="DemiBold"/>
+			</Button>        
+		
+		<!--Raw Material Category List View Function-->
+		<Button x:Name ="RawMaterialCategoryListView" 
+				Style="{DynamicResource MetroTileStyle}"
+				Command="{Binding RawMaterialCategoryListViewCommand}"
+				Height="120" Width="120"
+				Margin="20 20 20 20"
+				BorderBrush="#FFCA5502">
+				<Button.Effect>
+					<DropShadowEffect BlurRadius="15"/>
+				</Button.Effect>
+				<TextBlock Text="Raw Material Categories" TextWrapping="Wrap" 
+					   FontSize="15" TextAlignment="Center" 
+					   FontFamily="Arial" FontWeight="DemiBold"/>
+			</Button>        
+		
+		<!--Location List View Function-->
+		<Button x:Name ="LocationListView" 
+				Style="{DynamicResource MetroTileStyle}"
+				Command="{Binding LocationListViewCommand}"
+				Height="120" Width="120"
+				Margin="20 20 20 20"
+				BorderBrush="#FFCA5502">
+				<Button.Effect>
+					<DropShadowEffect BlurRadius="15"/>
+				</Button.Effect>
+				<TextBlock Text="Raw Material Locations" TextWrapping="Wrap" 
+					   FontSize="15" TextAlignment="Center" 
+					   FontFamily="Arial" FontWeight="DemiBold"/>
+			</Button>
 
-        </WrapPanel>
+		</WrapPanel>
 
-    <!--Navigation-->
-    <StackPanel x:Name="NavigationPanel" Grid.Column="1" Margin="0" Orientation="Horizontal" Grid.Row="1">
-    	<Button x:Name="BackHome" Content="Back Home"
-    		Command="{Binding BackHomeCommand}" Margin="0" 
+	<!--Navigation-->
+	<StackPanel x:Name="NavigationPanel" Grid.Column="1" Margin="0" Orientation="Horizontal" Grid.Row="1">
+		<Button x:Name="BackHome" Content="Back Home"
+			Command="{Binding BackHomeCommand}" Margin="0" 
 			FontSize="13.333" FontFamily="Adobe Caslon Pro Bold" 
 			VerticalAlignment="Center" HorizontalAlignment="Left" 
 			Background="#00F7F7F7" BorderBrush="#00F7F7F7" Width="97"/>
 	</StackPanel>
-        
-    <!--Search Function-->
+		
+	<!--Search Function-->
 	<TextBox controls:TextBoxHelper.Watermark="Search"
-                     controls:TextBoxHelper.ClearTextButton="True"
-                        Grid.Row="2" Grid.Column="1"
+					 controls:TextBoxHelper.ClearTextButton="True"
+						Grid.Row="2" Grid.Column="1"
 						x:Name="SearchTextBox"
-                        Height="36"
-                        FontSize="18"
+						Height="36"
+						FontSize="18"
 						HorizontalAlignment="Center"
 						VerticalAlignment="Center" 
 						VerticalContentAlignment="Center"
-                        HorizontalContentAlignment="Center"
+						HorizontalContentAlignment="Center"
 						Margin="0" Width="285">
-                <TextBox.Style>
-                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MetroTextBox}" >
-                    	<Setter Property="Foreground" Value="{DynamicResource MainForeground}"/>
-                    	<Setter Property="BorderBrush" Value="{DynamicResource MainBorderColor}"/>
-                    	<Setter Property="BorderThickness" Value="1"/>
-                    	<Setter Property="controls:TextBoxHelper.ClearTextButton" Value="True"/>
-                    	<Setter Property="Padding" Value="0,1,0,0" />
-                        <Style.Triggers>
-                        	<Trigger Property="IsMouseOver" Value="True">
-                        		<Setter Property="Foreground" Value="Orange"/>
-                        		<Setter Property="controls:TextBoxHelper.ClearTextButton" Value="True"/>
-                        	</Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBox.Style>
-        </TextBox>
+				<TextBox.Style>
+					<Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource MetroTextBox}" >
+						<Setter Property="Foreground" Value="{DynamicResource MainForeground}"/>
+						<Setter Property="BorderBrush" Value="{DynamicResource MainBorderColor}"/>
+						<Setter Property="BorderThickness" Value="1"/>
+						<Setter Property="controls:TextBoxHelper.ClearTextButton" Value="True"/>
+						<Setter Property="Padding" Value="0,1,0,0" />
+						<Style.Triggers>
+							<Trigger Property="IsMouseOver" Value="True">
+								<Setter Property="Foreground" Value="Orange"/>
+								<Setter Property="controls:TextBoxHelper.ClearTextButton" Value="True"/>
+							</Trigger>
+						</Style.Triggers>
+					</Style>
+				</TextBox.Style>
+		</TextBox>
 
-    </Grid>
+	</Grid>
 </UserControl>

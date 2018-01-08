@@ -16,7 +16,7 @@ namespace RestaurantPro.Infrastructure.Repositories
             _context = (RestProContext) context;
         }
 
-        public void AddOrUpdateRawMaterials(List<RawMaterialCategory> categories)
+        public void AddOrUpdate(List<RawMaterialCategory> categories)
         {
             foreach (var category in categories)
             {
@@ -31,7 +31,7 @@ namespace RestaurantPro.Infrastructure.Repositories
             }
         }
 
-        public void FakeDeleteSupplier(RawMaterialCategory category)
+        public void FakeDelete(RawMaterialCategory category)
         {
             var categoryInDb = _context.RawMaterialCategories
                 .SingleOrDefault(s => s.Id == category.Id);

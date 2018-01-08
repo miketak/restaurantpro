@@ -21,6 +21,7 @@ namespace RestaurantPro.Infrastructure
             PurchaseOrders = new PurchaseOrderRepository(_context);
             RawMaterials = new RawMaterialsRepository(_context);
             RawMaterialCategories = new RawMaterialCategoryRepository(_context);
+            Locations = new LocationRepository(_context);
         }
 
         public IUserRepository Users { get; private set; }
@@ -31,6 +32,7 @@ namespace RestaurantPro.Infrastructure
         public IPurchaseOrderRepository PurchaseOrders { get; private set; }
         public IRawMaterialsRepository RawMaterials { get; private set; }
         public IRawMaterialCategoryRepository RawMaterialCategories { get; private set; }
+        public ILocationRepository Locations { get; set; }
 
         public int Complete()
         {

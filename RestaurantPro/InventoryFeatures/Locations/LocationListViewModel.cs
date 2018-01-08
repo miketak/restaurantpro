@@ -6,17 +6,17 @@ using MahApps.Metro.Controls.Dialogs;
 using RestaurantPro.Core;
 using RestaurantPro.Models;
 
-namespace RestaurantPro.InventoryFeatures.RawMaterials
+namespace RestaurantPro.InventoryFeatures.Locations
 {
     /// <summary>
-    /// Raw Material List View Model
+    /// Location List View Model
     /// </summary>
-    public class RawMaterialListViewModel : BindableBase
+    public class LocationListViewModel : BindableBase
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IDialogCoordinator dialogCoordinator;
 
-        public RawMaterialListViewModel(IUnitOfWork unitOfWork, IDialogCoordinator instance)
+        public LocationListViewModel(IUnitOfWork unitOfWork, IDialogCoordinator instance)
         {
             _unitOfWork = unitOfWork;
             dialogCoordinator = instance;
@@ -25,8 +25,7 @@ namespace RestaurantPro.InventoryFeatures.RawMaterials
             LogoutCommand = new RelayCommand(OnLogout);
             BackHomeCommand = new RelayCommand(OnHomeClick);
             SaveCommand = new RelayCommand(OnSave, CanSave);
-            DeleteCommand = new RelayCommand<WpfRawMaterial>(OnDeleteClick);
-
+            DeleteCommand = new RelayCommand<WpfLocation>(OnDeleteClick);
         }
 
         #region Object Bindings
@@ -38,11 +37,11 @@ namespace RestaurantPro.InventoryFeatures.RawMaterials
             set { SetProperty(ref _currentUser, value); }
         }
 
-        private BindingList<WpfRawMaterial> _rawMaterials;
-        public BindingList<WpfRawMaterial> RawMaterials
+        private BindingList<WpfLocation> _locations;
+        public BindingList<WpfLocation> Locations
         {
-            get { return _rawMaterials; }
-            set { SetProperty(ref _rawMaterials, value); }
+            get { return _locations; }
+            set { SetProperty(ref _locations, value); }
         }
 
         #endregion
@@ -54,14 +53,14 @@ namespace RestaurantPro.InventoryFeatures.RawMaterials
             CurrentUser = user;
         }
 
-        public void LoadRawMaterials()
+        public void LoadLocations()
         {
-            var rawMaterialsInDb = _unitOfWork.RawMaterials
+            var locationsInDb = _unitOfWork.Locations
                 .GetAll().ToList();
 
-            var rawMaterialsForView = RestproMapper.MapRawMaterialListToWpfRawMaterialList(rawMaterialsInDb);
+            var locationsForView = RestproMapper.MapLocationListToWpfLocationList(locationsInDb);
 
-            RawMaterials = new BindingList<WpfRawMaterial>(rawMaterialsForView);
+            Locations = new BindingList<WpfLocation>(locationsForView);
         }
 
         #endregion
@@ -86,7 +85,7 @@ namespace RestaurantPro.InventoryFeatures.RawMaterials
 
         public RelayCommand SaveCommand { get; private set; }
 
-        public RelayCommand<WpfRawMaterial> DeleteCommand { get; private set; }
+        public RelayCommand<WpfLocation> DeleteCommand { get; private set; }
 
         #endregion
 
@@ -110,14 +109,14 @@ namespace RestaurantPro.InventoryFeatures.RawMaterials
 
         private async void OnSave()
         {
-            var rawMaterialsToDb = RestproMapper
-                .MapWpfRawMaterialLIstToRawMaterialList(RawMaterials.ToList());
+            var locationsToDb = RestproMapper
+                .MapWpfLocationListToLocationList(Locations.ToList());
             string errorMessage = null;
 
             try
             {
-                _unitOfWork.RawMaterials.AddOrUpdateRawMaterials(rawMaterialsToDb);
-                LoadRawMaterials();
+                _unitOfWork.Locations.AddOrUpdate(locationsToDb);
+                LoadLocations();
                 await dialogCoordinator.ShowMessageAsync(this, "Success", "Items Saved Successfully. You Rock!");
             }
             catch (Exception e)
@@ -135,19 +134,19 @@ namespace RestaurantPro.InventoryFeatures.RawMaterials
                       errorMessage);
         }
 
-        private async void OnDeleteClick(WpfRawMaterial wpfRawMaterial)
+        private async void OnDeleteClick(WpfLocation location)
         {
-            if (wpfRawMaterial == null)
+            if (location == null)
                 return;
 
-            var rawMaterialToDb = RestproMapper.MapWpfRawMaterialToRawMaterial(wpfRawMaterial);
+            var locationToDb = RestproMapper.MapWpfLocationToLocation(location);
             string errorMessage = null;
 
             try
             {
-                RawMaterials.Remove(wpfRawMaterial);
-                if ( wpfRawMaterial.Id != 0 )
-                    _unitOfWork.RawMaterials.FakeDelete(rawMaterialToDb);
+                Locations.Remove(location);
+                if (location.LocationId != null)
+                    _unitOfWork.Locations.FakeDelete(locationToDb);
                 await dialogCoordinator.ShowMessageAsync(this, "Success", "Raw Material Deleted Successfully. Good Bye :(");
             }
             catch (Exception e)
@@ -167,10 +166,10 @@ namespace RestaurantPro.InventoryFeatures.RawMaterials
 
         private bool CanSave()
         {
-            return RawMaterials == null || RawMaterials.All(a => !a.HasErrors);
+            return Locations == null || Locations.All(a => !a.HasErrors);
         }
 
         #endregion
-
+        
     }
 }

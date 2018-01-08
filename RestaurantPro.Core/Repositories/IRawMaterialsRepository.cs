@@ -6,6 +6,6 @@ namespace RestaurantPro.Core.Repositories
     public interface IRawMaterialsRepository : IRepository<RawMaterial>
     {
         void AddOrUpdateRawMaterials(List<RawMaterial> rawMaterials);
-        void FakeDeleteSupplier(RawMaterial rawMaterial);
+        void FakeDelete(RawMaterial rawMaterial);
     }
 }

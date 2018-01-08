@@ -10,6 +10,7 @@ using RestaurantPro.Core;
 using RestaurantPro.Core.Services;
 using RestaurantPro.HomeDashboard;
 using RestaurantPro.InventoryFeatures;
+using RestaurantPro.InventoryFeatures.Locations;
 using RestaurantPro.InventoryFeatures.PurchaseOrders;
 using RestaurantPro.InventoryFeatures.RawMaterials;
 using RestaurantPro.InventoryFeatures.Suppliers;
@@ -37,6 +38,7 @@ namespace RestaurantPro
         private SupplierListViewModel _supplierListViewModel;
         private RawMaterialListViewModel _rawMaterialListViewModel;
         private RawMaterialCategoryListViewModel _rawMaterialCategoryListViewModel;
+        private LocationListViewModel _locationListViewModel;
 
         /// <summary>
         /// Constructor to subscription of events for overall program navigation.
@@ -56,6 +58,8 @@ namespace RestaurantPro
             _supplierListViewModel = new SupplierListViewModel(unitOfWork, DialogCoordinator.Instance);
             _rawMaterialListViewModel = new RawMaterialListViewModel(unitOfWork, DialogCoordinator.Instance);
             _rawMaterialCategoryListViewModel = new RawMaterialCategoryListViewModel(unitOfWork, DialogCoordinator.Instance);
+            _locationListViewModel = new LocationListViewModel(unitOfWork, DialogCoordinator.Instance);
+            
 
             //Set Login context
             SetLoginContext();
@@ -73,6 +77,7 @@ namespace RestaurantPro
             _inventoryDashboardViewModel.SupplierListViewRequested += NavToSupplierListView;
             _inventoryDashboardViewModel.RawMaterialListViewRequested += NavToRawMaterialsListView;
             _inventoryDashboardViewModel.RawMaterialCategoryListViewRequested += NavToRawMaterialCategoryListView;
+            _inventoryDashboardViewModel.LocationListViewRequested += NavToLocationListView;
 
             _workCycleListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
             _workCycleListViewModel.LogoutRequested += NavToLoginView;
@@ -106,7 +111,11 @@ namespace RestaurantPro
 
             _rawMaterialCategoryListViewModel.LogoutRequested += NavToLoginView;
             _rawMaterialCategoryListViewModel.HomeViewRequested += NavToHomeDashboard;
-            _rawMaterialCategoryListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
+            _rawMaterialCategoryListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;           
+            
+            _locationListViewModel.LogoutRequested += NavToLoginView;
+            _locationListViewModel.HomeViewRequested += NavToHomeDashboard;
+            _locationListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
         }
 
         /// <summary>
@@ -228,6 +237,12 @@ namespace RestaurantPro
         {
             _rawMaterialCategoryListViewModel.SetCurrentUser(currentUser);
             CurrentViewModel = _rawMaterialCategoryListViewModel;
+        }
+
+        private void NavToLocationListView(WpfUser currentUser)
+        {
+            _locationListViewModel.SetCurrentUser(currentUser);
+            CurrentViewModel = _locationListViewModel;
         }
 
         #endregion
