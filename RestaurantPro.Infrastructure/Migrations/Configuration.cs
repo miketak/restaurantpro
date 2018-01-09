@@ -120,6 +120,18 @@ namespace RestaurantPro.Infrastructure.Migrations
 
             #endregion
 
+            #region Add Inventory Settings
+
+            var inventorySettings = new InventorySettings
+            {
+                Parameter = "Tax",
+                Value = (decimal)0.17500
+            };
+            context.InventorySettings.Add(inventorySettings);
+            context.SaveChanges();
+
+            #endregion
+
         }
     }
 }

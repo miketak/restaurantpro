@@ -50,14 +50,12 @@ namespace RestaurantPro.InventoryFeatures.Settings
 
         public void LoadSettings()
         {
-            if (InventorySettings == null)
-            {
+            var tax = _unitOfWork.InventorySettings.GetTax();
+            if (tax != null)
                 InventorySettings = new InventorySettings
                 {
-
-                    Tax = (decimal)0.5
+                    Tax = (decimal) tax
                 };
-            }
         }
 
         #endregion
@@ -108,13 +106,11 @@ namespace RestaurantPro.InventoryFeatures.Settings
 
         private async void OnTaxSave()
         {
-           // var rawMaterialsToDb = RestproMapper
-             //   .MapWpfRawMaterialLIstToRawMaterialList(RawMaterials.ToList());
+            _unitOfWork.InventorySettings.SetTax(InventorySettings.Tax);
             string errorMessage = null;
 
             try
             {
-                //_unitOfWork.InventorySettings.AddOrUpdateRawMaterials(rawMaterialsToDb);
                 LoadSettings();
                 await dialogCoordinator.ShowMessageAsync(this, "Success", "Items Saved Successfully. You Rock!");
             }
@@ -135,14 +131,11 @@ namespace RestaurantPro.InventoryFeatures.Settings
 
         private bool CanSaveTax()
         {
+            if( InventorySettings != null)
+                return !InventorySettings.HasErrors;
             return true;
-            //if ( InventorySettings != null)
-            //    return !InventorySettings.HasErrors;
-            //return true;
         }
 
         #endregion
-
-
     }
 }

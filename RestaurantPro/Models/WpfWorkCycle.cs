@@ -14,6 +14,7 @@ namespace RestaurantPro.Models
 {
     public class WpfWorkCycle : ValidatableBindableBase
     {
+        IUnitOfWork _unitOfWork = new UnitOfWork(new RestProContext());
 
         public WpfWorkCycle()
         {
@@ -109,7 +110,7 @@ namespace RestaurantPro.Models
             set { SetProperty(ref _subTotal, value); }
         }
 
-        public double Tax{ get { return 0.175; }  } //to be abstracted to db later
+        public double Tax {get { return (double)_unitOfWork.InventorySettings.GetTax(); }  } //to be abstracted to db later
 
         private double _total;
         public double Total
