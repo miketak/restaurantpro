@@ -56,8 +56,7 @@ namespace RestaurantPro.InventoryFeatures.RawMaterials
 
         public void LoadRawMaterials()
         {
-            var rawMaterialsInDb = _unitOfWork.RawMaterials
-                .GetAll().ToList();
+            var rawMaterialsInDb = _unitOfWork.RawMaterials.GetRawMaterials().ToList();
 
             var rawMaterialsForView = RestproMapper.MapRawMaterialListToWpfRawMaterialList(rawMaterialsInDb);
 

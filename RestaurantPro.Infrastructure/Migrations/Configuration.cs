@@ -109,11 +109,11 @@ namespace RestaurantPro.Infrastructure.Migrations
 
             var rawMaterials = new List<RawMaterial>
             {
-                new RawMaterial {Name = "Tomatoes", RawMaterialCategoryId = 1},
-                new RawMaterial {Name = "Cabbage", RawMaterialCategoryId = 1},
-                new RawMaterial {Name = "Sprite", RawMaterialCategoryId = 4},
-                new RawMaterial {Name = "Orange", RawMaterialCategoryId = 2},
-                new RawMaterial {Name = "Garlic", RawMaterialCategoryId = 3}
+                new RawMaterial {Name = "Tomatoes", RawMaterialCategoryId = 1, Active=true},
+                new RawMaterial {Name = "Cabbage", RawMaterialCategoryId = 1, Active=true},
+                new RawMaterial {Name = "Sprite", RawMaterialCategoryId = 4, Active=true},
+                new RawMaterial {Name = "Orange", RawMaterialCategoryId = 2, Active=true},
+                new RawMaterial {Name = "Garlic", RawMaterialCategoryId = 3, Active=true}
             };
             rawMaterials.ForEach(p => context.RawMaterials.AddOrUpdate(t => t.Name, p));
             context.SaveChanges();

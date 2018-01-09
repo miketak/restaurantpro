@@ -17,6 +17,18 @@ namespace RestaurantPro.Infrastructure.Repositories
             _context = (RestProContext) context;
         }
 
+        public IEnumerable<RawMaterial> GetRawMaterials()
+        {
+            return _context.RawMaterials.Where(x => x.Active).ToList();
+        }
+
+        public RawMaterial ReturnRawMaterialIfExists(string rawMaterialName)
+        {
+            return _context
+                .RawMaterials.Where(x => x.Active)
+                .SingleOrDefault(raw => raw.Name.ToLower() == rawMaterialName.ToLower());
+        }
+
         public void AddOrUpdateRawMaterials(List<RawMaterial> rawMaterials)
         {
             foreach (var rawMaterial in rawMaterials)
@@ -39,9 +51,20 @@ namespace RestaurantPro.Infrastructure.Repositories
             if( rawMaterialInDb == null)
                 throw new ApplicationException("Illegal Operation");
 
-            _context.RawMaterials.Remove(rawMaterialInDb); //will be removed to active bit deactivation
+            rawMaterial.Active = false;
+            UpdateRawMaterial(rawMaterialInDb, rawMaterial);
             _context.SaveChanges();
         }
+
+        
+
+
+
+
+
+
+
+
 
         private void AddRawMaterial(RawMaterial rawMaterial)
         {
@@ -52,6 +75,7 @@ namespace RestaurantPro.Infrastructure.Repositories
         {
             rawMaterialInDb.Name = rawMaterial.Name;
             rawMaterialInDb.RawMaterialCategoryId = rawMaterial.RawMaterialCategoryId;
+            rawMaterialInDb.Active = rawMaterial.Active;
         }
     }
 }

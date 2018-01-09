@@ -54,8 +54,7 @@ namespace RestaurantPro.Models
             set
             {
                 var rawMaterialInDb = _unitOfWork
-                    .RawMaterials
-                    .SingleOrDefault(raw => raw.Name.ToLower() == value.ToLower());
+                    .RawMaterials.ReturnRawMaterialIfExists(value);
 
                 RawMaterialId = rawMaterialInDb != null ? rawMaterialInDb.Id : 0;
                 NewRawMaterial = rawMaterialInDb == null ? value : null;

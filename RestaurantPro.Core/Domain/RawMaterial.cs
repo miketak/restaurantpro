@@ -11,6 +11,8 @@ namespace RestaurantPro.Core.Domain
 
         public int RawMaterialCategoryId { get; set; }
 
+        public bool Active { get; set; }
+
 
         #region Navigation Properties
 

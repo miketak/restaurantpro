@@ -7,5 +7,8 @@ namespace RestaurantPro.Core.Repositories
     {
         void AddOrUpdateRawMaterials(List<RawMaterial> rawMaterials);
         void FakeDelete(RawMaterial rawMaterial);
+        IEnumerable<RawMaterial> GetRawMaterials();
+
+        RawMaterial ReturnRawMaterialIfExists(string rawMaterialName);
     }
 }

@@ -119,8 +119,17 @@ namespace RestaurantPro.Infrastructure.Repositories
             foreach (var line in workCycle.Lines)
             {
                 line.WorkCycleId = workCycle.Id;
+                bool isOldRawMaterialUsed = false;
+
 
                 if (line.RawMaterialId == 0)
+                {
+                    line.RawMaterialId = CheckForOldRawMaterialsToActivate(line);
+                    if (line.RawMaterialId != 0)
+                        isOldRawMaterialUsed = true;
+                }
+
+                if (line.RawMaterialId == 0 && !isOldRawMaterialUsed)
                     line.RawMaterialId = AddNewRawMaterialToRawMaterialTable(line);
 
                 if (line.SupplierId == 0)
@@ -132,6 +141,19 @@ namespace RestaurantPro.Infrastructure.Repositories
             }
         }
 
+        private int CheckForOldRawMaterialsToActivate(WorkCycleLines line)
+        {
+            var rawMaterialInDb = _context.RawMaterials.SingleOrDefault(r => r.Name == line.RawMaterialStringTemp);
+
+            if (rawMaterialInDb == null)
+                return 0;
+
+            rawMaterialInDb.Active = true;
+            _context.SaveChanges();
+
+            return rawMaterialInDb.Id;
+        }
+
         private int AddNewSupplierToSupplierTable(WorkCycleLines line)
         {
             _context.Suppliers.Add(new Supplier { Name = line.SupplierStringTemp, Active = true });
@@ -141,7 +163,7 @@ namespace RestaurantPro.Infrastructure.Repositories
 
         private int AddNewRawMaterialToRawMaterialTable(WorkCycleLines line)
         {
-            _context.RawMaterials.Add(new RawMaterial { Name = line.RawMaterialStringTemp, RawMaterialCategoryId = 1 });
+            _context.RawMaterials.Add(new RawMaterial { Name = line.RawMaterialStringTemp, RawMaterialCategoryId = 1, Active=true });
             _context.SaveChanges();
             return _context.RawMaterials.SingleOrDefault(r => r.Name == line.RawMaterialStringTemp).Id;
         }
