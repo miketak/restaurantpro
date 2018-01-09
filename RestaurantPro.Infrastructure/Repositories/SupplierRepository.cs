@@ -16,6 +16,12 @@ namespace RestaurantPro.Infrastructure.Repositories
             _context = (RestProContext) context;
         }
 
+        public IEnumerable<Supplier> GetSuppliers()
+        {
+            return _context.Suppliers
+                .Where(u => u.Active).ToList();
+        }
+
         public void AddOrUpdateSuppliers(List<Supplier> suppliers)
         {
             foreach (var supplier in suppliers)

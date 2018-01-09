@@ -5,6 +5,8 @@ namespace RestaurantPro.Core.Repositories
 {
     public interface ISupplierRepository : IRepository<Supplier>
     {
+        IEnumerable<Supplier> GetSuppliers();
+
         void AddOrUpdateSuppliers(List<Supplier> suppliers);
 
         void FakeDeleteSupplier(Supplier supplier);

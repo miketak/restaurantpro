@@ -56,9 +56,7 @@ namespace RestaurantPro.InventoryFeatures.Suppliers
 
         public void LoadSuppliers()
         {
-            var suppliers = _unitOfWork.Suppliers
-                .GetAll()
-                .Where(u => u.Active).ToList();
+            var suppliers = _unitOfWork.Suppliers.GetSuppliers().ToList();
 
             var wpfSuppliers = RestproMapper.MapSupplierListToWpfSupplierList(suppliers);
 
