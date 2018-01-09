@@ -175,6 +175,10 @@
       <DependentUpon>RawMaterialListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="InventoryFeatures\RawMaterials\RawMaterialListViewModel.cs" />
+    <Compile Include="InventoryFeatures\Settings\InventorySettingView.xaml.cs">
+      <DependentUpon>InventorySettingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="InventoryFeatures\Settings\InventorySettingViewModel.cs" />
     <Compile Include="InventoryFeatures\Suppliers\SupplierListView.xaml.cs">
       <DependentUpon>SupplierListView.xaml</DependentUpon>
     </Compile>
@@ -192,6 +196,7 @@
     </Compile>
     <Compile Include="Login\LoginViewModel.cs" />
     <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="Models\InventorySettings.cs" />
     <Compile Include="Models\RestproMapper.cs" />
     <Compile Include="Models\WpfLocation.cs" />
     <Compile Include="Models\WpfPurchaseOrder.cs" />
@@ -244,6 +249,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="InventoryFeatures\RawMaterials\RawMaterialListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InventoryFeatures\Settings\InventorySettingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

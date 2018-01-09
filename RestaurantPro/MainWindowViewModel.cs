@@ -13,6 +13,7 @@ using RestaurantPro.InventoryFeatures;
 using RestaurantPro.InventoryFeatures.Locations;
 using RestaurantPro.InventoryFeatures.PurchaseOrders;
 using RestaurantPro.InventoryFeatures.RawMaterials;
+using RestaurantPro.InventoryFeatures.Settings;
 using RestaurantPro.InventoryFeatures.Suppliers;
 using RestaurantPro.InventoryFeatures.WorkCycles;
 using RestaurantPro.Login;
@@ -39,6 +40,7 @@ namespace RestaurantPro
         private RawMaterialListViewModel _rawMaterialListViewModel;
         private RawMaterialCategoryListViewModel _rawMaterialCategoryListViewModel;
         private LocationListViewModel _locationListViewModel;
+        private InventorySettingViewModel _inventorySettingViewModel;
 
         /// <summary>
         /// Constructor to subscription of events for overall program navigation.
@@ -59,6 +61,7 @@ namespace RestaurantPro
             _rawMaterialListViewModel = new RawMaterialListViewModel(unitOfWork, DialogCoordinator.Instance);
             _rawMaterialCategoryListViewModel = new RawMaterialCategoryListViewModel(unitOfWork, DialogCoordinator.Instance);
             _locationListViewModel = new LocationListViewModel(unitOfWork, DialogCoordinator.Instance);
+            _inventorySettingViewModel = new InventorySettingViewModel(unitOfWork, DialogCoordinator.Instance);
             
 
             //Set Login context
@@ -78,6 +81,7 @@ namespace RestaurantPro
             _inventoryDashboardViewModel.RawMaterialListViewRequested += NavToRawMaterialsListView;
             _inventoryDashboardViewModel.RawMaterialCategoryListViewRequested += NavToRawMaterialCategoryListView;
             _inventoryDashboardViewModel.LocationListViewRequested += NavToLocationListView;
+            _inventoryDashboardViewModel.InventorySettingViewRequested += NavToInventorySettingView;
 
             _workCycleListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
             _workCycleListViewModel.LogoutRequested += NavToLoginView;
@@ -115,7 +119,13 @@ namespace RestaurantPro
             
             _locationListViewModel.LogoutRequested += NavToLoginView;
             _locationListViewModel.HomeViewRequested += NavToHomeDashboard;
-            _locationListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
+            _locationListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;            
+            
+            _inventorySettingViewModel.LogoutRequested += NavToLoginView;
+            _inventorySettingViewModel.HomeViewRequested += NavToHomeDashboard;
+            _inventorySettingViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
+
+
         }
 
         /// <summary>
@@ -243,6 +253,12 @@ namespace RestaurantPro
         {
             _locationListViewModel.SetCurrentUser(currentUser);
             CurrentViewModel = _locationListViewModel;
+        }
+
+        private void NavToInventorySettingView(WpfUser currentUser)
+        {
+            _inventorySettingViewModel.SetCurrentUser(currentUser);
+            CurrentViewModel = _inventorySettingViewModel;
         }
 
         #endregion

@@ -14,6 +14,7 @@
 		xmlns:supplier="clr-namespace:RestaurantPro.InventoryFeatures.Suppliers"
 		xmlns:rawMaterials="clr-namespace:RestaurantPro.InventoryFeatures.RawMaterials"
 		xmlns:locations="clr-namespace:RestaurantPro.InventoryFeatures.Locations"
+		xmlns:invsettings="clr-namespace:RestaurantPro.InventoryFeatures.Settings"
 		mc:Ignorable="d" 
 		x:Class="RestaurantPro.MainWindow"
 		Title="Restaurant Pro"
@@ -70,6 +71,9 @@
         </DataTemplate>        
         <DataTemplate DataType="{x:Type locations:LocationListViewModel}">
             <locations:LocationListView/>
+        </DataTemplate>        
+        <DataTemplate DataType="{x:Type invsettings:InventorySettingViewModel}">
+            <invsettings:InventorySettingView/>
         </DataTemplate>
 	</Window.Resources>
 	<!--End of Window Reousrces-->
