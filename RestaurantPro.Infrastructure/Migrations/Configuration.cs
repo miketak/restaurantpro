@@ -66,9 +66,9 @@ namespace RestaurantPro.Infrastructure.Migrations
 
             var locations = new List<Location>
             {
-                new Location {LocationId = "Room A"},
-                new Location {LocationId = "Room B"},
-                new Location {LocationId = "Home Warehouse"}
+                new Location {LocationId = "Room A", Active=true},
+                new Location {LocationId = "Room B", Active=true},
+                new Location {LocationId = "Home Warehouse", Active=true}
             };
             locations.ForEach(p => context.Locations.AddOrUpdate(t => t.LocationId, p));
             context.SaveChanges();

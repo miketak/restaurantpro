@@ -60,21 +60,21 @@
 		<DataTemplate DataType="{x:Type polist:AddEditPurchaseOrderViewModel}">
 			<polist:AddEditPurchaseOrderView/>
 		</DataTemplate>		
-	    <DataTemplate DataType="{x:Type supplier:SupplierListViewModel}">
-            <supplier:SupplierListView/>
+		<DataTemplate DataType="{x:Type supplier:SupplierListViewModel}">
+			<supplier:SupplierListView/>
 		</DataTemplate>
-        <DataTemplate DataType="{x:Type rawMaterials:RawMaterialListViewModel}">
-            <rawMaterials:RawMaterialListView/>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type rawMaterials:RawMaterialCategoryListViewModel}">
-            <rawMaterials:RawMaterialCategoryListView/>
-        </DataTemplate>        
-        <DataTemplate DataType="{x:Type locations:LocationListViewModel}">
-            <locations:LocationListView/>
-        </DataTemplate>        
-        <DataTemplate DataType="{x:Type invsettings:InventorySettingViewModel}">
-            <invsettings:InventorySettingView/>
-        </DataTemplate>
+		<DataTemplate DataType="{x:Type rawMaterials:RawMaterialListViewModel}">
+			<rawMaterials:RawMaterialListView/>
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type rawMaterials:RawMaterialCategoryListViewModel}">
+			<rawMaterials:RawMaterialCategoryListView/>
+		</DataTemplate>        
+		<DataTemplate DataType="{x:Type locations:LocationListViewModel}">
+			<locations:LocationListView/>
+		</DataTemplate>        
+		<DataTemplate DataType="{x:Type invsettings:InventorySettingViewModel}">
+			<invsettings:InventorySettingView/>
+		</DataTemplate>
 	</Window.Resources>
 	<!--End of Window Reousrces-->
 	
@@ -94,7 +94,7 @@
 		<StackPanel Grid.Row="1" 
 			Orientation="Horizontal"
 			HorizontalAlignment="Center">
-			<Label Content="Stable Corps. All Copyrights Reserved 2017"
+			<Label Content="Stable Corps. All Copyrights Reserved 2018"
 				Foreground="{DynamicResource MainForeground}" 
 				FontFamily="Adobe Caslon Pro Bold"
 				HorizontalAlignment="Center"

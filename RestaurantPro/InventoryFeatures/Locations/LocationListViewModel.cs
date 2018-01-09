@@ -55,8 +55,9 @@ namespace RestaurantPro.InventoryFeatures.Locations
 
         public void LoadLocations()
         {
-            var locationsInDb = _unitOfWork.Locations
-                .GetAll().ToList();
+            var locationsInDb = _unitOfWork
+                .Locations
+                .GetLocations().ToList();
 
             var locationsForView = RestproMapper.MapLocationListToWpfLocationList(locationsInDb);
 

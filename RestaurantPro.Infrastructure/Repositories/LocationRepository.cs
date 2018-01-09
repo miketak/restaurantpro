@@ -17,6 +17,13 @@ namespace RestaurantPro.Infrastructure.Repositories
             _context = (RestProContext) context;
         }
 
+        public IEnumerable<Location> GetLocations()
+        {
+            return _context
+                .Locations
+                .Where(a => a.Active).ToList();
+        }
+
         public void AddOrUpdate(List<Location> locations)
         {
             foreach (var location in locations)
@@ -40,7 +47,8 @@ namespace RestaurantPro.Infrastructure.Repositories
             if (locationInDb == null)
                 throw new ApplicationException("Illegal Operation");
 
-            _context.Locations.Remove(locationInDb); //must be changed to active bit deactivation
+            location.Active = false;
+            UpdateLocation(locationInDb, location);
             _context.SaveChanges();
         }
 
@@ -52,6 +60,7 @@ namespace RestaurantPro.Infrastructure.Repositories
         private void UpdateLocation(Location locationInDb, Location location)
         {
             locationInDb.LocationId = location.LocationId;
+            locationInDb.Active = location.Active;
         }
     }
 }
