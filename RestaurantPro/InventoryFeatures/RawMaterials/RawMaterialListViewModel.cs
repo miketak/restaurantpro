@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -54,13 +55,28 @@ namespace RestaurantPro.InventoryFeatures.RawMaterials
             CurrentUser = user;
         }
 
-        public void LoadRawMaterials()
+        public async void LoadRawMaterials()
         {
-            var rawMaterialsInDb = _unitOfWork.RawMaterials.GetRawMaterials().ToList();
+            string errorMessage = null;
+            try
+            {
+                var rawMaterialsInDb = _unitOfWork.RawMaterials.GetRawMaterials().ToList();
+                var rawMaterialsForView = RestproMapper.MapRawMaterialListToWpfRawMaterialList(rawMaterialsInDb);
+                RawMaterials = new BindingList<WpfRawMaterial>(rawMaterialsForView);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                errorMessage = e.Message;
+            }
 
-            var rawMaterialsForView = RestproMapper.MapRawMaterialListToWpfRawMaterialList(rawMaterialsInDb);
+            if (errorMessage == null)
+                return;
 
-            RawMaterials = new BindingList<WpfRawMaterial>(rawMaterialsForView);
+            await dialogCoordinator
+                .ShowMessageAsync(this, "Error"
+                    , "Fatal Error Occured. You're Screwed!\n" +
+                      errorMessage);   
         }
 
         #endregion
