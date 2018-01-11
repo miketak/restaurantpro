@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
@@ -15,6 +16,11 @@ namespace RestaurantPro.Infrastructure.Repositories
             : base(context)
         {
             _context = (RestProContext) context;
+        }
+
+        public IEnumerable<WorkCycle> GetWorkCycles()
+        {
+            return _context.WorkCycles.Where(x => x.Active).ToList();
         }
 
         /// <summary>

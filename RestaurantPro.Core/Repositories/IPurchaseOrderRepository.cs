@@ -1,4 +1,5 @@
-﻿using RestaurantPro.Core.Domain;
+﻿using System.Collections.Generic;
+using RestaurantPro.Core.Domain;
 
 namespace RestaurantPro.Core.Repositories
 {
@@ -9,5 +10,6 @@ namespace RestaurantPro.Core.Repositories
         PurchaseOrder GetPurchaseOrderByPurchaseOrderNumber(string purchaseOrderNumber, bool isActive);
         PurchaseOrder GetPurchaseOrderById(int purchaseOrderId, bool isActive);
         void UpdatePurchaseOrder(PurchaseOrder purchaseOrder);
+        IEnumerable<PurchaseOrder> GetPurchaseOrdersWithoutLines();
     }
 }

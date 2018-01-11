@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using MahApps.Metro.Controls.Dialogs;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using AutoMapper;
@@ -35,7 +36,6 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
             DeleteWorkingCycleCommand = new RelayCommand<WpfWorkCycle>(DeleteWorkCycle);
             AddWorkingCycleCommand = new RelayCommand(OnAddWorkCycle);
             EditWorkCycleCommand = new RelayCommand<WpfWorkCycle>(OnEditWorkCycle);
-
         }
 
         #region Initialization Methods
@@ -53,17 +53,28 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
         /// <summary>
         /// Loads Work Cycles with true flag from database
         /// </summary>
-        public void LoadWorkCycles()
+        public async void LoadWorkCycles()
         {
-            var workCyclesInDb = _unitOfWork.WorkCycles
-                .GetAll()
-                .Where(t => t.Active).ToList();
+            string errorMessage = null;
+            try
+            {
+                var workCyclesInDb = _unitOfWork.WorkCycles.GetWorkCycles().ToList();
+                var wpfWorkCycles = RestproMapper.MapWorkCycleListToWpfWorkCycleList(workCyclesInDb);
+                WorkCycles = new ObservableCollection<WpfWorkCycle>(wpfWorkCycles);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                errorMessage = e.Message;
+            }
 
-            var wpfWorkCycles = RestproMapper.MapWorkCycleListToWpfWorkCycleList(workCyclesInDb);
+            if (errorMessage == null)
+                return;
 
-            wpfWorkCycles = AppendCreatedByUsers(wpfWorkCycles);
-
-            WorkCycles = new ObservableCollection<WpfWorkCycle>(wpfWorkCycles);
+            await dialogCoordinator
+                .ShowMessageAsync(this, "Error"
+                    , "Fatal Error Occured. You're probably screwed!\n" +
+                      errorMessage);  
         }
 
 
@@ -181,24 +192,5 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
 
         #endregion
 
-        #region Private Helper Methods
-
-        private List<WpfWorkCycle> AppendCreatedByUsers(List<WpfWorkCycle> wpfWorkCycles)
-        {
-            foreach (var workCycle in wpfWorkCycles)
-            {
-                workCycle.FirstName = _unitOfWork.Users
-                    .SingleOrDefault(user => user.Id == workCycle.UserId)
-                    .FirstName;
-
-                workCycle.LastName = _unitOfWork.Users
-                    .SingleOrDefault(user => user.Id == workCycle.UserId)
-                    .LastName;
-            }
-
-            return wpfWorkCycles;
-        }
-
-        #endregion
     }
 }

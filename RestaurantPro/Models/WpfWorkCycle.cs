@@ -83,9 +83,27 @@ namespace RestaurantPro.Models
 
         #region Properties for View
 
-        public string FirstName { get; set; }
+        private string _firstName;
+        public string FirstName
+        {
+            get
+            {
+                return _unitOfWork.Users
+                    .SingleOrDefault(user => user.Id == UserId)
+                    .FirstName;
+            }
+            set { _firstName = value; }
+        }
 
-        public string LastName { get; set; }
+        private string _lastName;
+        public string LastName { 
+            get
+        {
+            return _unitOfWork.Users
+                .SingleOrDefault(user => user.Id == UserId)
+                .LastName;
+        }
+            set { _lastName = value; } }
 
         public string FullName
         {

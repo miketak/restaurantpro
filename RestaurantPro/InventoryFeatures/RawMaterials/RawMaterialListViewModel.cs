@@ -75,7 +75,7 @@ namespace RestaurantPro.InventoryFeatures.RawMaterials
 
             await dialogCoordinator
                 .ShowMessageAsync(this, "Error"
-                    , "Fatal Error Occured. You're Screwed!\n" +
+                    , "Fatal Error Occured. You're probably screwed!\n" +
                       errorMessage);   
         }
 

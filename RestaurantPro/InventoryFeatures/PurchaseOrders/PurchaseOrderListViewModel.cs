@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using MahApps.Metro.Controls.Dialogs;
 using RestaurantPro.Core;
@@ -35,15 +36,29 @@ namespace RestaurantPro.InventoryFeatures.PurchaseOrders
             CurrentUser = user;
         }
 
-        public void LoadPurchaseOrders()
+        public async void LoadPurchaseOrders()
         {
-            var purchaseOrders = _unitOfWork.PurchaseOrders
-                .GetAll()
-                .Where(u => u.Active).ToList();
+            string errorMessage = null;
+            try
+            {
+                var purchaseOrders = _unitOfWork.PurchaseOrders.GetPurchaseOrdersWithoutLines().ToList();
+                var wpfPurchaseOrders = RestproMapper.MapPurchaseOrderListToWpfPurchaseOrderList(purchaseOrders);
+                PurchaseOrders = new ObservableCollection<WpfPurchaseOrder>(wpfPurchaseOrders);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                errorMessage = e.Message;
+            }
 
-            var wpfPurchaseOrders = RestproMapper.MapPurchaseOrderListToWpfPurchaseOrderList(purchaseOrders);
+            if (errorMessage == null)
+                return;
 
-            PurchaseOrders = new ObservableCollection<WpfPurchaseOrder>(wpfPurchaseOrders);
+            await dialogCoordinator
+                .ShowMessageAsync(this, "Error"
+                    , "Fatal Error Occured. You're probably screwed!\n" +
+                      errorMessage);  
+
         }
 
         #endregion

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
@@ -60,6 +61,11 @@ namespace RestaurantPro.Infrastructure.Repositories
             _context.SaveChanges();
 
             AddOrUpdateWorkingCycleLines(purchaseOrder);
+        }
+
+        public IEnumerable<PurchaseOrder> GetPurchaseOrdersWithoutLines()
+        {
+            return _context.PurchaseOrders.Where(x => x.Active).ToList();
         }
 
         /// <summary>
