@@ -201,8 +201,9 @@
 					 ItemsSource="{Binding Statuses, ValidatesOnNotifyDataErrors=True}"
 					 SelectedValue="{Binding StatusId, ValidatesOnNotifyDataErrors=True}"
 					 Grid.Row="2" 
-					 Height="23" 
-					 Grid.Column="4"/>
+					 Height="23" Width="168"
+                     HorizontalAlignment="Left"
+					 Grid.Column="3" Grid.ColumnSpan="2"/>
 		</Grid>
 		
 		<!--Datagrid-->
