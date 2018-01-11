@@ -194,8 +194,15 @@
 					 Margin="3,6,-28,6" 
 					 Height="23" 
 					 HorizontalAlignment="Left" 
-					 Grid.Column="4" Grid.ColumnSpan="2" />
+					 Grid.Column="4" Grid.ColumnSpan="2" />			
 			
+			<!--Working Cycle Status-->
+			<ComboBox x:Name="Status"
+					 ItemsSource="{Binding Statuses, ValidatesOnNotifyDataErrors=True}"
+					 SelectedValue="{Binding StatusId, ValidatesOnNotifyDataErrors=True}"
+					 Grid.Row="2" 
+					 Height="23" 
+					 Grid.Column="4"/>
 		</Grid>
 		
 		<!--Datagrid-->

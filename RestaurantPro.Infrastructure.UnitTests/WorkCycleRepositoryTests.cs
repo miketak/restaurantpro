@@ -102,7 +102,8 @@ namespace RestaurantPro.Infrastructure.UnitTests
                     DateBegin = new DateTime(2017, 10, 05),
                     DateEnd = new DateTime(2018, 12, 15),
                     Active = true,
-                    UserId = 2
+                    UserId = 2,
+                    StatusId = "Draft"
                 };
 
                 _unitOfWork.WorkCycles.UpdateWorkCycle(newWorkCycle);

@@ -1,4 +1,5 @@
-﻿using RestaurantPro.Core.Domain;
+﻿using System.Collections.Generic;
+using RestaurantPro.Core.Domain;
 
 namespace RestaurantPro.Core.Repositories
 {

@@ -30,15 +30,28 @@ namespace RestaurantPro.Infrastructure.Migrations
 
             #endregion
 
+            #region Work Cycle Statuses
+
+            var wcStatuses = new List<WcStatus>
+            {
+                new WcStatus {Status = "Draft"},
+                new WcStatus {Status = "Active"},
+                new WcStatus {Status = "Closed"},
+            };
+            wcStatuses.ForEach(p => context.WorkCycleStatuses.AddOrUpdate(t => t.Status, p));
+            context.SaveChanges();
+
+            #endregion
+
             #region Add Work Cycles
 
             var workCycles = new List<WorkCycle>
             {
-                new WorkCycle{ Name = "Cycle 1", DateBegin = new DateTime(2017, 09, 01), DateEnd = new DateTime(2017, 09, 11), Active = true, UserId = 1},
-                new WorkCycle{ Name = "Cycle 2", DateBegin = new DateTime(2017, 10, 02), DateEnd = new DateTime(2017, 10, 12), Active = true, UserId = 1},
-                new WorkCycle{ Name = "Cycle 3", DateBegin = new DateTime(2017, 11, 03), DateEnd = new DateTime(2017, 11, 13), Active = true, UserId = 2},
-                new WorkCycle{ Name = "Cycle 4", DateBegin = new DateTime(2017, 12, 04), DateEnd = new DateTime(2017, 12, 14), Active = true, UserId = 2},
-                new WorkCycle{ Name = "Cycle 5", DateBegin = new DateTime(2018, 01, 15), DateEnd = new DateTime(2017, 01, 15), Active = true, UserId = 2}
+                new WorkCycle{ Name = "Cycle 1", DateBegin = new DateTime(2017, 09, 01), DateEnd = new DateTime(2017, 09, 11), Active = true, UserId = 1, StatusId = "Draft"},
+                new WorkCycle{ Name = "Cycle 2", DateBegin = new DateTime(2017, 10, 02), DateEnd = new DateTime(2017, 10, 12), Active = true, UserId = 1, StatusId = "Draft"},
+                new WorkCycle{ Name = "Cycle 3", DateBegin = new DateTime(2017, 11, 03), DateEnd = new DateTime(2017, 11, 13), Active = true, UserId = 2, StatusId = "Draft"},
+                new WorkCycle{ Name = "Cycle 4", DateBegin = new DateTime(2017, 12, 04), DateEnd = new DateTime(2017, 12, 14), Active = true, UserId = 2, StatusId = "Draft"},
+                new WorkCycle{ Name = "Cycle 5", DateBegin = new DateTime(2018, 01, 15), DateEnd = new DateTime(2017, 01, 15), Active = true, UserId = 2, StatusId = "Draft"}
             };
             workCycles.ForEach(w => context.WorkCycles.AddOrUpdate(t => t.Name, w));
             context.SaveChanges();

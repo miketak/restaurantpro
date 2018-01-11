@@ -45,6 +45,7 @@ namespace RestaurantPro.Infrastructure.Repositories
             workCycleInDb.DateEnd = workCycle.DateEnd;
             workCycleInDb.Active = workCycle.Active;
             workCycleInDb.UserId = workCycle.UserId;
+            workCycleInDb.StatusId = workCycle.StatusId;
             _context.SaveChanges();
 
             AddOrUpdateWorkingCycleLines(workCycle);

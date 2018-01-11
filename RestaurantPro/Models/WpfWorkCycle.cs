@@ -14,7 +14,7 @@ namespace RestaurantPro.Models
 {
     public class WpfWorkCycle : ValidatableBindableBase
     {
-        IUnitOfWork _unitOfWork = new UnitOfWork(new RestProContext());
+        static IUnitOfWork _unitOfWork = new UnitOfWork(new RestProContext());
 
         public WpfWorkCycle()
         {
@@ -62,6 +62,14 @@ namespace RestaurantPro.Models
             set { SetProperty(ref _userId, value); }
         }
 
+
+        private string _statusId;
+        public string StatusId
+        {
+            get { return _statusId; }
+            set { SetProperty(ref _statusId, value); }
+        }
+
         private BindingList<WpfWorkCycleLines> _workCycleLines;
         public BindingList<WpfWorkCycleLines> Lines
         {
@@ -73,7 +81,7 @@ namespace RestaurantPro.Models
             }
         }
 
-        #region Fields for Working Cycle Datagrid View 
+        #region Properties for View
 
         public string FirstName { get; set; }
 
@@ -99,6 +107,21 @@ namespace RestaurantPro.Models
             get { return Active ? "Active" : "Inactive"; }
         }
 
+        public static List<string> Statuses
+        {
+            get
+            {
+                if (_statuses == null)
+                    Statuses = _unitOfWork
+                        .WorkCycleStatuses
+                        .GetAll().Select(a => a.Status).ToList();
+                return _statuses;
+            }
+            set { _statuses = value;  }
+        }
+
+        private static List<string> _statuses;
+
         #endregion
 
         #region Subtotal Section Fields
@@ -113,6 +136,7 @@ namespace RestaurantPro.Models
         public double Tax {get { return (double)_unitOfWork.InventorySettings.GetTax(); }  } //to be abstracted to db later
 
         private double _total;
+
         public double Total
         {
             get { return _total; }

@@ -24,6 +24,8 @@ namespace RestaurantPro.Core
 
         IInventorySettingsRepository InventorySettings { get; }
 
+        IWorkCycleStatusRepository WorkCycleStatuses { get; }
+
         int Complete();
     }
 }

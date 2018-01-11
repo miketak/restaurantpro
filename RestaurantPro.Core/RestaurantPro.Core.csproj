@@ -49,6 +49,7 @@
     <Compile Include="Domain\RawMaterialCategory.cs" />
     <Compile Include="Domain\Supplier.cs" />
     <Compile Include="Domain\User.cs" />
+    <Compile Include="Domain\WcStatus.cs" />
     <Compile Include="Domain\WorkCycle.cs" />
     <Compile Include="Domain\WorkCycleLines.cs" />
     <Compile Include="IUnitOfWork.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Repositories\ISupplierRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Repositories\IWorkCycleRepository.cs" />
+    <Compile Include="Repositories\IWorkCycleStatusRepository.cs" />
     <Compile Include="Services\IUserAuthenticationService.cs" />
   </ItemGroup>
   <ItemGroup>

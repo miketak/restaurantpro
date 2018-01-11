@@ -23,6 +23,7 @@ namespace RestaurantPro.Infrastructure
             RawMaterialCategories = new RawMaterialCategoryRepository(_context);
             Locations = new LocationRepository(_context);
             InventorySettings = new InventorySettingsRepository(_context);
+            WorkCycleStatuses = new WorkCycleStatusRepository(_context);
         }
 
         public IUserRepository Users { get; private set; }
@@ -35,6 +36,7 @@ namespace RestaurantPro.Infrastructure
         public IRawMaterialCategoryRepository RawMaterialCategories { get; private set; }
         public ILocationRepository Locations { get; private set; }
         public IInventorySettingsRepository InventorySettings { get; private set; }
+        public IWorkCycleStatusRepository WorkCycleStatuses { get; private set; }
 
 
         public int Complete()

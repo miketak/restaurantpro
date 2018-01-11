@@ -126,7 +126,7 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
 
         public event Action<WpfUser> HomeViewRequested = delegate { };
 
-    public event Action<WpfWorkCycle, WpfUser> AddWorkCycleRequested = delegate { };
+        public event Action<WpfWorkCycle, WpfUser> AddWorkCycleRequested = delegate { };
 
         public event Action<WpfWorkCycle, WpfUser> EditWorkCycleRequested = delegate { };
 

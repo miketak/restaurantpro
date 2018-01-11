@@ -17,6 +17,8 @@ namespace RestaurantPro.Core.Domain
 
         public int UserId { get; set; }
 
+        public string StatusId { get; set; }
+
         public IEnumerable<WorkCycleLines> Lines { get; set; }
 
 
@@ -27,6 +29,8 @@ namespace RestaurantPro.Core.Domain
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
 
         public virtual ICollection<WorkCycleLines> WorkCycleLines { get; set; }
+
+        public virtual WcStatus Status { get; set; }
 
         #endregion
     }
