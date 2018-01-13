@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using RestaurantPro.Core.Repositories;
 
 namespace RestaurantPro.Core.Domain
 {
@@ -23,6 +24,8 @@ namespace RestaurantPro.Core.Domain
         public virtual ICollection<WorkCycleAdjustments> WorkCycleAdjustments { get; set; }
 
         public virtual ICollection<WorkCycleTransaction> WorkCycleTransactions { get; set; }
+
+        public virtual ICollection<PurchaseOrderTransaction> PurchaseOrderTransactions { get; set; }
 
         #endregion
 
