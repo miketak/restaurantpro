@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Threading.Tasks;
@@ -28,16 +29,24 @@ namespace RestaurantPro.Infrastructure.Services
             if (password.Length < 3) // to future mike - use some regex complexity
                 throw new ApplicationException("Invalid Password");
 
-            var isVerified = await VerifyUsernameAndPassword(username, password);
+            try
+            {
+                var isVerified = await VerifyUsernameAndPassword(username, password);
 
-            if (isVerified)
-            {
-                password = null;
-                user = await RetrieveUserByUsername(username);
+                if (isVerified)
+                {
+                    password = null;
+                    user = await RetrieveUserByUsername(username);
+                }
+                else
+                {
+                    throw new ApplicationException("Authentication Failed!");
+                }
             }
-            else
+            catch (Exception e)
             {
-                throw new ApplicationException("Authentication Failed!");
+                Console.WriteLine(e);
+                throw new ApplicationException(e.Message);
             }
 
             return user;
@@ -45,8 +54,17 @@ namespace RestaurantPro.Infrastructure.Services
 
         private async Task<bool> VerifyUsernameAndPassword(string username, SecureString password)
         {
-            //might change implementation to stored procedure implementation
-            var user = await _userRepository.SingleOrDefaultAsync(u => u.Username == username);
+            User user = null;
+            try
+            {
+                //might change implementation to stored procedure implementation
+                user = await _userRepository.SingleOrDefaultAsync(u => u.Username == username);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                throw new ApplicationException(e.Message);
+            }
 
             if (user == null)
                 return false;

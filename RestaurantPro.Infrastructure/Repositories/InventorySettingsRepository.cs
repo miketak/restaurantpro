@@ -28,7 +28,7 @@ namespace RestaurantPro.Infrastructure.Repositories
 
         public decimal? GetTax()
         {
-            var taxInDb = context.InventorySettings.SingleOrDefault(x => x.Parameter == "Tax");
+            var taxInDb = context.InventorySettings.FirstOrDefault(x => x.Parameter == "Tax");
 
             return taxInDb == null ? null : taxInDb.Value;
         }

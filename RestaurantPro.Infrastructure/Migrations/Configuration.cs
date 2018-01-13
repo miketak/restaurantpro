@@ -34,9 +34,9 @@ namespace RestaurantPro.Infrastructure.Migrations
 
             var wcStatuses = new List<WcStatus>
             {
-                new WcStatus {Status = "Draft"},
-                new WcStatus {Status = "Active"},
-                new WcStatus {Status = "Closed"},
+                new WcStatus {Status = WorkCycleStatus.Draft.ToString()},
+                new WcStatus {Status = WorkCycleStatus.Active.ToString()},
+                new WcStatus {Status = WorkCycleStatus.Closed.ToString()}
             };
             wcStatuses.ForEach(p => context.WorkCycleStatuses.AddOrUpdate(t => t.Status, p));
             context.SaveChanges();
@@ -140,7 +140,7 @@ namespace RestaurantPro.Infrastructure.Migrations
                 Parameter = "Tax",
                 Value = (decimal)0.17500
             };
-            context.InventorySettings.Add(inventorySettings);
+            context.InventorySettings.AddOrUpdate(inventorySettings);
             context.SaveChanges();
 
             #endregion

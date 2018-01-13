@@ -69,6 +69,7 @@ namespace RestaurantPro.Login
         {
             var controller = await dialogCoordinator.ShowProgressAsync(this, "Stay Tuned", "Checking if you're not a thief", false, null);
             User user = null;
+           string errorMessage = null;
             try
             {
                 controller.SetIndeterminate();
@@ -81,12 +82,13 @@ namespace RestaurantPro.Login
             catch (Exception e)
             {
                 Debug.WriteLine(e.Message);
+                errorMessage = e.Message;
             }
 
             if (user == null)
             {
                 controller.SetTitle("Go seek the kingdom of God, Thief");
-                controller.SetMessage("Invalid Username or password");
+                controller.SetMessage("Invalid Username or password\n" + errorMessage);
                 await Task.Delay(2000);
                 await controller.CloseAsync();
                 return;

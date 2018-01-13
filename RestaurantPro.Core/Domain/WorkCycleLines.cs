@@ -12,10 +12,6 @@ namespace RestaurantPro.Core.Domain
 
         public float PlannedQuantity { get; set; }
 
-        public float? ActualQuantity { get; set; }
-
-        public float? CurrentQuantity { get; set; }
-
         public double UnitPrice { get; set; }
 
         public string UnitOfMeasure { get; set; }
@@ -32,8 +28,6 @@ namespace RestaurantPro.Core.Domain
         public string SupplierStringTemp { get; set; }
 
         #endregion
-
-
 
         #region Navigation Properties
 

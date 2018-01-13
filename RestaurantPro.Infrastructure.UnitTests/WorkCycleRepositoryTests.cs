@@ -22,7 +22,8 @@ namespace RestaurantPro.Infrastructure.UnitTests
             DateBegin = new DateTime(2017, 12, 10),
             DateEnd = new DateTime(2017, 12, 15),
             Active = true,
-            UserId = 1
+            UserId = 1,
+            StatusId = WorkCycleStatus.Draft.ToString()
         };
 
         public WorkCycleRepositoryTests()
@@ -142,7 +143,8 @@ namespace RestaurantPro.Infrastructure.UnitTests
                 DateBegin = new DateTime(2017, 12, 10),
                 DateEnd = new DateTime(2017, 12, 23),
                 Active = isActive,
-                UserId = users[0].Id
+                UserId = users[0].Id,
+                StatusId = WorkCycleStatus.Draft.ToString()
             };
 
             var wcLines = new List<WorkCycleLines>

@@ -18,10 +18,6 @@ namespace RestaurantPro.Models
 
         public int SupplierId { get; set; }
 
-        public float? ActualQuantity { get; set; }
-
-        public float? CurrentQuantity { get; set; }
-
         private double _unitPrice;
         public double UnitPrice
         {

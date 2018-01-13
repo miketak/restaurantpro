@@ -30,6 +30,8 @@ namespace RestaurantPro.Core.Domain
 
         public virtual ICollection<WorkCycleLines> WorkCycleLines { get; set; }
 
+        public virtual ICollection<WorkCycleAdjustments> WorkCycleAdjustments { get; set; }
+
         public virtual WcStatus Status { get; set; }
 
         #endregion

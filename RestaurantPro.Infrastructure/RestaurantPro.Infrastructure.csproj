@@ -57,6 +57,7 @@
     <Compile Include="EntityConfigurations\SupplierConfiguration.cs" />
     <Compile Include="EntityConfigurations\UserConfiguration.cs" />
     <Compile Include="EntityConfigurations\WcStatusConfiguration.cs" />
+    <Compile Include="EntityConfigurations\WorkCycleAdjustmentsConfiguration.cs" />
     <Compile Include="EntityConfigurations\WorkCycleConfigurations.cs" />
     <Compile Include="EntityConfigurations\WorkCycleLinesConfiguration.cs" />
     <Compile Include="Migrations\201712290456592_InitialCreateTwo.cs" />
@@ -82,6 +83,14 @@
     <Compile Include="Migrations\201801112000112_WorkCycleStatusesAndFKConstraints.cs" />
     <Compile Include="Migrations\201801112000112_WorkCycleStatusesAndFKConstraints.Designer.cs">
       <DependentUpon>201801112000112_WorkCycleStatusesAndFKConstraints.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801131950237_RemoveFieldsFromWorkCycleLines.cs" />
+    <Compile Include="Migrations\201801131950237_RemoveFieldsFromWorkCycleLines.Designer.cs">
+      <DependentUpon>201801131950237_RemoveFieldsFromWorkCycleLines.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801132056188_AddWorkCycleAdjustmentsTable.cs" />
+    <Compile Include="Migrations\201801132056188_AddWorkCycleAdjustmentsTable.Designer.cs">
+      <DependentUpon>201801132056188_AddWorkCycleAdjustmentsTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -128,6 +137,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201801112000112_WorkCycleStatusesAndFKConstraints.resx">
       <DependentUpon>201801112000112_WorkCycleStatusesAndFKConstraints.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801131950237_RemoveFieldsFromWorkCycleLines.resx">
+      <DependentUpon>201801131950237_RemoveFieldsFromWorkCycleLines.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801132056188_AddWorkCycleAdjustmentsTable.resx">
+      <DependentUpon>201801132056188_AddWorkCycleAdjustmentsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

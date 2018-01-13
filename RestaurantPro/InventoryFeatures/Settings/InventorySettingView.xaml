@@ -87,17 +87,25 @@
 			  Grid.Row="3">
 
 			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="100"/>
 				<ColumnDefinition Width="*"/>
 				<ColumnDefinition Width="180"/>
 			</Grid.ColumnDefinitions>
-			
-			<!--Tax Setting-->
+            
+            <!--Tax Label-->
+		    <Label x:Name="TaxLabel" Content="TAX: " Margin="0,5" 
+		            FontSize="13.333" FontFamily="Adobe Caslon Pro Bold" 
+		            VerticalAlignment="Center" HorizontalAlignment="Left" 
+		            Background="#00F7F7F7" BorderBrush="#00F7F7F7"/>
+
+
+            <!--Tax Setting-->
 			<TextBox Text="{Binding Tax, UpdateSourceTrigger=LostFocus, 
                 StringFormat=n3, ValidatesOnDataErrors=True}" 
 				controls:TextBoxHelper.Watermark="Tax"
 					 controls:TextBoxHelper.ClearTextButton="True"
 			         DataContext="{Binding InventorySettings}"
-					 Grid.Column="0"
+					 Grid.Column="1"
 					 x:Name="TaxSetting"
 					 Height="36"
 					 FontSize="18"
@@ -126,7 +134,7 @@
 					Style="{StaticResource AccentedSquareButtonStyle}" 
 					Foreground="{DynamicResource MainForeground}" Background="White" BorderBrush="Orange" 
 					HorizontalAlignment="Left" VerticalAlignment="Top"
-					Width="150" Height="40" Grid.Column="1" Margin="15 0 0 0"/>
+					Width="150" Height="40" Grid.Column="2" Margin="15 0 0 0"/>
 
 		</Grid>
 

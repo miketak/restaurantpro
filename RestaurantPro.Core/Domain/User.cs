@@ -20,6 +20,8 @@ namespace RestaurantPro.Core.Domain
 
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
 
+        public virtual ICollection<WorkCycleAdjustments> WorkCycleAdjustments { get; set; }
+
         #endregion
 
     }
