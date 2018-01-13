@@ -22,6 +22,8 @@ namespace RestaurantPro.Core.Domain
 
         public virtual ICollection<WorkCycleAdjustments> WorkCycleAdjustments { get; set; }
 
+        public virtual ICollection<WorkCycleTransaction> WorkCycleTransactions { get; set; }
+
         #endregion
 
     }
