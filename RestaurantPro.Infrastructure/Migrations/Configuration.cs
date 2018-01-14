@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
 using RestaurantPro.Core.Domain;
+using RestaurantPro.Infrastructure.Services;
 
 namespace RestaurantPro.Infrastructure.Migrations
 {
@@ -20,13 +24,28 @@ namespace RestaurantPro.Infrastructure.Migrations
 
             var users = new List<User>
             {
-                new User{ Username = "rkpadi", FirstName = "Richard", LastName = "Padi", Email = "rkpadi@yahoo.com", Password = "password"},
-                new User{ Username = "linda", FirstName = "Linda", LastName = "Ocloo", Email = "linda.ocloo@yahoo.com", Password = "password"},
-                new User{ Username = "roman", FirstName = "Roman", LastName = "Boehm", Email = "rboehm@yahoo.com", Password = "password"},
-                new User{ Username = "betty", FirstName = "Betty", LastName = "Afornu", Email = "bafornu@yahoo.com", Password = "password"}
+                new User{ Username = "rkpadi", FirstName = "Richard", LastName = "Padi", Email = "rkpadi@yahoo.com"},
+                new User{Username = "linda", FirstName = "Linda", LastName = "Ocloo", Email = "linda.ocloo@yahoo.com"},
+                new User{Username = "roman", FirstName = "Roman", LastName = "Boehm", Email = "rboehm@yahoo.com"},
+                new User{Username = "betty", FirstName = "Betty", LastName = "Afornu", Email = "bafornu@yahoo.com"}
             };
             users.ForEach(u => context.Users.AddOrUpdate(p => p.LastName, u));
             context.SaveChanges();
+
+            var auth = new UserAuthenticationService();
+            string password = "password";
+
+            for (int i = 1; i < 5; i++)
+            {
+                byte[] saltByte =Encoding.ASCII.GetBytes(RandomString());
+                byte[] pasByte = Encoding.ASCII.GetBytes(password);
+                byte[] passHash = auth.Hash(pasByte, saltByte);
+
+                var user = context.Users.SingleOrDefault(x => x.Id == i);
+                user.PasswordHash = passHash;
+                user.SaltHash = saltByte;
+                context.SaveChanges();
+            }
 
             #endregion
 
@@ -145,6 +164,15 @@ namespace RestaurantPro.Infrastructure.Migrations
 
             #endregion
 
+        }
+
+        private static Random random = new Random();
+        public static string RandomString()
+        {
+            var length = 25;
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }

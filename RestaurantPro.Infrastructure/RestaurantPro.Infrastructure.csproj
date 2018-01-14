@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RestaurantPro.Infrastructure</RootNamespace>
     <AssemblyName>RestaurantPro.Infrastructure</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -100,6 +101,10 @@
     <Compile Include="Migrations\201801132156486_AddPurchaseOrderTransactionTable.Designer.cs">
       <DependentUpon>201801132156486_AddPurchaseOrderTransactionTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801132246346_UserTableAuthenticationFields.cs" />
+    <Compile Include="Migrations\201801132246346_UserTableAuthenticationFields.Designer.cs">
+      <DependentUpon>201801132246346_UserTableAuthenticationFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\InventorySettingsRepository.cs" />
@@ -157,6 +162,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201801132156486_AddPurchaseOrderTransactionTable.resx">
       <DependentUpon>201801132156486_AddPurchaseOrderTransactionTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801132246346_UserTableAuthenticationFields.resx">
+      <DependentUpon>201801132246346_UserTableAuthenticationFields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

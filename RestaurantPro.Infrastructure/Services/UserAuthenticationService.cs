@@ -1,47 +1,45 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using RestaurantPro.Core.Domain;
 using RestaurantPro.Core.Repositories;
 using RestaurantPro.Core.Services;
+using RestaurantPro.Infrastructure.Repositories;
 
 namespace RestaurantPro.Infrastructure.Services
 {
     public class UserAuthenticationService : IUserAuthenticationService
     {
-        private IUserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
 
         public UserAuthenticationService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
 
+        public UserAuthenticationService() //temporary constructor
+        {
+            _userRepository = new UserRepository(new RestProContext());
+        }
+
         public async Task<User> AuthenticateUser(string username, SecureString password)
         {
             User user = null;
-
-            //Username & Password Pre-validation
-            if (username.Length < 2 || username.Length > 20)
-                throw new ApplicationException("Invalid Username");
-
-            if (password.Length < 3) // to future mike - use some regex complexity
-                throw new ApplicationException("Invalid Password");
+            PrevalidateLoginCredentials(username, password);
 
             try
             {
-                var isVerified = await VerifyUsernameAndPassword(username, password);
+                var isPassValidation = await VerifyUsernameAndPassword(username, password);
 
-                if (isVerified)
-                {
-                    password = null;
+                if (isPassValidation)
                     user = await RetrieveUserByUsername(username);
-                }
                 else
-                {
                     throw new ApplicationException("Authentication Failed!");
-                }
             }
             catch (Exception e)
             {
@@ -57,8 +55,7 @@ namespace RestaurantPro.Infrastructure.Services
             User user = null;
             try
             {
-                //might change implementation to stored procedure implementation
-                user = await _userRepository.SingleOrDefaultAsync(u => u.Username == username);
+                user = await RetrieveUserByUsername(username);
             }
             catch (Exception e)
             {
@@ -69,59 +66,63 @@ namespace RestaurantPro.Infrastructure.Services
             if (user == null)
                 return false;
 
-            //will need to be changed future Michael
-            var passwordInDb = new SecureString();
-            foreach (char c in user.Password)
-            {
-                passwordInDb.AppendChar(c);
-            }
-
-            return IsPasswordSame(password, passwordInDb);
+            return ConfirmPassword(SecureStringToString(password), user.PasswordHash, user.SaltHash);
         }
 
-        /// <summary>
-        /// Checks for password equality
-        /// </summary>
-        /// <param name="ss1"></param>
-        /// <param name="ss2"></param>
-        /// <returns></returns>
-        public bool IsPasswordSame(SecureString ss1, SecureString ss2)
+        private Task<User> RetrieveUserByUsername(string username)
         {
-            IntPtr bstr1 = IntPtr.Zero;
-            IntPtr bstr2 = IntPtr.Zero;
+            var user = _userRepository.SingleOrDefaultAsync(u => u.Username == username);
+
+            return user;
+        }
+
+        private void PrevalidateLoginCredentials(string username, SecureString password)
+        {
+            if (username.Length < 2 || username.Length > 30)
+                throw new ApplicationException("Invalid Username");
+
+            if (password.Length < 3) // to future mike - use some regex complexity
+                throw new ApplicationException("Invalid Password");
+        }
+
+        #region Hash and Security Methods
+
+        // will be changed to private in due time
+
+        public byte[] Hash(string value, byte[] salt)
+        {
+            return Hash(Encoding.UTF8.GetBytes(value), salt);
+        }
+
+        public byte[] Hash(byte[] value, byte[] salt)
+        {
+            byte[] saltedValue = value.Concat(salt).ToArray();
+
+            return new SHA256Managed().ComputeHash(saltedValue);
+        }
+
+        public bool ConfirmPassword(string password, byte[] in_passwordHash, byte[] in_passwordSalt)
+        {
+            byte[] passwordHash = Hash(password, in_passwordSalt);
+
+            return in_passwordHash.SequenceEqual(passwordHash);
+        }
+
+        public string SecureStringToString(SecureString value)
+        {
+            IntPtr valuePtr = IntPtr.Zero;
             try
             {
-                bstr1 = Marshal.SecureStringToBSTR(ss1);
-                bstr2 = Marshal.SecureStringToBSTR(ss2);
-                int length1 = Marshal.ReadInt32(bstr1, -4);
-                int length2 = Marshal.ReadInt32(bstr2, -4);
-                if (length1 == length2)
-                {
-                    for (int x = 0; x < length1; ++x)
-                    {
-                        byte b1 = Marshal.ReadByte(bstr1, x);
-                        byte b2 = Marshal.ReadByte(bstr2, x);
-                        if (b1 != b2) return false;
-                    }
-                }
-                else return false;
-                return true;
+                valuePtr = Marshal.SecureStringToGlobalAllocUnicode(value);
+                return Marshal.PtrToStringUni(valuePtr);
             }
             finally
             {
-                if (bstr2 != IntPtr.Zero) Marshal.ZeroFreeBSTR(bstr2);
-                if (bstr1 != IntPtr.Zero) Marshal.ZeroFreeBSTR(bstr1);
+                Marshal.ZeroFreeGlobalAllocUnicode(valuePtr);
             }
         }
 
-        /// <summary>
-        /// Retrieves User by Username
-        /// </summary>
-        /// <param name="username"></param>
-        /// <returns></returns>
-        public Task<User> RetrieveUserByUsername(string username)
-        {
-            return _userRepository.SingleOrDefaultAsync(u => u.Username == username);
-        }
+        #endregion
+         
     }
 }

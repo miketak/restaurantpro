@@ -15,7 +15,9 @@ namespace RestaurantPro.Core.Domain
         public string Email { get; set; }
 
         //Remove this now future Michael. You know this is evil and bad practice. Regards. Michael 12/17/17:21:21CDT
-        public string Password { get; set; }
+        public byte[] PasswordHash { get; set; }
+
+        public byte[] SaltHash { get; set; }
 
         #region Navigation Properties
 
