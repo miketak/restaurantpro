@@ -65,6 +65,8 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
         {
             WorkCycle = wCycle;
 
+            wCycle.UserId = CurrentUser.Id;
+
             if (EditMode)
             {
                 var workCycleWithLines = _unitOfWork

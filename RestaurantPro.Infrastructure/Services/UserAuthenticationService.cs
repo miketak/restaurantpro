@@ -78,6 +78,9 @@ namespace RestaurantPro.Infrastructure.Services
 
         private void PrevalidateLoginCredentials(string username, SecureString password)
         {
+            if (username == null) throw new ArgumentNullException("username");
+            if (password == null) throw new ArgumentNullException("password");
+
             if (username.Length < 2 || username.Length > 30)
                 throw new ApplicationException("Invalid Username");
 
@@ -87,28 +90,26 @@ namespace RestaurantPro.Infrastructure.Services
 
         #region Hash and Security Methods
 
-        // will be changed to private in due time
-
-        public byte[] Hash(string value, byte[] salt)
+        private byte[] Hash(string value, byte[] salt)
         {
             return Hash(Encoding.UTF8.GetBytes(value), salt);
         }
 
-        public byte[] Hash(byte[] value, byte[] salt)
+        private byte[] Hash(byte[] value, byte[] salt)
         {
             byte[] saltedValue = value.Concat(salt).ToArray();
 
             return new SHA256Managed().ComputeHash(saltedValue);
         }
 
-        public bool ConfirmPassword(string password, byte[] in_passwordHash, byte[] in_passwordSalt)
+        private bool ConfirmPassword(string password, byte[] in_passwordHash, byte[] in_passwordSalt)
         {
             byte[] passwordHash = Hash(password, in_passwordSalt);
 
             return in_passwordHash.SequenceEqual(passwordHash);
         }
 
-        public string SecureStringToString(SecureString value)
+        private string SecureStringToString(SecureString value)
         {
             IntPtr valuePtr = IntPtr.Zero;
             try

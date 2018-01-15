@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using RestaurantPro.Core.Domain;
 using RestaurantPro.Infrastructure.Services;
@@ -32,14 +33,13 @@ namespace RestaurantPro.Infrastructure.Migrations
             users.ForEach(u => context.Users.AddOrUpdate(p => p.LastName, u));
             context.SaveChanges();
 
-            var auth = new UserAuthenticationService();
             string password = "password";
 
             for (int i = 1; i < 5; i++)
             {
                 byte[] saltByte =Encoding.ASCII.GetBytes(RandomString());
                 byte[] pasByte = Encoding.ASCII.GetBytes(password);
-                byte[] passHash = auth.Hash(pasByte, saltByte);
+                byte[] passHash = Hash(pasByte, saltByte);
 
                 var user = context.Users.SingleOrDefault(x => x.Id == i);
                 user.PasswordHash = passHash;
@@ -173,6 +173,14 @@ namespace RestaurantPro.Infrastructure.Migrations
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             return new string(Enumerable.Repeat(chars, length)
                 .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        //will leave soon
+        public byte[] Hash(byte[] value, byte[] salt)
+        {
+            byte[] saltedValue = value.Concat(salt).ToArray();
+
+            return new SHA256Managed().ComputeHash(saltedValue);
         }
     }
 }
