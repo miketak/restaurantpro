@@ -29,7 +29,6 @@ namespace RestaurantPro.Models
                     .ForMember(dest => dest.FullName, opt => opt.Ignore())
                     .ForMember(dest => dest.DateBeginForView, opt => opt.Ignore())
                     .ForMember(dest => dest.DateEndForView, opt => opt.Ignore())
-                    .ForMember(dest => dest.ActiveForView, opt => opt.Ignore())
                     .ForMember(dest => dest.FirstName, opt => opt.Ignore())
                     .ForMember(dest => dest.LastName, opt => opt.Ignore())
                     .ForMember(dest => dest.Lines, opt => opt.Ignore());

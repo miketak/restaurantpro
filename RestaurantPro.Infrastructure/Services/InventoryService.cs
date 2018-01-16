@@ -75,19 +75,6 @@ namespace RestaurantPro.Infrastructure.Services
             return purchaseOrderToDb;
         }
 
-        private string GenerateNewPurchaseOrder()
-        {
-            var maxPurchaseOrderNumber = _unitOfWork
-                .PurchaseOrders.GetAll()
-                .Select(a => a.PurchaseOrderNumber)
-                .Select(int.Parse)
-                .Max();
-
-            var newPoNumber = maxPurchaseOrderNumber + 1;
-
-            return newPoNumber.ToString();
-        }
-
         #endregion
 
 

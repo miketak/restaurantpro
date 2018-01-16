@@ -120,11 +120,6 @@ namespace RestaurantPro.Models
             get { return DateEnd.ToShortDateString(); }
         }
 
-        public string ActiveForView
-        {
-            get { return Active ? "Active" : "Inactive"; }
-        }
-
         public static List<string> Statuses
         {
             get
