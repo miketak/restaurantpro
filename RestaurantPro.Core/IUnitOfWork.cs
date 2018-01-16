@@ -20,11 +20,14 @@ namespace RestaurantPro.Core
         IRawMaterialsRepository RawMaterials { get; }
 
         IRawMaterialCategoryRepository RawMaterialCategories { get; }
+
         ILocationRepository Locations { get; }
 
         IInventorySettingsRepository InventorySettings { get; }
 
         IWorkCycleStatusRepository WorkCycleStatuses { get; }
+
+        IInventoryService InventoryService { get; }
 
         int Complete();
     }

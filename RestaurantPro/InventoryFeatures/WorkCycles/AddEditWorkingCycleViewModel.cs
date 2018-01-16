@@ -65,8 +65,6 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
         {
             WorkCycle = wCycle;
 
-            wCycle.UserId = CurrentUser.Id;
-
             if (EditMode)
             {
                 var workCycleWithLines = _unitOfWork
@@ -82,6 +80,7 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
             }
             else
             {
+                wCycle.UserId = CurrentUser.Id;
                 WorkCycle.Lines = new BindingList<WpfWorkCycleLines>();
             } 
 

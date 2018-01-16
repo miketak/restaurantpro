@@ -6,4 +6,14 @@
         Active,
         Closed
     }
+
+    public enum PurchaseOrderStatus
+    {
+        Canceled,
+        Changed,
+        Closed,
+        InProgress,
+        New,
+        Received
+    }
 }

@@ -70,6 +70,8 @@
     <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Repositories\IWorkCycleRepository.cs" />
     <Compile Include="Repositories\IWorkCycleStatusRepository.cs" />
+    <Compile Include="Services\IInventoryService.cs" />
+    <Compile Include="Services\IRestProService.cs" />
     <Compile Include="Services\IUserAuthenticationService.cs" />
   </ItemGroup>
   <ItemGroup>
