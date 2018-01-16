@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RestaurantPro.Core;
 using RestaurantPro.Core.Domain;
+using RestaurantPro.Core.Services;
+using RestaurantPro.Infrastructure.Services;
 
 namespace RestaurantPro.Infrastructure.UnitTests
 {
@@ -11,10 +14,12 @@ namespace RestaurantPro.Infrastructure.UnitTests
     public class InventoryServiceTests
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IRestProService _services;
 
         public InventoryServiceTests()
         {
             _unitOfWork = new UnitOfWork(new RestProContext());
+            _services = new RestProService(_unitOfWork);
         }
 
         [TestMethod]
@@ -32,7 +37,9 @@ namespace RestaurantPro.Infrastructure.UnitTests
             if (workCycle == null)
                 throw new AssertFailedException();
 
-            _unitOfWork.InventoryService.ConfirmWorkCycle(workCycle.Id, user);
+            
+
+            _services.InventoryService.ConfirmWorkCycle(workCycle.Id, user);
 
             var poId = _unitOfWork.PurchaseOrders.FirstOrDefault(x => x.WorkCycleId == workCycle.Id).Id;
             var po = _unitOfWork.PurchaseOrders.GetPurchaseOrderById(poId, true);
@@ -45,6 +52,31 @@ namespace RestaurantPro.Infrastructure.UnitTests
 
             _unitOfWork.PurchaseOrders.Remove(po);
             _unitOfWork.Complete();
+        }
+
+        [TestMethod]
+        public void ProcurePurchaseOrderTest()
+        {
+            var purchaseOrder = GetPurchaseOrder();
+
+            var user = new User {Id = 2};
+
+            if (purchaseOrder == null) return;
+            var poTransaction = new List<PurchaseOrderTransaction>();
+
+            _services.InventoryService.ProcurePurchaseOrder(purchaseOrder, poTransaction, user);
+        }
+
+        private PurchaseOrder GetPurchaseOrder()
+        {
+
+            var poId = _unitOfWork.PurchaseOrders.GetAll().ToArray()[1].Id;
+            var purchaseOrder = _unitOfWork.PurchaseOrders.GetPurchaseOrderById(poId, true);
+            purchaseOrder.Lines = new List<PurchaseOrderLine>(purchaseOrder.PurchaseOrderLines);
+
+            _unitOfWork.PurchaseOrders.DetachPurchaseOrder(purchaseOrder);
+
+            return purchaseOrder;
         }
         
     }

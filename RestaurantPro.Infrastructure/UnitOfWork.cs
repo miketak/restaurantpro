@@ -24,7 +24,8 @@ namespace RestaurantPro.Infrastructure
             Locations = new LocationRepository(_context);
             InventorySettings = new InventorySettingsRepository(_context);
             WorkCycleStatuses = new WorkCycleStatusRepository(_context);
-            InventoryService = new InventoryService(this);
+            PurchaseOrderTransactions = new PurchaseOrderTransactionRepository(_context);
+            WorkCycleTransactions = new WorkCycleTransactionRepository(_context);
         }
 
         public IUserRepository Users { get; private set; }
@@ -38,7 +39,8 @@ namespace RestaurantPro.Infrastructure
         public ILocationRepository Locations { get; private set; }
         public IInventorySettingsRepository InventorySettings { get; private set; }
         public IWorkCycleStatusRepository WorkCycleStatuses { get; private set; }
-        public IInventoryService InventoryService { get; private set; }
+        public IPurchaseOrderTransactionRepository PurchaseOrderTransactions { get; private set; }
+        public IWorkCycleTransactionRepository WorkCycleTransactions { get; private set; }
 
 
         public int Complete()

@@ -11,5 +11,10 @@ namespace RestaurantPro.Core.Repositories
         PurchaseOrder GetPurchaseOrderById(int purchaseOrderId, bool isActive);
         void UpdatePurchaseOrder(PurchaseOrder purchaseOrder);
         IEnumerable<PurchaseOrder> GetPurchaseOrdersWithoutLines();
+
+        void DetachPurchaseOrder(PurchaseOrder purchaseOrder);
+
+        PurchaseOrder GetPurchaseOrderByIdWithoutTracking(int purchaseOrderId, bool isActive);
+        void Dispose();
     }
 }

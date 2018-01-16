@@ -2,7 +2,7 @@
 {
     public interface IRestProService
     {
-
+        IInventoryService InventoryService { get; }
 
     }
 }

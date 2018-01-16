@@ -68,6 +68,18 @@ namespace RestaurantPro.Infrastructure.Repositories
             return _context.PurchaseOrders.Where(x => x.Active).ToList();
         }
 
+        public void DetachPurchaseOrder(PurchaseOrder purchaseOrder)
+        {
+            _context.Entry(purchaseOrder).State = EntityState.Detached;
+
+            //foreach (var line in purchaseOrder.PurchaseOrderLines)
+            //    _context.Entry(line).State = EntityState.Detached;            
+            
+            foreach (var line in purchaseOrder.Lines)
+                _context.Entry(line).State = EntityState.Detached;
+            
+        }
+
         /// <summary>
         /// Gets Purchase Order by purchase order number 
         /// based on active bit.
@@ -94,6 +106,26 @@ namespace RestaurantPro.Infrastructure.Repositories
                     .Include(po => po.PurchaseOrderLines)
                     .Where(c => c.Active == isActive)
                     .SingleOrDefault(c => c.Id == purchaseOrderId);
+        }        
+        
+        /// <summary>
+        /// Gets Purchase Order by purchase order id 
+        /// based on active bit.
+        /// </summary>
+        /// <param name="isActive"></param>
+        /// <param name="purchaseOrderId"></param>
+        public PurchaseOrder GetPurchaseOrderByIdWithoutTracking(int purchaseOrderId, bool isActive)
+        {
+                return _context.PurchaseOrders
+                    .Include(po => po.PurchaseOrderLines)
+                    .AsNoTracking()
+                    .Where(c => c.Active == isActive)
+                    .SingleOrDefault(c => c.Id == purchaseOrderId);
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
         }
 
         #region Private Helper Methods

@@ -121,6 +121,7 @@
     <Compile Include="RestProContext.cs" />
     <Compile Include="Services\InventoryService.cs" />
     <Compile Include="Services\RestProService.cs" />
+    <Compile Include="Services\RestProServiceBase.cs" />
     <Compile Include="Services\UserAuthenticationService.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>

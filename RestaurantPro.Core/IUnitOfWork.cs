@@ -27,7 +27,9 @@ namespace RestaurantPro.Core
 
         IWorkCycleStatusRepository WorkCycleStatuses { get; }
 
-        IInventoryService InventoryService { get; }
+        IPurchaseOrderTransactionRepository PurchaseOrderTransactions { get; }
+
+        IWorkCycleTransactionRepository WorkCycleTransactions { get; }
 
         int Complete();
     }

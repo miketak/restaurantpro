@@ -13,21 +13,10 @@ namespace RestaurantPro.Infrastructure.Services
         public RestProService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+            InventoryService = new InventoryService(_unitOfWork);
         }
 
-        protected string GenerateNewPurchaseOrder()
-        {
-            var maxPurchaseOrderNumber = _unitOfWork
-                .PurchaseOrders.GetAll()
-                .Select(a => a.PurchaseOrderNumber)
-                .Select(int.Parse)
-                .Max();
-
-            var newPoNumber = maxPurchaseOrderNumber + 1;
-
-            return newPoNumber.ToString();
-        }
-
+        public IInventoryService InventoryService { get; private set; }
 
         
     }

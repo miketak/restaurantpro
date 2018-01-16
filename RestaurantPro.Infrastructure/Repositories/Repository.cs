@@ -66,6 +66,11 @@ namespace RestaurantPro.Infrastructure.Repositories
         {
             Context.Set<TEntity>().RemoveRange(entities);
         }
+
+        public void DetachEntity(TEntity entity)
+        {
+            Context.Entry(entity).State = EntityState.Detached;
+        }
         
     }
 }
