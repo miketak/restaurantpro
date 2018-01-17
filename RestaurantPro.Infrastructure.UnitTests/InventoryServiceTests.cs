@@ -15,6 +15,8 @@ namespace RestaurantPro.Infrastructure.UnitTests
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRestProService _services;
+        private PurchaseOrder _purchaseOrder;
+        private User _user;
 
         public InventoryServiceTests()
         {
@@ -57,26 +59,44 @@ namespace RestaurantPro.Infrastructure.UnitTests
         [TestMethod]
         public void ProcurePurchaseOrderTest()
         {
-            var purchaseOrder = GetPurchaseOrder();
+            GeneratePurchaseOrder();
 
-            var user = new User {Id = 2};
+            _user = new User {Id = 2};
 
-            if (purchaseOrder == null) return;
-            var poTransaction = new List<PurchaseOrderTransaction>();
+            if (_purchaseOrder == null) return;
+            var poTransaction = GetPurchaseOrderTransactions();
 
-            _services.InventoryService.ProcurePurchaseOrder(purchaseOrder, poTransaction, user);
+            _services.InventoryService.ProcurePurchaseOrder(_purchaseOrder, poTransaction, _user);
         }
 
-        private PurchaseOrder GetPurchaseOrder()
+        private void GeneratePurchaseOrder()
         {
+            var poId = _unitOfWork.PurchaseOrders.GetAll().ToArray()[0].Id;
 
-            var poId = _unitOfWork.PurchaseOrders.GetAll().ToArray()[1].Id;
-            var purchaseOrder = _unitOfWork.PurchaseOrders.GetPurchaseOrderById(poId, true);
-            purchaseOrder.Lines = new List<PurchaseOrderLine>(purchaseOrder.PurchaseOrderLines);
+            if (poId == 0)
+                throw new AssertFailedException("No purchase orders in database");
 
-            _unitOfWork.PurchaseOrders.DetachPurchaseOrder(purchaseOrder);
+            _purchaseOrder = _unitOfWork.PurchaseOrders.GetPurchaseOrderById(poId, true);
+            _purchaseOrder.Lines = new List<PurchaseOrderLine>(_purchaseOrder.PurchaseOrderLines);
 
-            return purchaseOrder;
+        }
+
+        private IEnumerable<PurchaseOrderTransaction> GetPurchaseOrderTransactions()
+        {
+            var lines = _purchaseOrder.Lines;
+
+            return lines.Select(line => new PurchaseOrderTransaction
+                {
+                    PurchaseOrderId = _purchaseOrder.Id,
+                    RawMaterialId = line.RawMaterialId,
+                    SupplierId = line.SupplierId,
+                    QuantityReceived = line.Quantity - 2,
+                    DateReceived = DateTime.MaxValue,
+                    LocationId = "Room A",
+                    DeliveredBy = "Johson Banner",
+                    ReceivedBy = _user.Id
+                })
+                .ToList();
         }
         
     }

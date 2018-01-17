@@ -62,14 +62,17 @@
     <Compile Include="Repositories\IInventorySettingsRepository.cs" />
     <Compile Include="Repositories\ILocationRepository.cs" />
     <Compile Include="Repositories\IPurchaseOrderRepository.cs" />
+    <Compile Include="Repositories\IPurchaseOrderTransactionRepository.cs" />
     <Compile Include="Repositories\IRawMaterialCatalogRepository.cs" />
     <Compile Include="Repositories\IRawMaterialsRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\IStatusRepository.cs" />
     <Compile Include="Repositories\ISupplierRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
+    <Compile Include="Repositories\IWorkCycleLineRepository.cs" />
     <Compile Include="Repositories\IWorkCycleRepository.cs" />
     <Compile Include="Repositories\IWorkCycleStatusRepository.cs" />
+    <Compile Include="Repositories\IWorkCycleTransactionRepository.cs" />
     <Compile Include="Services\IInventoryService.cs" />
     <Compile Include="Services\IRestProService.cs" />
     <Compile Include="Services\IUserAuthenticationService.cs" />

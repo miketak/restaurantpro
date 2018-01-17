@@ -53,6 +53,7 @@
     <Compile Include="EntityConfigurations\PoStatusConfiguration.cs" />
     <Compile Include="EntityConfigurations\PurchaseOrderConfiguration.cs" />
     <Compile Include="EntityConfigurations\PurchaseOrderLinesConfiguration.cs" />
+    <Compile Include="EntityConfigurations\PurchaseOrderTransactionConfiguration.cs" />
     <Compile Include="EntityConfigurations\RawMaterialCatalogConfiguration.cs" />
     <Compile Include="EntityConfigurations\RawMaterialConfiguration.cs" />
     <Compile Include="EntityConfigurations\SupplierConfiguration.cs" />
@@ -110,14 +111,17 @@
     <Compile Include="Repositories\InventorySettingsRepository.cs" />
     <Compile Include="Repositories\LocationRepository.cs" />
     <Compile Include="Repositories\PurchaseOrderRepository.cs" />
+    <Compile Include="Repositories\PurchaseOrderTransactionRepository.cs" />
     <Compile Include="Repositories\RawMaterialCategoryRepository.cs" />
     <Compile Include="Repositories\RawMaterialsRepository.cs" />
     <Compile Include="Repositories\StatusRepository.cs" />
     <Compile Include="Repositories\SupplierRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Repositories\WorkCycleLineRepository.cs" />
     <Compile Include="Repositories\WorkCycleRepository.cs" />
     <Compile Include="Repositories\WorkCycleStatusRepository.cs" />
+    <Compile Include="Repositories\WorkCycleTransactionRepository.cs" />
     <Compile Include="RestProContext.cs" />
     <Compile Include="Services\InventoryService.cs" />
     <Compile Include="Services\RestProService.cs" />

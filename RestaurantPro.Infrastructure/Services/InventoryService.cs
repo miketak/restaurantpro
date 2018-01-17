@@ -51,17 +51,20 @@ namespace RestaurantPro.Infrastructure.Services
         {
             ValidateParameters(oldPurchaseOrder, purchaseOrderTransactions, user);
 
+            var newPurchaseOrder = purchaseOrderTransactions.ToList();
+
             _user = user;
 
             ConcurrencyCheckOnDatabase(oldPurchaseOrder);
 
             ChangePurchaseOrderStatusToInProgress(oldPurchaseOrder);
 
-            AddPurchaseOrderTransactions(purchaseOrderTransactions.ToList());
+            AddPurchaseOrderTransactions(newPurchaseOrder.ToList());
 
             AddWorkCycleTransactions(oldPurchaseOrder.WorkCycleId);
-        }
 
+            AssignLocationInWorkCycles(oldPurchaseOrder.WorkCycleId, newPurchaseOrder.ToList());
+        }
 
         #region Confirm Cycle Helper Methods
 
@@ -171,6 +174,22 @@ namespace RestaurantPro.Infrastructure.Services
                 _unitOfWork.WorkCycleTransactions.Add(workCycleTransaction);
                 _unitOfWork.Complete();
             }
+        }
+
+        private void AssignLocationInWorkCycles(int? workCycleId, List<PurchaseOrderTransaction> poTransactions)
+        {
+            var workCycleLinesToChange = _unitOfWork.WorkCyclesLines
+                .GetAll().Where(x => x.WorkCycleId == workCycleId).ToList();
+
+            foreach (var wcLine in workCycleLinesToChange)
+            {
+                foreach (var transaction in poTransactions)
+                {
+                    wcLine.LocationId = transaction.LocationId;
+                }
+            }
+
+            _unitOfWork.Complete();
         }
 
         #endregion

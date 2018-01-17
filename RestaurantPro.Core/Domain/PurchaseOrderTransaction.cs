@@ -18,6 +18,8 @@ namespace RestaurantPro.Core.Domain
 
         public DateTime DateReceived { get; set; }
 
+        public string LocationId { get; set; }
+
         /// <summary>
         /// Full name of person who delivered the raw material
         /// </summary>

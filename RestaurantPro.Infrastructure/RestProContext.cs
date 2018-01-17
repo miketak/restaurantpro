@@ -55,6 +55,7 @@ namespace RestaurantPro.Infrastructure
             modelBuilder.Configurations.Add(new WorkCycleLinesConfiguration());
             modelBuilder.Configurations.Add(new WcStatusConfiguration());
             modelBuilder.Configurations.Add(new WorkCycleAdjustmentsConfiguration());
+            modelBuilder.Configurations.Add(new PurchaseOrderTransactionConfiguration());
         }
  
     }

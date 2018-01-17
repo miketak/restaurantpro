@@ -30,7 +30,10 @@ namespace RestaurantPro.Core
         IPurchaseOrderTransactionRepository PurchaseOrderTransactions { get; }
 
         IWorkCycleTransactionRepository WorkCycleTransactions { get; }
+        IWorkCycleLineRepository WorkCyclesLines { get; set; }
 
         int Complete();
     }
+
+
 }
