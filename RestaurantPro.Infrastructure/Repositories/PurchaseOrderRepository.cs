@@ -108,21 +108,6 @@ namespace RestaurantPro.Infrastructure.Repositories
                     .SingleOrDefault(c => c.Id == purchaseOrderId);
         }        
         
-        /// <summary>
-        /// Gets Purchase Order by purchase order id 
-        /// based on active bit.
-        /// </summary>
-        /// <param name="isActive"></param>
-        /// <param name="purchaseOrderId"></param>
-        public PurchaseOrder GetPurchaseOrderByIdWithoutTracking(int purchaseOrderId, bool isActive)
-        {
-                return _context.PurchaseOrders
-                    .Include(po => po.PurchaseOrderLines)
-                    .AsNoTracking()
-                    .Where(c => c.Active == isActive)
-                    .SingleOrDefault(c => c.Id == purchaseOrderId);
-        }
-
         public void Dispose()
         {
             _context.Dispose();

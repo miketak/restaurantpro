@@ -39,8 +39,6 @@ namespace RestaurantPro.Infrastructure.UnitTests
             if (workCycle == null)
                 throw new AssertFailedException();
 
-            
-
             _services.InventoryService.ConfirmWorkCycle(workCycle.Id, user);
 
             var poId = _unitOfWork.PurchaseOrders.FirstOrDefault(x => x.WorkCycleId == workCycle.Id).Id;
@@ -48,7 +46,6 @@ namespace RestaurantPro.Infrastructure.UnitTests
             Trace.WriteLine(
                 string.Format("Successful with {0} lines in PurchaseOrder", po.PurchaseOrderLines.Count )
                 );
-
 
             Assert.AreEqual(workCycle.WorkCycleLines.Count, po.PurchaseOrderLines.Count);
 
@@ -71,7 +68,7 @@ namespace RestaurantPro.Infrastructure.UnitTests
 
         private void GeneratePurchaseOrder()
         {
-            var poId = _unitOfWork.PurchaseOrders.GetAll().ToArray()[0].Id;
+            var poId = _unitOfWork.PurchaseOrders.GetAll().ToArray()[2].Id;
 
             if (poId == 0)
                 throw new AssertFailedException("No purchase orders in database");

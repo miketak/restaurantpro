@@ -94,7 +94,7 @@ namespace RestaurantPro.Infrastructure.Services
                 Active = true,
                 Lines = fullWorkCycleFromDb.WorkCycleLines.Select(wcLine => new PurchaseOrderLine
                     {
-                        SupplierId = wcLine.WorkCycleId,
+                        SupplierId = wcLine.SupplierId,
                         RawMaterialId = wcLine.RawMaterialId,
                         UnitPrice = wcLine.UnitPrice,
                         Quantity = wcLine.PlannedQuantity,

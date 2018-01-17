@@ -6,7 +6,6 @@ namespace RestaurantPro.Core.Repositories
     public interface IPurchaseOrderRepository : IRepository<PurchaseOrder>
     {
         void AddPurchaseOrder(PurchaseOrder purchaseOrder);
-
         PurchaseOrder GetPurchaseOrderByPurchaseOrderNumber(string purchaseOrderNumber, bool isActive);
         PurchaseOrder GetPurchaseOrderById(int purchaseOrderId, bool isActive);
         void UpdatePurchaseOrder(PurchaseOrder purchaseOrder);
@@ -14,7 +13,6 @@ namespace RestaurantPro.Core.Repositories
 
         void DetachPurchaseOrder(PurchaseOrder purchaseOrder);
 
-        PurchaseOrder GetPurchaseOrderByIdWithoutTracking(int purchaseOrderId, bool isActive);
         void Dispose();
     }
 }

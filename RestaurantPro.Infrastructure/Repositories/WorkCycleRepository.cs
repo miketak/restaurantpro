@@ -163,6 +163,11 @@ namespace RestaurantPro.Infrastructure.Repositories
 
         private int AddNewSupplierToSupplierTable(WorkCycleLines line)
         {
+            var checkForExistence = _context.Suppliers.SingleOrDefault(x => x.Name == line.SupplierStringTemp);
+
+            if (checkForExistence != null)
+                return checkForExistence.Id;
+
             _context.Suppliers.Add(new Supplier { Name = line.SupplierStringTemp, Active = true });
             _context.SaveChanges();
             return _context.Suppliers.SingleOrDefault(s => s.Name == line.SupplierStringTemp).Id;

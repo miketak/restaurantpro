@@ -15,13 +15,18 @@ namespace RestaurantPro.Infrastructure.Services
         }
         protected string GenerateNewPurchaseOrder()
         {
-            var maxPurchaseOrderNumber = _unitOfWork
-                .PurchaseOrders.GetAll()
+            var poNumbers = _unitOfWork
+                .PurchaseOrders.GetAll().ToList();
+
+            if (!poNumbers.Any())
+                return "1000";
+
+            var maxPoNumber = poNumbers
                 .Select(a => a.PurchaseOrderNumber)
                 .Select(int.Parse)
                 .Max();
 
-            var newPoNumber = maxPurchaseOrderNumber + 1;
+            var newPoNumber = maxPoNumber + 1;
 
             return newPoNumber.ToString();
         }
