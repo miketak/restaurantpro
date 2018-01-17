@@ -21,6 +21,8 @@ namespace RestaurantPro.Models
 
         public int RawMaterialCategoryId { get; set; }
 
+        public bool Active { get; set; }
+
         #region Properties for View
 
         public string Category

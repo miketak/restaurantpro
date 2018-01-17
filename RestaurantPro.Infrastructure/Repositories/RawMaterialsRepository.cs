@@ -56,18 +56,10 @@ namespace RestaurantPro.Infrastructure.Repositories
             _context.SaveChanges();
         }
 
-        
-
-
-
-
-
-
-
-
 
         private void AddRawMaterial(RawMaterial rawMaterial)
         {
+            rawMaterial.Active = true;
             _context.RawMaterials.Add(rawMaterial);
         }
 

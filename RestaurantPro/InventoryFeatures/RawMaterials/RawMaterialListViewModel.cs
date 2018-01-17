@@ -27,7 +27,6 @@ namespace RestaurantPro.InventoryFeatures.RawMaterials
             BackHomeCommand = new RelayCommand(OnHomeClick);
             SaveCommand = new RelayCommand(OnSave, CanSave);
             DeleteCommand = new RelayCommand<WpfRawMaterial>(OnDeleteClick);
-
         }
 
         #region Object Bindings
