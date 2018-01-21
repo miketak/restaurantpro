@@ -3,7 +3,8 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-			 xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls" x:Class="RestaurantPro.InventoryFeatures.ProcurePurchaseOrderView" 
+			 xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls" 
+			 x:Class="RestaurantPro.InventoryFeatures.ProcurePurchaseOrderView" 
 			 mc:Ignorable="d" 
 			 d:DesignHeight="800" d:DesignWidth="1000">
 	<Grid>
@@ -11,7 +12,7 @@
 			<ColumnDefinition Width="40" />
 			<ColumnDefinition />
 			<ColumnDefinition Width="20"/>
-			<ColumnDefinition Width="200"/>
+			<ColumnDefinition Width="225"/>
 			<ColumnDefinition Width="40" />
 		</Grid.ColumnDefinitions>
 
@@ -24,7 +25,6 @@
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="15"/>
 			<RowDefinition Height="40"/>
-			<RowDefinition Height="15"/>
 			<RowDefinition/>
 			<RowDefinition Height="40"/>
 		</Grid.RowDefinitions>
@@ -49,26 +49,24 @@
 		</Grid>
 
 		<!--Navigation Controls-->
-		<StackPanel x:Name="NavigationPanel" Grid.Column="1" Margin="0" Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3">
-			<Button x:Name="BackHome" Content="Home /"
+        <StackPanel x:Name="NavigationPanel" Grid.Column="1" Margin="0" Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3">
+            <Button x:Name="BackHome" Content="Home /"
 				Command="{Binding BackHomeCommand}" Margin="0,5" 
 				FontSize="13.333" FontFamily="Adobe Caslon Pro Bold" 
 				VerticalAlignment="Center" HorizontalAlignment="Left" 
 				Background="#00F7F7F7" BorderBrush="#00F7F7F7" Width="68"/>
-			<Button x:Name="Inventory" Content="Inventory /"
+            <Button x:Name="Inventory" Content="Inventory /"
 				Command="{Binding BackToInventoryCommand}" Margin="0" 
 				FontSize="13.333" FontFamily="Adobe Caslon Pro Bold" 
 				VerticalAlignment="Center" HorizontalAlignment="Left" 
 				Background="#00F7F7F7" BorderBrush="#00F7F7F7"/>
-			<Button x:Name="ProcurePurchaseOrder" Content="Procure Purchase Order" Margin="0,5" 
+            <Button x:Name="ProcurePurchaseOrder" Content="Procure Purchase Order" Margin="0,5" 
 				FontSize="13.333" FontFamily="Adobe Caslon Pro Bold" 
 				VerticalAlignment="Center" HorizontalAlignment="Left" 
 				Background="#00F7F7F7" BorderBrush="#00F7F7F7"/>
-		</StackPanel>
-		
-		
-		
-		<!--Pending Items DataGrid-->
+        </StackPanel>
+
+        <!--Pending Items DataGrid-->
 		<Grid x:Name="PendingItemsGrid" Grid.Column="1" Margin="0" Grid.Row="3">
 			<Grid.RowDefinitions>
 				<RowDefinition/>
@@ -113,7 +111,7 @@
 					Content="Pending Items on Purchase Order" Width="246.433" Margin="0,10.36" Height="31.28" />
 			</Grid>
 			<DataGrid x:Name="PendingItemsDataGrid"
-				ItemsSource="{Binding Categories, Mode=TwoWay}"
+				ItemsSource="{Binding PendingItems, Mode=TwoWay}"
 				AutoGenerateColumns ="False"
 				Style="{StaticResource AzureDataGrid}"
 				CanUserAddRows="True"
@@ -122,18 +120,49 @@
 				RowBackground="#00000000"
 				MaxHeight="550" Grid.Row="2">
 				<DataGrid.Columns>
-					<DataGridTextColumn Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Header="Name" Width="*"/>
-					<DataGridTextColumn Binding="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Header="Description" Width="2*"/>
+					<DataGridTextColumn Binding="{Binding RawMaterial, UpdateSourceTrigger=PropertyChanged}" Header="Raw Material" Width="*"/>
+					<DataGridTextColumn Binding="{Binding Supplier, UpdateSourceTrigger=PropertyChanged}" Header="Supplier" Width="*"/>
+					<DataGridTextColumn Binding="{Binding OrderedQuantity, UpdateSourceTrigger=PropertyChanged}" Header="Ordered Quantity" Width="2*"/>
+					<DataGridTextColumn Binding="{Binding PendingQuantity, UpdateSourceTrigger=PropertyChanged}" Header="Pending Quantity" Width="*"/>
+					<DataGridTextColumn Binding="{Binding TotalValue, UpdateSourceTrigger=PropertyChanged}" Header="Value" Width="*"/>
 
-				<!--Delete Raw Material Template-->
+					<!--Received Quantity Template-->
 					<DataGridTemplateColumn Width="80" MinWidth="80" MaxWidth="80">
 						<DataGridTemplateColumn.CellTemplate>
 							<DataTemplate>
-								<Button Content="Delete"
+								<TextBox 
+									Foreground="{DynamicResource MainForeground}" 
+									Background="Transparent" BorderBrush="Orange"
+									Text="{Binding DataContext.ReceivedQuantity, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+									Margin="5"/>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
+
+					<!--Procure Button Template-->
+					<DataGridTemplateColumn Width="80" MinWidth="80" MaxWidth="80">
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<Button Content="Procure"
 									Style="{StaticResource AccentedSquareButtonStyle}"
 									Foreground="{DynamicResource MainForeground}" 
 									Background="Transparent" BorderBrush="Orange"
-									Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+									Command="{Binding DataContext.Procure, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+									CommandParameter="{Binding}"
+									Margin="5"/>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>                     
+					
+					<!--Detail Button Template-->
+					<DataGridTemplateColumn Width="80" MinWidth="80" MaxWidth="80">
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<Button Content="Detail"
+									Style="{StaticResource AccentedSquareButtonStyle}"
+									Foreground="{DynamicResource MainForeground}" 
+									Background="Transparent" BorderBrush="Orange"
+									Command="{Binding DataContext.Details, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
 									CommandParameter="{Binding}"
 									Margin="5"/>
 							</DataTemplate>
@@ -190,7 +219,7 @@
 					Content="Received Items Summary" Width="246.433" Margin="0,10.36" Height="31.28" />
 			</Grid>
 			<DataGrid x:Name="PendingItemsDataGrid1"
-				ItemsSource="{Binding Categories, Mode=TwoWay}"
+				ItemsSource="{Binding PendingProcurements, Mode=TwoWay}"
 				AutoGenerateColumns ="False"
 				Style="{StaticResource AzureDataGrid}"
 				CanUserAddRows="True"
@@ -199,29 +228,42 @@
 				RowBackground="#00000000"
 				MaxHeight="550" Grid.Row="2">
 				<DataGrid.Columns>
-					<DataGridTextColumn Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Header="Name" Width="*"/>
-					<DataGridTextColumn Binding="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Header="Description" Width="2*"/>
+					<DataGridTextColumn Binding="{Binding RawMaterial, UpdateSourceTrigger=PropertyChanged}" Header="Raw Material" Width="*"/>
+					<DataGridTextColumn Binding="{Binding Supplier, UpdateSourceTrigger=PropertyChanged}" Header="Supplier" Width="*"/>
+					<DataGridTextColumn Binding="{Binding WorkCycleName, UpdateSourceTrigger=PropertyChanged}" Header="Work Cycle" Width="*"/>
+					<DataGridTextColumn Binding="{Binding PurchaseOrderNumber, UpdateSourceTrigger=PropertyChanged}" Header="Purchase Order No." Width="*"/>
 
-				<!--Delete Raw Material Template-->
-					<DataGridTemplateColumn Width="80" MinWidth="80" MaxWidth="80">
+					<!--Received Quantity Template-->
+					<DataGridTemplateColumn Width="80" MinWidth="80" MaxWidth="80" Header="Qty. Received">
 						<DataGridTemplateColumn.CellTemplate>
 							<DataTemplate>
-								<Button Content="Delete"
-									Style="{StaticResource AccentedSquareButtonStyle}"
+								<TextBox 
 									Foreground="{DynamicResource MainForeground}" 
 									Background="Transparent" BorderBrush="Orange"
-									Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
-									CommandParameter="{Binding}"
+									Text="{Binding DataContext.ReceivedQuantity, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+									Margin="5"/>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>                   
+					
+					<!--Delivered By Template-->
+					<DataGridTemplateColumn Width="80" MinWidth="80" MaxWidth="80" Header="Received By">
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<TextBox 
+									Foreground="{DynamicResource MainForeground}" 
+									Background="Transparent" BorderBrush="Orange"
+									Text="{Binding DataContext.DeliveredBy, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
 									Margin="5"/>
 							</DataTemplate>
 						</DataGridTemplateColumn.CellTemplate>
 					</DataGridTemplateColumn>
 
+					<DataGridTextColumn Binding="{Binding DateReceived, UpdateSourceTrigger=PropertyChanged}" Header="Date Received" Width="*"/>
 				</DataGrid.Columns>
 			</DataGrid>
 
 		</Grid>
-
 
 		<!--Add/Edit Controls-->
 		<Grid x:Name="AddEditFormControls"
@@ -233,7 +275,7 @@
 				<ColumnDefinition Width="180"/>
 			</Grid.ColumnDefinitions>
 
-			<!--Save Command-->
+			<!--Procure Command-->
 			<Button Content="Procure"
 				Command="{Binding ProcureCommand}"
 				Style="{StaticResource AccentedSquareButtonStyle}" 
@@ -242,7 +284,7 @@
 				Width="150" Height="35" Grid.Column="1" Margin="0"/>
 
 			<!--Cancel Command-->
-			<Button Content="Cancel"
+            <Button Content="Cancel"
 				Command="{Binding BackToInventoryCommand}"
 				Style="{StaticResource AccentedSquareButtonStyle}" 
 				Foreground="{DynamicResource MainForeground}" Background="White" BorderBrush="Orange" HorizontalAlignment="Right" 
@@ -250,44 +292,46 @@
 				VerticalAlignment="Top"
 				Width="150" Height="35"
 				Margin="0"/>
-
-
-		</Grid>
+        </Grid>
+		
+		<!--Sidebar-->
 		<Grid x:Name="SideBarGrid" Grid.ColumnSpan="2" Grid.Column="3" Grid.Row="1" Grid.RowSpan="10" Background="{DynamicResource MainBorderColor}">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="10"/>
+				<ColumnDefinition/>
+				<ColumnDefinition Width="10"/>
+			</Grid.ColumnDefinitions>
 			<Grid.RowDefinitions>
 				<RowDefinition Height="40"/>
 				<RowDefinition Height="300"/>
-				<RowDefinition Height="347*"/>
-				<RowDefinition Height="204*"/>
+				<RowDefinition Height="15"/>
+				<RowDefinition Height="300"/>
+				<RowDefinition Height="*"/>
 			</Grid.RowDefinitions>
-			<Grid x:Name="FilterGrid" Grid.Row="1">
+			<Grid x:Name="FilterGrid" Grid.Row="1" Grid.Column="1">
 				<Grid.RowDefinitions>
-					<RowDefinition Height="40*"/>
-					<RowDefinition Height="40*"/>
-					<RowDefinition Height="17*"/>
-					<RowDefinition Height="120*"/>
-					<RowDefinition Height="21*"/>
+					<RowDefinition Height="30"/>
+					<RowDefinition Height="35"/>
+					<RowDefinition Height="15"/>
+					<RowDefinition Height="89*"/>
+					<RowDefinition Height="16*"/>
 				</Grid.RowDefinitions>
 				<Label
 					FontSize="16" 
 					Grid.Column="0"
-					Content="Filters" Width="246.433" Height="31.28" />
+					Content="Filters" />
 				<ComboBox x:Name="Status"
-					Width="225"
-					SelectedItem="{Binding StatusId, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Margin="7.5,0" 
-	/>
+					SelectedItem="{Binding FilterCategories, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1"/>
 				<ListBox x:Name="ListBox"
-					Width="225"
-					SelectedItem="{Binding StatusId, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" 
-	/>
+					ItemsSource="{Binding FilterValues, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3"/>
 			</Grid>
-			<Grid x:Name="ProcurementSettingsGRid" Grid.Row="2">
+			<Grid x:Name="ProcurementSettingsGrid" Grid.Row="3" Grid.Column="1">
 				<Grid.RowDefinitions>
-					<RowDefinition Height="44*"/>
-					<RowDefinition Height="44*"/>
+					<RowDefinition Height="35"/>
+					<RowDefinition Height="38.985"/>
 					<RowDefinition Height="40"/>
-					<RowDefinition Height="133*"/>
-					<RowDefinition Height="23*"/>
+					<RowDefinition Height="79*"/>
+					<RowDefinition Height="14*"/>
 				</Grid.RowDefinitions>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="120"/>
@@ -305,12 +349,8 @@
 					Grid.Row="1"
 					Content="Location" VerticalAlignment="Center"/>
 				<ComboBox x:Name="Location"
-					Width="120"
-					VerticalAlignment="Center"
-					SelectedValue="{Binding LocationId, ValidatesOnNotifyDataErrors=True}"
-					Height="26" 
-					HorizontalAlignment="Left" 
-					Grid.Column="1" Grid.Row="1"/>                
+					SelectedValue="{Binding LocationId, ValidatesOnNotifyDataErrors=True}" 
+					Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Height="25"/>                
 				
 				<Label
 					FontSize="16" 
@@ -318,12 +358,8 @@
 					Grid.Row="2"
 					Content="Date Received" VerticalAlignment="Center"/>
 				<DatePicker x:Name="DateReceived"
-					Width="120"
-					VerticalAlignment="Center"
-					SelectedDate="{Binding DateReceived, ValidatesOnNotifyDataErrors=True}"
-					Height="26" 
-					HorizontalAlignment="Left" 
-					Grid.Column="1" Grid.Row="2"/>
+					SelectedDate="{Binding DateReceived, ValidatesOnNotifyDataErrors=True}" 
+					Grid.Column="1" Grid.Row="2" Height="30"/>
 
 			</Grid>
 		</Grid>
