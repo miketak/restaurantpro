@@ -159,6 +159,9 @@
       <DependentUpon>LocationListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="InventoryFeatures\Locations\LocationListViewModel.cs" />
+    <Compile Include="InventoryFeatures\ProcurePurchaseOrderView.xaml.cs">
+      <DependentUpon>ProcurePurchaseOrderView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="InventoryFeatures\PurchaseOrders\AddEditPurchaseOrderView.xaml.cs">
       <DependentUpon>AddEditPurchaseOrderView.xaml</DependentUpon>
     </Compile>
@@ -233,6 +236,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="InventoryFeatures\Locations\LocationListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InventoryFeatures\ProcurePurchaseOrderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

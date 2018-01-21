@@ -1,0 +1,1 @@
+<Playlist Version="1.0"><Add Test="RestaurantPro.Infrastructure.UnitTests.InventoryServiceTests.ProcurePurchaseOrderTest" /><Add Test="RestaurantPro.Infrastructure.UnitTests.InventoryServiceTests.ConfirmWorkCycle" /></Playlist>

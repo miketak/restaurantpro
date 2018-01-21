@@ -40,6 +40,7 @@ namespace RestaurantPro.Infrastructure.Services
             var purchaseOrderToDb = CreateNewPurchaseOrderForInsert(fullWorkCycleFromDb);
 
             _unitOfWork.PurchaseOrders.AddPurchaseOrder(purchaseOrderToDb);
+
         }
 
         /// <summary>
@@ -51,7 +52,7 @@ namespace RestaurantPro.Infrastructure.Services
         {
             ValidateParameters(oldPurchaseOrder, purchaseOrderTransactions, user);
 
-            var newPurchaseOrder = purchaseOrderTransactions.ToList();
+            var newPurchaseOrderTransactions = purchaseOrderTransactions.ToList();
 
             _user = user;
 
@@ -59,11 +60,11 @@ namespace RestaurantPro.Infrastructure.Services
 
             ChangePurchaseOrderStatusToInProgress(oldPurchaseOrder);
 
-            AddPurchaseOrderTransactions(newPurchaseOrder.ToList());
+            AddPurchaseOrderTransactions(newPurchaseOrderTransactions.ToList());
 
             AddWorkCycleTransactions(oldPurchaseOrder.WorkCycleId);
 
-            AssignLocationInWorkCycles(oldPurchaseOrder.WorkCycleId, newPurchaseOrder.ToList());
+            AssignLocationInWorkCycles(oldPurchaseOrder.WorkCycleId, newPurchaseOrderTransactions.ToList());
         }
 
         #region Confirm Cycle Helper Methods
@@ -110,10 +111,11 @@ namespace RestaurantPro.Infrastructure.Services
 
         #region Procure Purchase Order Helper Methods
 
-        private static void ValidateParameters(PurchaseOrder oldPurchaseOrder, IEnumerable<PurchaseOrderTransaction> newPurchaseOrder, User user)
+        private static void ValidateParameters(PurchaseOrder oldPurchaseOrder, 
+            IEnumerable<PurchaseOrderTransaction> newPurchaseOrderTransactions, User user)
         {
             if (oldPurchaseOrder == null) throw new ArgumentNullException("oldPurchaseOrder");
-            if (newPurchaseOrder == null) throw new ArgumentNullException("newPurchaseOrder");
+            if (newPurchaseOrderTransactions == null) throw new ArgumentNullException("newPurchaseOrderTransactions");
             if (user == null) throw new ArgumentNullException("user");
         }
 
@@ -138,7 +140,7 @@ namespace RestaurantPro.Infrastructure.Services
             _unitOfWork.Complete();
         }
 
-        private void AddPurchaseOrderTransactions(List<PurchaseOrderTransaction> purchaseOrderTransactions)
+        private void AddPurchaseOrderTransactions(IEnumerable<PurchaseOrderTransaction> purchaseOrderTransactions)
         {
             _currentTrackingNumber = GenerateTrackingNumber();
             foreach (var pt in purchaseOrderTransactions)
