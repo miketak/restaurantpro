@@ -74,6 +74,9 @@
 		</DataTemplate>        
 		<DataTemplate DataType="{x:Type invsettings:InventorySettingViewModel}">
 			<invsettings:InventorySettingView/>
+		</DataTemplate>		
+		<DataTemplate DataType="{x:Type inventdash:ProcurePurchaseOrderViewModel}">
+			<inventdash:ProcurePurchaseOrderView/>
 		</DataTemplate>
 	</Window.Resources>
 	<!--End of Window Reousrces-->

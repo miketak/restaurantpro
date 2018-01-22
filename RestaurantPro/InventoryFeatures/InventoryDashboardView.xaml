@@ -149,6 +149,21 @@
 				<TextBlock Text="Inventory Settings" TextWrapping="Wrap" 
 					   FontSize="15" TextAlignment="Center" 
 					   FontFamily="Arial" FontWeight="DemiBold"/>
+			</Button>		
+		
+		<!--Procure Purchaes Order View Function-->
+		<Button x:Name ="ProcurePurchaseOrderView" 
+				Style="{DynamicResource MetroTileStyle}"
+				Command="{Binding ProcurePurchaseOrderViewCommand}"
+				Height="120" Width="120"
+				Margin="20 20 20 20"
+				BorderBrush="#FFCA5502">
+				<Button.Effect>
+					<DropShadowEffect BlurRadius="15"/>
+				</Button.Effect>
+				<TextBlock Text="Procure Purchase Order" TextWrapping="Wrap" 
+					   FontSize="15" TextAlignment="Center" 
+					   FontFamily="Arial" FontWeight="DemiBold"/>
 			</Button>
 
 		</WrapPanel>

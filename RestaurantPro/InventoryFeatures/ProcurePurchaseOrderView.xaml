@@ -3,8 +3,10 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-			 xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls" 
+			 xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
+			 xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
 			 x:Class="RestaurantPro.InventoryFeatures.ProcurePurchaseOrderView" 
+			dialogs:DialogParticipation.Register="{Binding}" 
 			 mc:Ignorable="d" 
 			 d:DesignHeight="800" d:DesignWidth="1000">
 	<Grid>
@@ -49,24 +51,24 @@
 		</Grid>
 
 		<!--Navigation Controls-->
-        <StackPanel x:Name="NavigationPanel" Grid.Column="1" Margin="0" Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3">
-            <Button x:Name="BackHome" Content="Home /"
+		<StackPanel x:Name="NavigationPanel" Grid.Column="1" Margin="0" Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3">
+			<Button x:Name="BackHome" Content="Home /"
 				Command="{Binding BackHomeCommand}" Margin="0,5" 
 				FontSize="13.333" FontFamily="Adobe Caslon Pro Bold" 
 				VerticalAlignment="Center" HorizontalAlignment="Left" 
 				Background="#00F7F7F7" BorderBrush="#00F7F7F7" Width="68"/>
-            <Button x:Name="Inventory" Content="Inventory /"
+			<Button x:Name="Inventory" Content="Inventory /"
 				Command="{Binding BackToInventoryCommand}" Margin="0" 
 				FontSize="13.333" FontFamily="Adobe Caslon Pro Bold" 
 				VerticalAlignment="Center" HorizontalAlignment="Left" 
 				Background="#00F7F7F7" BorderBrush="#00F7F7F7"/>
-            <Button x:Name="ProcurePurchaseOrder" Content="Procure Purchase Order" Margin="0,5" 
+			<Button x:Name="ProcurePurchaseOrder" Content="Procure Purchase Order" Margin="0,5" 
 				FontSize="13.333" FontFamily="Adobe Caslon Pro Bold" 
 				VerticalAlignment="Center" HorizontalAlignment="Left" 
 				Background="#00F7F7F7" BorderBrush="#00F7F7F7"/>
-        </StackPanel>
+		</StackPanel>
 
-        <!--Pending Items DataGrid-->
+		<!--Pending Items DataGrid-->
 		<Grid x:Name="PendingItemsGrid" Grid.Column="1" Margin="0" Grid.Row="3">
 			<Grid.RowDefinitions>
 				<RowDefinition/>
@@ -284,7 +286,7 @@
 				Width="150" Height="35" Grid.Column="1" Margin="0"/>
 
 			<!--Cancel Command-->
-            <Button Content="Cancel"
+			<Button Content="Cancel"
 				Command="{Binding BackToInventoryCommand}"
 				Style="{StaticResource AccentedSquareButtonStyle}" 
 				Foreground="{DynamicResource MainForeground}" Background="White" BorderBrush="Orange" HorizontalAlignment="Right" 
@@ -292,7 +294,7 @@
 				VerticalAlignment="Top"
 				Width="150" Height="35"
 				Margin="0"/>
-        </Grid>
+		</Grid>
 		
 		<!--Sidebar-->
 		<Grid x:Name="SideBarGrid" Grid.ColumnSpan="2" Grid.Column="3" Grid.Row="1" Grid.RowSpan="10" Background="{DynamicResource MainBorderColor}">

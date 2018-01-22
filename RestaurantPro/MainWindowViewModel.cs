@@ -41,6 +41,7 @@ namespace RestaurantPro
         private RawMaterialCategoryListViewModel _rawMaterialCategoryListViewModel;
         private LocationListViewModel _locationListViewModel;
         private InventorySettingViewModel _inventorySettingViewModel;
+        private ProcurePurchaseOrderViewModel _procurePurchaseOrderViewModel;
 
         /// <summary>
         /// Constructor to subscription of events for overall program navigation.
@@ -62,7 +63,7 @@ namespace RestaurantPro
             _rawMaterialCategoryListViewModel = new RawMaterialCategoryListViewModel(unitOfWork, DialogCoordinator.Instance);
             _locationListViewModel = new LocationListViewModel(unitOfWork, DialogCoordinator.Instance);
             _inventorySettingViewModel = new InventorySettingViewModel(unitOfWork, DialogCoordinator.Instance);
-            
+            _procurePurchaseOrderViewModel = new ProcurePurchaseOrderViewModel(unitOfWork, DialogCoordinator.Instance);
 
             //Set Login context
             SetLoginContext();
@@ -82,6 +83,7 @@ namespace RestaurantPro
             _inventoryDashboardViewModel.RawMaterialCategoryListViewRequested += NavToRawMaterialCategoryListView;
             _inventoryDashboardViewModel.LocationListViewRequested += NavToLocationListView;
             _inventoryDashboardViewModel.InventorySettingViewRequested += NavToInventorySettingView;
+            _inventoryDashboardViewModel.ProcurePurchaseOrderViewRequested += NavToProcurePurchaseOrderView;
 
             _workCycleListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
             _workCycleListViewModel.LogoutRequested += NavToLoginView;
@@ -125,7 +127,9 @@ namespace RestaurantPro
             _inventorySettingViewModel.HomeViewRequested += NavToHomeDashboard;
             _inventorySettingViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
 
-
+            _procurePurchaseOrderViewModel.LogoutRequested += NavToLoginView;
+            _procurePurchaseOrderViewModel.HomeViewRequested += NavToHomeDashboard;
+            _procurePurchaseOrderViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
         }
 
         /// <summary>
@@ -259,6 +263,12 @@ namespace RestaurantPro
         {
             _inventorySettingViewModel.SetCurrentUser(currentUser);
             CurrentViewModel = _inventorySettingViewModel;
+        }
+
+        private void NavToProcurePurchaseOrderView(WpfUser currentUser)
+        {
+            _procurePurchaseOrderViewModel.SetCurrentUser(currentUser);
+            CurrentViewModel = _procurePurchaseOrderViewModel;
         }
 
         #endregion

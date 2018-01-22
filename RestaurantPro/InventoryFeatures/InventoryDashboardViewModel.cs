@@ -22,7 +22,7 @@ namespace RestaurantPro.InventoryFeatures
             RawMaterialCategoryListViewCommand = new RelayCommand(OnRawMaterialCategoryListViewClick);
             LocationListViewCommand = new RelayCommand(OnLocationListViewClick);
             InventorySettingViewCommand = new RelayCommand(OnInventorySettingViewClick);
-            
+            ProcurePurchaseOrderViewCommand = new RelayCommand(OnPurchaseOrderViewClick);
         }
 
         #region Initialization Methods
@@ -71,6 +71,8 @@ namespace RestaurantPro.InventoryFeatures
 
         public event Action<WpfUser> InventorySettingViewRequested = delegate { };
 
+        public event Action<WpfUser> ProcurePurchaseOrderViewRequested = delegate { };
+
         #endregion
 
         #region Commands
@@ -92,6 +94,8 @@ namespace RestaurantPro.InventoryFeatures
         public RelayCommand LocationListViewCommand { get; private set; }
 
         public RelayCommand InventorySettingViewCommand { get; private set; }
+
+        public RelayCommand ProcurePurchaseOrderViewCommand { get; private set; }
 
 
         #endregion
@@ -142,6 +146,11 @@ namespace RestaurantPro.InventoryFeatures
         private void OnInventorySettingViewClick()
         {
             InventorySettingViewRequested(CurrentUser);
+        }
+
+        private void OnPurchaseOrderViewClick()
+        {
+            ProcurePurchaseOrderViewRequested(CurrentUser);
         }
 
     #endregion
