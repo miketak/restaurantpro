@@ -63,6 +63,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IInventoryRepository.cs" />
     <Compile Include="Repositories\IInventorySettingsRepository.cs" />
+    <Compile Include="Repositories\IInventoryTrasactionsRepository.cs" />
     <Compile Include="Repositories\ILocationRepository.cs" />
     <Compile Include="Repositories\IPurchaseOrderRepository.cs" />
     <Compile Include="Repositories\IPurchaseOrderTransactionRepository.cs" />

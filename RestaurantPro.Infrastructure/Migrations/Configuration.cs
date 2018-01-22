@@ -154,14 +154,22 @@ namespace RestaurantPro.Infrastructure.Migrations
 
             #region Add Inventory Settings
 
-            var inventorySettings = new InventorySettings
+            var inventorySettings = new List<InventorySettings>
             {
-                Parameter = "Tax",
-                Value = (decimal)0.17500
-            };
-            context.InventorySettings.AddOrUpdate(inventorySettings);
-            context.SaveChanges();
+                new InventorySettings
+                {
+                    Parameter = "Tax",
+                    Value = (decimal) 0.17500
+                },
+                new InventorySettings
+                {
+                    Parameter = "Default Lead Time",
+                    Value = 5
+                }
 
+            };
+            inventorySettings.ForEach( p => context.InventorySettings.AddOrUpdate(t => t.Parameter, p));
+            context.SaveChanges();
             #endregion
 
         }

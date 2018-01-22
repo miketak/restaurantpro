@@ -1,13 +1,9 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Data.Entity;
 using System.Linq;
 using RestaurantPro.Core;
 using RestaurantPro.Core.Domain;
 using RestaurantPro.Core.Services;
-using RestaurantPro.Infrastructure.Migrations;
 
 namespace RestaurantPro.Infrastructure.Services
 {
@@ -16,15 +12,15 @@ namespace RestaurantPro.Infrastructure.Services
         private readonly IUnitOfWork _unitOfWork;
         private User _user;
 
-        public InventoryService(IUnitOfWork unitOfWork) 
+        public InventoryService(IUnitOfWork unitOfWork)
             : base(unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
         /// <summary>
-        /// Transfers WorkCycle with Items to New Purchase Order
-        /// Part of Workflow: WorkCycle -> PurchaseOrder
+        ///     Transfers WorkCycle with Items to New Purchase Order
+        ///     Part of Workflow: WorkCycle -> PurchaseOrder
         /// </summary>
         /// <param name="workCycleId"></param>
         /// <param name="user"></param>
@@ -36,18 +32,20 @@ namespace RestaurantPro.Infrastructure.Services
 
             var fullWorkCycleFromDb = ActivateWorkCycle(workCycleId);
 
+            InventoryTransactionsService.AddWorkCycleTransactions(fullWorkCycleFromDb);
+
             var purchaseOrderToDb = CreateNewPurchaseOrderForInsert(fullWorkCycleFromDb);
 
             _unitOfWork.PurchaseOrders.AddPurchaseOrder(purchaseOrderToDb);
-
         }
 
         /// <summary>
-        /// Updates Purchase Order Transactiosn and Work Cycle Transactionsw
+        ///     Updates Purchase Order Transactiosn and Work Cycle Transactionsw
         /// </summary>
         /// <param name="oldPurchaseOrder"></param>
         /// <param name="purchaseOrderTransactions"></param>
-        public void ProcurePurchaseOrder(PurchaseOrder oldPurchaseOrder, IEnumerable<PurchaseOrderTransaction> purchaseOrderTransactions, User user)
+        public void ProcurePurchaseOrder(PurchaseOrder oldPurchaseOrder,
+            IEnumerable<PurchaseOrderTransaction> purchaseOrderTransactions, User user)
         {
             ValidateParameters(oldPurchaseOrder, purchaseOrderTransactions, user);
 
@@ -59,13 +57,15 @@ namespace RestaurantPro.Infrastructure.Services
 
             ChangePurchaseOrderStatusToInProgress(oldPurchaseOrder);
 
-            InventoryTransactions.AddPurchaseOrderTransactions(newPurchaseOrderTransactions.ToList());
+            InventoryTransactionsService.AddPurchaseOrderTransactions(newPurchaseOrderTransactions.ToList());
 
-            InventoryTransactions.AddWorkCycleTransactions(oldPurchaseOrder.WorkCycleId, user);
+            InventoryTransactionsService.AddWorkCycleTransactions(oldPurchaseOrder.WorkCycleId, user);
 
             AssignLocationInWorkCycles(oldPurchaseOrder.WorkCycleId, newPurchaseOrderTransactions.ToList());
 
             AddOrUpdateItemsToStock(newPurchaseOrderTransactions);
+
+            InventoryTransactionsService.AddInventoryTransactions(TransformToITL(newPurchaseOrderTransactions.ToList()), _user);
         }
 
         private void AddOrUpdateItemsToStock(IEnumerable<PurchaseOrderTransaction> newPurchaseOrderTransactions)
@@ -135,12 +135,11 @@ namespace RestaurantPro.Infrastructure.Services
             return purchaseOrderToDb;
         }
 
-
         #endregion
 
         #region Procure Purchase Order Helper Methods
 
-        private static void ValidateParameters(PurchaseOrder oldPurchaseOrder, 
+        private static void ValidateParameters(PurchaseOrder oldPurchaseOrder,
             IEnumerable<PurchaseOrderTransaction> newPurchaseOrderTransactions, User user)
         {
             if (oldPurchaseOrder == null) throw new ArgumentNullException("oldPurchaseOrder");
@@ -162,7 +161,7 @@ namespace RestaurantPro.Infrastructure.Services
                 throw new ApplicationException("Concurrency Error");
         }
 
-         private void ChangePurchaseOrderStatusToInProgress(PurchaseOrder oldPurchaseOrder)
+        private void ChangePurchaseOrderStatusToInProgress(PurchaseOrder oldPurchaseOrder)
         {
             var purchaseOrder = _unitOfWork.PurchaseOrders.SingleOrDefault(x => x.Id == oldPurchaseOrder.Id);
             purchaseOrder.StatusId = "In Progress";
@@ -175,18 +174,25 @@ namespace RestaurantPro.Infrastructure.Services
                 .GetAll().Where(x => x.WorkCycleId == workCycleId).ToList();
 
             foreach (var wcLine in workCycleLinesToChange)
-            {
-                foreach (var transaction in poTransactions)
-                {
-                    wcLine.LocationId = transaction.LocationId;
-                }
-            }
+            foreach (var transaction in poTransactions)
+                wcLine.LocationId = transaction.LocationId;
 
             _unitOfWork.Complete();
         }
 
+        private List<InventoryTransaction> TransformToITL(IEnumerable<PurchaseOrderTransaction> newPurchaseOrderTransactions)
+        {
+            var invItems = newPurchaseOrderTransactions.ToList()
+                .Select(item => new InventoryTransaction
+                {
+                    InventoryId = _unitOfWork.Inventory.SingleOrDefault(x => x.RawMaterialId == item.RawMaterialId).Id,
+                    Quantity = item.QuantityReceived,
+                    CreatedBy = _user.Id
+                })
+                .ToList();
+            return invItems;
+        }
+
         #endregion
-
-
     }
 }

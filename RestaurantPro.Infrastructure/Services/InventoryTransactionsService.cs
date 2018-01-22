@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using RestaurantPro.Core;
 using RestaurantPro.Core.Domain;
 
 namespace RestaurantPro.Infrastructure.Services
 {
-    public class InventoryTransactions
+    public class InventoryTransactionsService
     {
         private readonly IUnitOfWork _unitOfWork;
+
         private int _currentTrackingNumber;
         private static Random random = new Random();
 
-        public InventoryTransactions(IUnitOfWork unitOfWork)
+        public InventoryTransactionsService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -52,6 +54,48 @@ namespace RestaurantPro.Infrastructure.Services
                     TransactionDate = pt.TransactionDate
                 };
                 _unitOfWork.WorkCycleTransactions.Add(workCycleTransaction);
+                _unitOfWork.Complete();
+            }
+        }
+
+        internal void AddWorkCycleTransactions(WorkCycle workCycle)
+        {
+            if (workCycle == null) throw new ArgumentNullException("workCycle");
+
+            var workCycleInDb = _unitOfWork.WorkCycles
+                .SingleOrDefault(wc => wc.Name == workCycle.Name);
+
+            if (workCycle.Id != workCycleInDb.Id)
+                throw new ApplicationException("Work Cycle Id mismatch");
+
+            if ( workCycleInDb == null)
+                throw new ApplicationException("Work Cycle not in database");
+
+            var timeStamp = DateTime.Now;
+
+            foreach (var line in workCycle.WorkCycleLines)
+            {
+                _unitOfWork.WorkCycleTransactions.Add(new WorkCycleTransaction
+                {
+                    WorkCycleId = workCycleInDb.Id,
+                    RawMaterialId = line.RawMaterialId,
+                    TrackingNumber = 0,
+                    UsedQuantity = -1.0 * line.PlannedQuantity,
+                    DateUsed = timeStamp,
+                    CreatedBy = workCycle.UserId,
+                    TransactionDate = timeStamp
+                });
+                _unitOfWork.Complete();
+            }
+        }
+
+        internal void AddInventoryTransactions(IEnumerable<InventoryTransaction> inventoryItems, User user)
+        {
+            var transactionDate = DateTime.Now;
+            foreach (var item in inventoryItems.ToList())
+            {
+                item.TransactionDate = transactionDate;
+                _unitOfWork.InventoryTransactionRepository.Add(item);
                 _unitOfWork.Complete();
             }
         }

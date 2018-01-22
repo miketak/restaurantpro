@@ -5,12 +5,15 @@ using System.Diagnostics;
 using System.Linq;
 using RestaurantPro.Core.Domain;
 using RestaurantPro.Core.Repositories;
+using RestaurantPro.Infrastructure.Migrations;
+using RestaurantPro.Infrastructure.Services;
 
 namespace RestaurantPro.Infrastructure.Repositories
 {
     public class WorkCycleRepository : Repository<WorkCycle>, IWorkCycleRepository
     {
         private RestProContext _context;
+        private InventoryTransactionsService InventoryTrasactionsService;
 
         public WorkCycleRepository(DbContext context)
             : base(context)

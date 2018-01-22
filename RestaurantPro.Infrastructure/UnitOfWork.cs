@@ -28,6 +28,7 @@ namespace RestaurantPro.Infrastructure
             WorkCycleTransactions = new WorkCycleTransactionRepository(_context);
             WorkCyclesLines = new WorkCycleLineRepository(_context);
             Inventory = new InventoryRepository(_context);
+            InventoryTransactionRepository = new InventoryTransactionsRepository(_context);
         }
 
         public IUserRepository Users { get; private set; }
@@ -45,6 +46,7 @@ namespace RestaurantPro.Infrastructure
         public IWorkCycleTransactionRepository WorkCycleTransactions { get; private set; }
         public IWorkCycleLineRepository WorkCyclesLines { get; set; }
         public IInventoryRepository Inventory { get; private set; }
+        public IInventoryTrasactionsRepository InventoryTransactionRepository { get; private set; }
 
 
         public int Complete()

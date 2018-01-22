@@ -34,6 +34,8 @@ namespace RestaurantPro.Core
 
         IInventoryRepository Inventory { get; }
 
+        IInventoryTrasactionsRepository InventoryTransactionRepository { get; }
+
         int Complete();
     }
 

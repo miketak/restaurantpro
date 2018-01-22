@@ -7,12 +7,12 @@ namespace RestaurantPro.Infrastructure.Services
     public class RestProServiceBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        protected readonly InventoryTransactions InventoryTransactions;
+        protected readonly InventoryTransactionsService InventoryTransactionsService;
 
         public RestProServiceBase(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            InventoryTransactions = new InventoryTransactions(unitOfWork);
+            InventoryTransactionsService = new InventoryTransactionsService(unitOfWork);
         }
         protected string GenerateNewPurchaseOrderNumber()
         {
