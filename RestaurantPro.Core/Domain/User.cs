@@ -29,6 +29,8 @@ namespace RestaurantPro.Core.Domain
 
         public virtual ICollection<PurchaseOrderTransaction> PurchaseOrderTransactions { get; set; }
 
+        public virtual ICollection<InventoryTransaction> InventoryTransactions { get; set; }
+
         #endregion
 
     }

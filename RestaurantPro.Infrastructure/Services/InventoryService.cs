@@ -15,7 +15,6 @@ namespace RestaurantPro.Infrastructure.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private User _user;
-        private int _currentTrackingNumber;
 
         public InventoryService(IUnitOfWork unitOfWork) 
             : base(unitOfWork)
@@ -60,9 +59,9 @@ namespace RestaurantPro.Infrastructure.Services
 
             ChangePurchaseOrderStatusToInProgress(oldPurchaseOrder);
 
-            AddPurchaseOrderTransactions(newPurchaseOrderTransactions.ToList());
+            InventoryTransactions.AddPurchaseOrderTransactions(newPurchaseOrderTransactions.ToList());
 
-            AddWorkCycleTransactions(oldPurchaseOrder.WorkCycleId);
+            InventoryTransactions.AddWorkCycleTransactions(oldPurchaseOrder.WorkCycleId, user);
 
             AssignLocationInWorkCycles(oldPurchaseOrder.WorkCycleId, newPurchaseOrderTransactions.ToList());
         }
@@ -87,7 +86,7 @@ namespace RestaurantPro.Infrastructure.Services
         {
             var purchaseOrderToDb = new PurchaseOrder
             {
-                PurchaseOrderNumber = GenerateNewPurchaseOrder(),
+                PurchaseOrderNumber = GenerateNewPurchaseOrderNumber(),
                 DateCreated = DateTime.Now,
                 CreatedBy = _user.Id,
                 StatusId = PurchaseOrderStatus.New.ToString(),
@@ -138,44 +137,6 @@ namespace RestaurantPro.Infrastructure.Services
             var purchaseOrder = _unitOfWork.PurchaseOrders.SingleOrDefault(x => x.Id == oldPurchaseOrder.Id);
             purchaseOrder.StatusId = "In Progress";
             _unitOfWork.Complete();
-        }
-
-        private void AddPurchaseOrderTransactions(IEnumerable<PurchaseOrderTransaction> purchaseOrderTransactions)
-        {
-            _currentTrackingNumber = GenerateTrackingNumber();
-            foreach (var pt in purchaseOrderTransactions)
-            {
-                pt.TrackingNumber = _currentTrackingNumber;
-                pt.TransactionDate = DateTime.Now;
-                _unitOfWork.PurchaseOrderTransactions.Add(pt);
-                _unitOfWork.Complete();
-            }
-        }
-
-        private void AddWorkCycleTransactions(int? workCycleId )
-        {
-            var workCycleTransaction = new WorkCycleTransaction();
-
-            var purchaseOrderTransactions =
-                _unitOfWork.PurchaseOrderTransactions.GetAll()
-                .Where(t => t.TrackingNumber == _currentTrackingNumber)
-                    .ToList();
-
-            foreach (var pt in purchaseOrderTransactions)
-            {
-                workCycleTransaction = new WorkCycleTransaction
-                {
-                    WorkCycleId = (int) workCycleId,
-                    RawMaterialId = pt.RawMaterialId,
-                    TrackingNumber = _currentTrackingNumber,
-                    UsedQuantity = pt.QuantityReceived,
-                    DateUsed = pt.DateReceived,
-                    CreatedBy = _user.Id,
-                    TransactionDate = pt.TransactionDate
-                };
-                _unitOfWork.WorkCycleTransactions.Add(workCycleTransaction);
-                _unitOfWork.Complete();
-            }
         }
 
         private void AssignLocationInWorkCycles(int? workCycleId, List<PurchaseOrderTransaction> poTransactions)

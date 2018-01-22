@@ -43,6 +43,8 @@ namespace RestaurantPro.Infrastructure
 
         public virtual DbSet<WorkCycleTransaction> WorkCycleTransactions { get; set; }
 
+        public virtual DbSet<Inventory> Inventory { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new PurchaseOrderLinesConfiguration());
@@ -56,6 +58,7 @@ namespace RestaurantPro.Infrastructure
             modelBuilder.Configurations.Add(new WcStatusConfiguration());
             modelBuilder.Configurations.Add(new WorkCycleAdjustmentsConfiguration());
             modelBuilder.Configurations.Add(new PurchaseOrderTransactionConfiguration());
+            modelBuilder.Configurations.Add(new InventoryConfigration());
         }
  
     }

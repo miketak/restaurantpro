@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntityConfigurations\InventoryConfigration.cs" />
     <Compile Include="EntityConfigurations\PoStatusConfiguration.cs" />
     <Compile Include="EntityConfigurations\PurchaseOrderConfiguration.cs" />
     <Compile Include="EntityConfigurations\PurchaseOrderLinesConfiguration.cs" />
@@ -105,6 +106,14 @@
     <Compile Include="Migrations\201801132246346_UserTableAuthenticationFields.cs" />
     <Compile Include="Migrations\201801132246346_UserTableAuthenticationFields.Designer.cs">
       <DependentUpon>201801132246346_UserTableAuthenticationFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801221402205_AddInventoryTable.cs" />
+    <Compile Include="Migrations\201801221402205_AddInventoryTable.Designer.cs">
+      <DependentUpon>201801221402205_AddInventoryTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801221410087_InventoryTransactionsTable.cs" />
+    <Compile Include="Migrations\201801221410087_InventoryTransactionsTable.Designer.cs">
+      <DependentUpon>201801221410087_InventoryTransactionsTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -172,6 +181,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201801132246346_UserTableAuthenticationFields.resx">
       <DependentUpon>201801132246346_UserTableAuthenticationFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801221402205_AddInventoryTable.resx">
+      <DependentUpon>201801221402205_AddInventoryTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801221410087_InventoryTransactionsTable.resx">
+      <DependentUpon>201801221410087_InventoryTransactionsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

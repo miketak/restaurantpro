@@ -7,13 +7,14 @@ namespace RestaurantPro.Infrastructure.Services
     public class RestProServiceBase
     {
         private readonly IUnitOfWork _unitOfWork;
-        private static Random random = new Random();
+        protected readonly InventoryTransactions InventoryTransactions;
 
         public RestProServiceBase(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+            InventoryTransactions = new InventoryTransactions(unitOfWork);
         }
-        protected string GenerateNewPurchaseOrder()
+        protected string GenerateNewPurchaseOrderNumber()
         {
             var poNumbers = _unitOfWork
                 .PurchaseOrders.GetAll().ToList();
@@ -31,21 +32,7 @@ namespace RestaurantPro.Infrastructure.Services
             return newPoNumber.ToString();
         }
 
-        protected int GenerateTrackingNumber()
-        {
-            var length = 6;
-            const string chars = "0123456789";
-            var val =  new string(Enumerable.Repeat(chars, length)
-                .Select(s => s[random.Next(s.Length)]).ToArray());
 
-            var trackingNumbers = _unitOfWork.PurchaseOrderTransactions.GetAll()
-                .Select(a => a.TrackingNumber).ToList();
-
-            if (trackingNumbers.Contains(int.Parse(val)))
-                GenerateTrackingNumber();
-
-            return int.Parse(val);
-        }
 
        
     }

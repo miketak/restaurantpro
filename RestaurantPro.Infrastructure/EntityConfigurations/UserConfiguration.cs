@@ -40,6 +40,11 @@ namespace RestaurantPro.Infrastructure.EntityConfigurations
                 .HasForeignKey(p => p.ReceivedBy)
                 .WillCascadeOnDelete(false);
 
+            HasMany(u => u.InventoryTransactions)
+                .WithRequired(k => k.User)
+                .HasForeignKey(p => p.CreatedBy)
+                .WillCascadeOnDelete(false);
+
 
         }
     }

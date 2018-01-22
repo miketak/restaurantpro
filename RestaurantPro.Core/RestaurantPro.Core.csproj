@@ -40,7 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\Inventory.cs" />
     <Compile Include="Domain\InventorySettings.cs" />
+    <Compile Include="Domain\InventoryTransaction.cs" />
     <Compile Include="Domain\Location.cs" />
     <Compile Include="Domain\PoStatus.cs" />
     <Compile Include="Domain\PurchaseOrder.cs" />
