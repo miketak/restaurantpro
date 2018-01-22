@@ -14,6 +14,9 @@ namespace RestaurantPro.Infrastructure.EntityConfigurations
                 table.RawMaterialId
             });
 
+            Property(p => p.LeadTime)
+                .IsOptional();
+
             Ignore(a => a.SupplierStringTemp);
             Ignore(a => a.RawMaterialStringTemp);
         }

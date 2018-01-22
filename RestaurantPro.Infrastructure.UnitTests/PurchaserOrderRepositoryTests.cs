@@ -49,12 +49,12 @@ namespace RestaurantPro.Infrastructure.UnitTests
 
             var poLines = new List<PurchaseOrderLine>
             {
-                new PurchaseOrderLine { RawMaterialId = rms[0].Id, SupplierId = supps[0].Id, UnitPrice= 25, Quantity = 91, UnitOfMeasure = "crates"},
+                new PurchaseOrderLine { RawMaterialId = rms[0].Id, SupplierId = supps[0].Id, UnitPrice= 25, Quantity = 91, UnitOfMeasure = "crates", LeadTime = 5},
                 new PurchaseOrderLine { RawMaterialId = rms[1].Id, SupplierId = supps[1].Id, UnitPrice= 26, Quantity = 92, UnitOfMeasure = "bags"},
-                new PurchaseOrderLine { RawMaterialId = rms[2].Id, SupplierId = supps[2].Id, UnitPrice= 27, Quantity = 93, UnitOfMeasure = "olonkas"},
-                new PurchaseOrderLine { RawMaterialId = rms[3].Id, SupplierId = supps[3].Id, UnitPrice= 28, Quantity = 94, UnitOfMeasure = "cups"},
-                new PurchaseOrderLine { RawMaterialId = rms[4].Id, SupplierId = supps[4].Id, UnitPrice= 29, Quantity = 95, UnitOfMeasure = "container"},
-                new PurchaseOrderLine { RawMaterialId = rms[1].Id, SupplierId = supps[2].Id, UnitPrice= 30, Quantity = 96, UnitOfMeasure = "kg"}
+                new PurchaseOrderLine { RawMaterialId = rms[2].Id, SupplierId = supps[2].Id, UnitPrice= 27, Quantity = 93, UnitOfMeasure = "olonkas", LeadTime = 3},
+                new PurchaseOrderLine { RawMaterialId = rms[3].Id, SupplierId = supps[3].Id, UnitPrice= 28, Quantity = 94, UnitOfMeasure = "cups", LeadTime = 2},
+                new PurchaseOrderLine { RawMaterialId = rms[4].Id, SupplierId = supps[4].Id, UnitPrice= 29, Quantity = 95, UnitOfMeasure = "container", LeadTime = 2},
+                new PurchaseOrderLine { RawMaterialId = rms[1].Id, SupplierId = supps[2].Id, UnitPrice= 30, Quantity = 96, UnitOfMeasure = "kg", LeadTime = 1}
             };
             po.Lines = poLines;
 

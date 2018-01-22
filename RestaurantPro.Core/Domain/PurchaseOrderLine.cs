@@ -14,6 +14,8 @@
 
         public string UnitOfMeasure { get; set; }
 
+        public int? LeadTime { get; set; }
+
         #region Equals
 
         protected bool Equals(PurchaseOrderLine other)

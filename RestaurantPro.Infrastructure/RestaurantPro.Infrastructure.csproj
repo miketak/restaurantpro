@@ -115,6 +115,10 @@
     <Compile Include="Migrations\201801221410087_InventoryTransactionsTable.Designer.cs">
       <DependentUpon>201801221410087_InventoryTransactionsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801221638188_AddLeadTimeToPurchaseOrderLines.cs" />
+    <Compile Include="Migrations\201801221638188_AddLeadTimeToPurchaseOrderLines.Designer.cs">
+      <DependentUpon>201801221638188_AddLeadTimeToPurchaseOrderLines.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\InventoryRepository.cs" />
@@ -189,6 +193,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201801221410087_InventoryTransactionsTable.resx">
       <DependentUpon>201801221410087_InventoryTransactionsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801221638188_AddLeadTimeToPurchaseOrderLines.resx">
+      <DependentUpon>201801221638188_AddLeadTimeToPurchaseOrderLines.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
