@@ -64,6 +64,36 @@ namespace RestaurantPro.Infrastructure.Services
             InventoryTransactions.AddWorkCycleTransactions(oldPurchaseOrder.WorkCycleId, user);
 
             AssignLocationInWorkCycles(oldPurchaseOrder.WorkCycleId, newPurchaseOrderTransactions.ToList());
+
+            AddOrUpdateItemsToStock(newPurchaseOrderTransactions);
+        }
+
+        private void AddOrUpdateItemsToStock(IEnumerable<PurchaseOrderTransaction> newPurchaseOrderTransactions)
+        {
+            if (newPurchaseOrderTransactions == null) throw new ArgumentNullException("newPurchaseOrderTransactions");
+
+            foreach (var transaction in newPurchaseOrderTransactions.ToList())
+            {
+                var rawMaterialInDb =
+                    _unitOfWork.Inventory.SingleOrDefault(r => r.RawMaterialId == transaction.RawMaterialId);
+
+                if (rawMaterialInDb == null)
+                {
+                    _unitOfWork.Inventory.Add(new Inventory
+                    {
+                        RawMaterialId = transaction.RawMaterialId,
+                        InitialQuantity = transaction.QuantityReceived,
+                        CurrentQuantity = transaction.QuantityReceived
+                    });
+                    _unitOfWork.Complete();
+                }
+                else
+                {
+                    rawMaterialInDb.InitialQuantity += transaction.QuantityReceived;
+                    rawMaterialInDb.CurrentQuantity += transaction.QuantityReceived;
+                    _unitOfWork.Complete();
+                }
+            }
         }
 
         #region Confirm Cycle Helper Methods

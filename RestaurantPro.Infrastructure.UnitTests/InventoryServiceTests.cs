@@ -68,7 +68,7 @@ namespace RestaurantPro.Infrastructure.UnitTests
 
         private void GeneratePurchaseOrder()
         {
-            var poId = _unitOfWork.PurchaseOrders.GetAll().ToArray()[2].Id;
+            var poId = _unitOfWork.PurchaseOrders.GetAll().ToArray()[0].Id;
 
             if (poId == 0)
                 throw new AssertFailedException("No purchase orders in database");

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -50,6 +51,11 @@ namespace RestaurantPro.Infrastructure.Repositories
         public void Add(TEntity entity)
         {
             Context.Set<TEntity>().Add(entity);
+        }
+
+        public void AddOrUpdate(Expression<Func<TEntity, object>> expression)
+        {
+            Context.Set<TEntity>().AddOrUpdate(expression);
         }
 
         public void AddRange(IEnumerable<TEntity> entities)

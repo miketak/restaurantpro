@@ -27,6 +27,7 @@ namespace RestaurantPro.Infrastructure
             PurchaseOrderTransactions = new PurchaseOrderTransactionRepository(_context);
             WorkCycleTransactions = new WorkCycleTransactionRepository(_context);
             WorkCyclesLines = new WorkCycleLineRepository(_context);
+            Inventory = new InventoryRepository(_context);
         }
 
         public IUserRepository Users { get; private set; }
@@ -43,6 +44,7 @@ namespace RestaurantPro.Infrastructure
         public IPurchaseOrderTransactionRepository PurchaseOrderTransactions { get; private set; }
         public IWorkCycleTransactionRepository WorkCycleTransactions { get; private set; }
         public IWorkCycleLineRepository WorkCyclesLines { get; set; }
+        public IInventoryRepository Inventory { get; private set; }
 
 
         public int Complete()

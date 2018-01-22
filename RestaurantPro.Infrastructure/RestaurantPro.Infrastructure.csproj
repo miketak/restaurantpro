@@ -117,6 +117,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\InventoryRepository.cs" />
     <Compile Include="Repositories\InventorySettingsRepository.cs" />
     <Compile Include="Repositories\LocationRepository.cs" />
     <Compile Include="Repositories\PurchaseOrderRepository.cs" />
@@ -133,6 +134,7 @@
     <Compile Include="Repositories\WorkCycleTransactionRepository.cs" />
     <Compile Include="RestProContext.cs" />
     <Compile Include="Services\InventoryService.cs" />
+    <Compile Include="Services\InventoryTransactions.cs" />
     <Compile Include="Services\RestProService.cs" />
     <Compile Include="Services\RestProServiceBase.cs" />
     <Compile Include="Services\UserAuthenticationService.cs" />

@@ -23,5 +23,7 @@ namespace RestaurantPro.Core.Repositories
 
         void DetachEntity(TEntity entity);
 
+        void AddOrUpdate(Expression<Func<TEntity, object>> expression);
+
     }
 }
