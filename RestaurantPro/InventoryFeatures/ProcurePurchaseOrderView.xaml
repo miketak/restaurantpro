@@ -323,7 +323,7 @@
 					Grid.Column="0"
 					Content="Filters" />
 				<ComboBox x:Name="Status"
-					SelectedItem="{Binding FilterCategories, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1"/>
+					ItemsSource="{Binding FilterCategories}" Grid.Row="1"/>
 				<ListBox x:Name="ListBox"
 					ItemsSource="{Binding FilterValues, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3"/>
 			</Grid>
@@ -350,8 +350,7 @@
 					Grid.Column="0"
 					Grid.Row="1"
 					Content="Location" VerticalAlignment="Center"/>
-				<ComboBox x:Name="Location"
-					SelectedValue="{Binding LocationId, ValidatesOnNotifyDataErrors=True}" 
+				<ComboBox x:Name="Location" ItemsSource="{Binding Locations}"
 					Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Height="25"/>                
 				
 				<Label

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using MahApps.Metro.Controls.Dialogs;
 using RestaurantPro.Core;
+using RestaurantPro.Core.Domain;
 using RestaurantPro.Models;
 
 namespace RestaurantPro.InventoryFeatures
@@ -14,6 +17,9 @@ namespace RestaurantPro.InventoryFeatures
         {
             _unitOfWork = unitOfWork;
             dialogCoordinator = instance;
+            SetLocations();
+            SetFilterCategories();
+            SetDateReceived();
 
             BackToInventoryCommand = new RelayCommand(OnBackToInventoryInventoryClick);
             LogoutCommand = new RelayCommand(OnLogout);
@@ -30,6 +36,27 @@ namespace RestaurantPro.InventoryFeatures
             set { SetProperty(ref _currentUser, value); }
         }
 
+        private List<string> _locations;
+        public List<string> Locations
+        {
+            get { return _locations; }
+            set { _locations = value; }
+        }
+
+        private List<string> _filterCategories;
+        public List<string> FilterCategories
+        {
+            get { return _filterCategories; }
+            set { _filterCategories = value; }
+        }
+
+        private DateTime _dateReceived;
+        public DateTime DateReceived
+        {
+            get { return _dateReceived; }
+            set { _dateReceived = value; }
+        }
+
         #endregion
 
         #region Initialization Methods
@@ -37,6 +64,29 @@ namespace RestaurantPro.InventoryFeatures
         public void SetCurrentUser(WpfUser user)
         {
             CurrentUser = user;
+        }
+
+        private void SetLocations()
+        {
+            var locationsInDb = _unitOfWork.Locations.GetAll().ToList();
+            var locs = locationsInDb.Select(a => a.LocationId).ToList();
+            Locations = locs;
+        }
+
+        private void SetFilterCategories()
+        {
+            var filterCategories = new List<string>
+            {
+                "Work Cycle",
+                "Purchase Order",
+                "Supplier"
+            };
+            FilterCategories = filterCategories;
+        }
+
+        private void SetDateReceived()
+        {
+            DateReceived = DateTime.Now;
         }
 
         #endregion
