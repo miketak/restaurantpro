@@ -230,7 +230,7 @@
 
 		</Grid>
 
-		<!--Add/Edit Controls-->
+		<!--Procure/Cancel Controls-->
 		<Grid x:Name="AddEditFormControls"
 			Grid.Column="1"
 			Grid.Row="7" Margin="0">
@@ -242,7 +242,7 @@
 
 			<!--Procure Command-->
 			<Button Content="Procure"
-				Command="{Binding ProcureCommand}"
+				Command="{Binding SubmitProcurementCommand}"
 				Style="{StaticResource AccentedSquareButtonStyle}" 
 				Foreground="{DynamicResource MainForeground}" Background="White" BorderBrush="Orange" HorizontalAlignment="Right" 
 				VerticalAlignment="Top"

@@ -29,6 +29,7 @@ namespace RestaurantPro.InventoryFeatures
             LogoutCommand = new RelayCommand(OnLogout);
             BackHomeCommand = new RelayCommand(OnHomeClick);
             ProcureCommand = new RelayCommand<ProcurementItem>(OnProcureClick);
+            SubmitProcurementCommand = new RelayCommand(OnSubmitProcurementClick);
         }
 
         #region Object Bindings
@@ -136,6 +137,7 @@ namespace RestaurantPro.InventoryFeatures
             };
             PendingItems = pds;
         }
+
         #endregion
 
         #region Events
@@ -158,6 +160,8 @@ namespace RestaurantPro.InventoryFeatures
         public RelayCommand BackHomeCommand { get; private set; }
 
         public RelayCommand<ProcurementItem> ProcureCommand { get; private set; }
+
+        public RelayCommand SubmitProcurementCommand { get; private set; }
 
         #endregion
 
@@ -234,6 +238,10 @@ namespace RestaurantPro.InventoryFeatures
             return a.RawMaterialId == b.RawMaterialId && a.SupplierId == b.SupplierId && a.WorkCycleId == b.WorkCycleId && a.PurchaseOrderId == b.PurchaseOrderId;
         }
 
+        private void OnSubmitProcurementClick()
+        {
+            MessageBox.Show("yep I'm live");
+        }
         #endregion
 
     }
