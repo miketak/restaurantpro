@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using MahApps.Metro.Controls.Dialogs;
 using RestaurantPro.Core;
 using RestaurantPro.Core.Domain;
+using RestaurantPro.Infrastructure;
 using RestaurantPro.Models;
 
 namespace RestaurantPro.InventoryFeatures
@@ -20,11 +23,12 @@ namespace RestaurantPro.InventoryFeatures
             SetLocations();
             SetFilterCategories();
             SetDateReceived();
+            LoadPendingItems();
 
             BackToInventoryCommand = new RelayCommand(OnBackToInventoryInventoryClick);
             LogoutCommand = new RelayCommand(OnLogout);
             BackHomeCommand = new RelayCommand(OnHomeClick);
-
+            ProcureCommand = new RelayCommand<ProcurementItem>(OnProcureClick);
         }
 
         #region Object Bindings
@@ -54,7 +58,21 @@ namespace RestaurantPro.InventoryFeatures
         public DateTime DateReceived
         {
             get { return _dateReceived; }
-            set { _dateReceived = value; }
+            set { SetProperty( ref _dateReceived, value); }
+        }
+
+        private BindingList<ProcurementItem> _pendingItems;
+        public BindingList<ProcurementItem> PendingItems
+        {
+            get { return _pendingItems; }
+            set { SetProperty(ref _pendingItems, value); }
+        }
+
+        private BindingList<ProcurementItem> _procurementSummary;
+        public BindingList<ProcurementItem> ProcurementSummary
+        {
+            get { return _procurementSummary; }
+            set { SetProperty(ref _procurementSummary, value); }
         }
 
         #endregion
@@ -89,6 +107,35 @@ namespace RestaurantPro.InventoryFeatures
             DateReceived = DateTime.Now;
         }
 
+        private void LoadPendingItems()
+        {
+            var pds = new BindingList<ProcurementItem>
+            {
+                new ProcurementItem
+                {
+                    RawMaterialId = 1,
+                    SupplierId = 1,
+                    PurchaseOrderId = 1,
+                    WorkCycleId = 1,
+                    OrderedQuantity = 20,
+                    PendingQuantity = 20,
+                    TotalValue = 100,
+
+                },                
+                new ProcurementItem
+                {
+                    RawMaterialId = 2,
+                    SupplierId = 2,
+                    PurchaseOrderId = 1,
+                    WorkCycleId = 1,
+                    OrderedQuantity = 25,
+                    PendingQuantity = 25,
+                    TotalValue = 50
+
+                }
+            };
+            PendingItems = pds;
+        }
         #endregion
 
         #region Events
@@ -110,9 +157,7 @@ namespace RestaurantPro.InventoryFeatures
 
         public RelayCommand BackHomeCommand { get; private set; }
 
-        public RelayCommand SaveCommand { get; private set; }
-
-        public RelayCommand<WpfRawMaterialCategory> DeleteCommand { get; private set; }
+        public RelayCommand<ProcurementItem> ProcureCommand { get; private set; }
 
         #endregion
 
@@ -132,6 +177,61 @@ namespace RestaurantPro.InventoryFeatures
         private void OnHomeClick()
         {
             HomeViewRequested(CurrentUser);
+        }
+
+        private void OnProcureClick(ProcurementItem procurementItemFromView)
+        {
+            if (ProcurementSummary == null)
+                ProcurementSummary = new BindingList<ProcurementItem>();
+
+            var isExist = false;
+            foreach (var a in ProcurementSummary)
+            {
+                if (isProcurementItemandPendingItemSame(procurementItemFromView, a))
+                {
+                    a.ReceivedQuantity += procurementItemFromView.ReceivedQuantity;
+                    isExist = true;
+                }
+            }
+
+            if (!isExist)
+            {
+                ProcurementSummary.Add(new ProcurementItem
+                {
+                    RawMaterialId = procurementItemFromView.RawMaterialId,
+                    SupplierId = procurementItemFromView.SupplierId,
+                    WorkCycleId = procurementItemFromView.WorkCycleId,
+                    OrderedQuantity = procurementItemFromView.OrderedQuantity,
+                    ReceivedQuantity = procurementItemFromView.ReceivedQuantity,
+                    PurchaseOrderId = procurementItemFromView.PurchaseOrderId,
+                    DateReceived = procurementItemFromView.DateReceived
+                });
+
+                foreach (var a in ProcurementSummary)
+                    a.ReceivedQuantityChanged += AdjustPendingItemsPendingQuantity;
+            }
+
+            foreach (var a in PendingItems)
+            {
+                if (!isProcurementItemandPendingItemSame(a, procurementItemFromView)) continue;
+                a.ReceivedQuantityAdjustment = a.ReceivedQuantity;
+                a.ReceivedQuantity = 0;
+            }
+        }     
+        
+        private void AdjustPendingItemsPendingQuantity(ProcurementItem summaryItem)
+        {
+                foreach (var b in PendingItems)
+                {
+                    if (!isProcurementItemandPendingItemSame(summaryItem, b)) continue;
+                    b.ReceivedQuantityAdjustment = summaryItem.ReceivedQuantity;
+                    return;
+                }
+        }
+
+        private static bool isProcurementItemandPendingItemSame(ProcurementItem a, ProcurementItem b)
+        {
+            return a.RawMaterialId == b.RawMaterialId && a.SupplierId == b.SupplierId && a.WorkCycleId == b.WorkCycleId && a.PurchaseOrderId == b.PurchaseOrderId;
         }
 
         #endregion

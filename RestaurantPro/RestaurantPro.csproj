@@ -201,6 +201,7 @@
     <Compile Include="Login\LoginViewModel.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Models\InventorySettings.cs" />
+    <Compile Include="Models\ProcurementItem.cs" />
     <Compile Include="Models\RestproMapper.cs" />
     <Compile Include="Models\WpfLocation.cs" />
     <Compile Include="Models\WpfPurchaseOrder.cs" />
