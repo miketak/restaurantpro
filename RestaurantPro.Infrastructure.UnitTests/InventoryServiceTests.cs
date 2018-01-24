@@ -66,6 +66,14 @@ namespace RestaurantPro.Infrastructure.UnitTests
             _services.InventoryService.ProcurePurchaseOrder(_purchaseOrder, poTransaction, _user);
         }
 
+        [TestMethod]
+        public void GetPurchaseOrderInformationTest()
+        {
+            var pois = _services.InventoryService.GetPurchaseOrderInformation();
+        }
+
+
+
         private void GeneratePurchaseOrder()
         {
             var poId = _unitOfWork.PurchaseOrders.GetAll().ToArray()[2].Id;

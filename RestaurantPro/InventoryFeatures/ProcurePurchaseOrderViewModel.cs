@@ -119,7 +119,7 @@ namespace RestaurantPro.InventoryFeatures
 
             var pds = RestproMapper.MapPurchaseOrderInformationListToProcurementItemList(poInfo);
 
-            PendingItems = new BindingList<ProcurementItem>(pds);
+            PendingItems = new BindingList<ProcurementItem>(pds); 
         }
 
         #endregion

@@ -71,6 +71,24 @@ namespace RestaurantPro.Infrastructure.Services
 
         public IEnumerable<PurchaseOrderInformation> GetPurchaseOrderInformation()
         {
+            var poNumbers = _unitOfWork.PurchaseOrders.GetAll()
+                .Where(a => a.Active)
+                .Where(p => p.StatusId != PurchaseOrderStatus.Closed.ToString())
+                .Select(p => p.PurchaseOrderNumber)
+                .ToList();
+
+            var purchaseOrders = poNumbers
+                .Select(poNumber => _unitOfWork.PurchaseOrders.GetPurchaseOrderByPurchaseOrderNumber(poNumber, true)).ToList();
+
+            var purchaseOrderInformationEntities = purchaseOrders
+                .Select(purchaseOrder => new PurchaseOrderInformation
+                {
+                    PurchaseOrderId = purchaseOrder.Id,
+
+                })
+                .ToList();
+
+
             var pds = new List<PurchaseOrderInformation>
             {
                 new PurchaseOrderInformation
