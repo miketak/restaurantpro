@@ -6,6 +6,7 @@ using System.Windows;
 using MahApps.Metro.Controls.Dialogs;
 using RestaurantPro.Core;
 using RestaurantPro.Core.Domain;
+using RestaurantPro.Core.Services;
 using RestaurantPro.Infrastructure;
 using RestaurantPro.Models;
 
@@ -15,11 +16,15 @@ namespace RestaurantPro.InventoryFeatures
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IDialogCoordinator dialogCoordinator;
+        private readonly IInventoryService _inventoryService;
 
-        public ProcurePurchaseOrderViewModel(IUnitOfWork unitOfWork, IDialogCoordinator instance)
+
+        public ProcurePurchaseOrderViewModel(IUnitOfWork unitOfWork, IDialogCoordinator instance, IInventoryService inventoryService)
         {
             _unitOfWork = unitOfWork;
             dialogCoordinator = instance;
+            _inventoryService = inventoryService;
+
             SetLocations();
             SetFilterCategories();
             SetDateReceived();
@@ -110,32 +115,11 @@ namespace RestaurantPro.InventoryFeatures
 
         private void LoadPendingItems()
         {
-            var pds = new BindingList<ProcurementItem>
-            {
-                new ProcurementItem
-                {
-                    RawMaterialId = 1,
-                    SupplierId = 1,
-                    PurchaseOrderId = 1,
-                    WorkCycleId = 1,
-                    OrderedQuantity = 20,
-                    PendingQuantity = 20,
-                    TotalValue = 100,
+            var poInfo = _inventoryService.GetPurchaseOrderInformation();
 
-                },                
-                new ProcurementItem
-                {
-                    RawMaterialId = 2,
-                    SupplierId = 2,
-                    PurchaseOrderId = 1,
-                    WorkCycleId = 1,
-                    OrderedQuantity = 25,
-                    PendingQuantity = 25,
-                    TotalValue = 50
+            var pds = RestproMapper.MapPurchaseOrderInformationListToProcurementItemList(poInfo);
 
-                }
-            };
-            PendingItems = pds;
+            PendingItems = new BindingList<ProcurementItem>(pds);
         }
 
         #endregion

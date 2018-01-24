@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using RestaurantPro.Core;
 using RestaurantPro.Core.Domain;
@@ -67,6 +68,37 @@ namespace RestaurantPro.Infrastructure.Services
 
             InventoryTransactionsService.AddInventoryTransactions(TransformToITL(newPurchaseOrderTransactions.ToList()), _user);
         }
+
+        public IEnumerable<PurchaseOrderInformation> GetPurchaseOrderInformation()
+        {
+            var pds = new List<PurchaseOrderInformation>
+            {
+                new PurchaseOrderInformation
+                {
+                    RawMaterialId = 1,
+                    SupplierId = 1,
+                    PurchaseOrderId = 1,
+                    WorkCycleId = 1,
+                    OrderedQuantity = 20,
+                    PendingQuantity = 20,
+                    TotalValue = 100,
+                }
+                ,                
+                new PurchaseOrderInformation
+                {
+                    RawMaterialId = 2,
+                    SupplierId = 2,
+                    PurchaseOrderId = 1,
+                    WorkCycleId = 1,
+                    OrderedQuantity = 25,
+                    PendingQuantity = 25,
+                    TotalValue = 50
+
+                }
+            };
+            return pds;
+        }
+
 
         private void AddOrUpdateItemsToStock(IEnumerable<PurchaseOrderTransaction> newPurchaseOrderTransactions)
         {

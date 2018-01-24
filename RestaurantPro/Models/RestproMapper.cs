@@ -420,6 +420,50 @@ namespace RestaurantPro.Models
 
         #endregion
 
+        #region Purchase Order and Procurement Mappings
+
+
+        internal static ProcurementItem MapPurchaseOrderInformationToProcurementItem(PurchaseOrderInformation source)
+        {
+            var config = new MapperConfiguration(cfg =>
+                cfg.CreateMap<PurchaseOrderInformation, ProcurementItem>()
+                    .ForMember(dest => dest.RawMaterial, opt => opt.Ignore())
+                    .ForMember(dest => dest.Supplier, opt => opt.Ignore())
+                    .ForMember(dest => dest.WorkCycle, opt => opt.Ignore())
+                    .ForMember(dest => dest.PurchaseOrderNumber, opt => opt.Ignore())
+                    .ForMember(dest => dest.ReceivedQuantityAdjustment, opt => opt.Ignore()));
+
+            var iMapper = config.CreateMapper();
+
+            var target = iMapper.Map<PurchaseOrderInformation, ProcurementItem>(source);
+
+            return target;
+        }
+
+        internal static PurchaseOrderInformation MapProcurementItemToPurchaseOrderInformation(ProcurementItem source)
+        {
+            var config = new MapperConfiguration(cfg =>
+                cfg.CreateMap<ProcurementItem, PurchaseOrderInformation>());
+            var iMapper = config.CreateMapper();
+
+            var target = iMapper.Map<ProcurementItem, PurchaseOrderInformation>(source);
+
+            return target;
+        }
+
+
+        public static List<ProcurementItem> MapPurchaseOrderInformationListToProcurementItemList(IEnumerable<PurchaseOrderInformation> source)
+        {
+            return source.Select(MapPurchaseOrderInformationToProcurementItem).ToList();
+        }
+
+        public static List<PurchaseOrderInformation> MapProcurementItemListToPurchaseOrderInformationList(IEnumerable<ProcurementItem> source)
+        {
+            return source.Select(MapProcurementItemToPurchaseOrderInformation).ToList();
+        }
+
+        #endregion
+
 
     }
 }

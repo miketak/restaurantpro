@@ -29,24 +29,24 @@ namespace RestaurantPro
     {
         private BindableBase _CurrentViewModel;
 
-        private LoginViewModel _loginViewModel;
-        private HomeDashboardViewModel _homeDashboardViewModel;
-        private InventoryDashboardViewModel _inventoryDashboardViewModel;
-        private WorkCycleListViewModel _workCycleListViewModel;
-        private AddEditWorkingCycleViewModel _addEditWorkingCycleViewModel;
-        private PurchaseOrderListViewModel _purchaseOrderListViewModel;
-        private AddEditPurchaseOrderViewModel _addEditPurchaseOrderListViewModel;
-        private SupplierListViewModel _supplierListViewModel;
-        private RawMaterialListViewModel _rawMaterialListViewModel;
-        private RawMaterialCategoryListViewModel _rawMaterialCategoryListViewModel;
-        private LocationListViewModel _locationListViewModel;
-        private InventorySettingViewModel _inventorySettingViewModel;
-        private ProcurePurchaseOrderViewModel _procurePurchaseOrderViewModel;
+        private readonly LoginViewModel _loginViewModel;
+        private readonly HomeDashboardViewModel _homeDashboardViewModel;
+        private readonly InventoryDashboardViewModel _inventoryDashboardViewModel;
+        private readonly WorkCycleListViewModel _workCycleListViewModel;
+        private readonly AddEditWorkingCycleViewModel _addEditWorkingCycleViewModel;
+        private readonly PurchaseOrderListViewModel _purchaseOrderListViewModel;
+        private readonly AddEditPurchaseOrderViewModel _addEditPurchaseOrderListViewModel;
+        private readonly SupplierListViewModel _supplierListViewModel;
+        private readonly RawMaterialListViewModel _rawMaterialListViewModel;
+        private readonly RawMaterialCategoryListViewModel _rawMaterialCategoryListViewModel;
+        private readonly LocationListViewModel _locationListViewModel;
+        private readonly InventorySettingViewModel _inventorySettingViewModel;
+        private readonly ProcurePurchaseOrderViewModel _procurePurchaseOrderViewModel;
 
         /// <summary>
         /// Constructor to subscription of events for overall program navigation.
         /// </summary>
-        public MainWindowViewModel(IUnitOfWork unitOfWork)
+        public MainWindowViewModel(IUnitOfWork unitOfWork, IInventoryService inventoryService)
         {
             NavCommand = new RelayCommand<string>(OnNav);
 
@@ -63,7 +63,7 @@ namespace RestaurantPro
             _rawMaterialCategoryListViewModel = new RawMaterialCategoryListViewModel(unitOfWork, DialogCoordinator.Instance);
             _locationListViewModel = new LocationListViewModel(unitOfWork, DialogCoordinator.Instance);
             _inventorySettingViewModel = new InventorySettingViewModel(unitOfWork, DialogCoordinator.Instance);
-            _procurePurchaseOrderViewModel = new ProcurePurchaseOrderViewModel(unitOfWork, DialogCoordinator.Instance);
+            _procurePurchaseOrderViewModel = new ProcurePurchaseOrderViewModel(unitOfWork, DialogCoordinator.Instance, inventoryService);
 
             //Set Login context
             SetLoginContext();

@@ -25,8 +25,10 @@ namespace RestaurantPro
 
             IUnityContainer container = new UnityContainer();
             container.RegisterType<IUnitOfWork, UnitOfWork>();
+            container.RegisterType<IInventoryService, InventoryService>();
 
             var mainWindowViewModel = container.Resolve<MainWindowViewModel>();
+
             var window = new MainWindow{DataContext = mainWindowViewModel};
             window.Show();
 

@@ -69,7 +69,7 @@
 		</StackPanel>
 
 		<!--Pending Items DataGrid-->
-        <Grid x:Name="PendingItemsGrid" Grid.Column="1" Margin="0" Grid.Row="3">
+		<Grid x:Name="PendingItemsGrid" Grid.Column="1" Margin="0" Grid.Row="3">
 			<Grid.RowDefinitions>
 				<RowDefinition/>
 				<RowDefinition/>
@@ -165,7 +165,7 @@
 		</Grid>
 		
 		<!--Procurement Summary Items DataGrid-->
-        <Grid x:Name="ItemsToProcureDataGrid" Grid.Column="1" Margin="0" Grid.Row="5">
+		<Grid x:Name="ItemsToProcureDataGrid" Grid.Column="1" Margin="0" Grid.Row="5">
 			<Grid.RowDefinitions>
 				<RowDefinition/>
 				<RowDefinition Height="0*"/>

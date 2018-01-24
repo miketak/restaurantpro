@@ -46,6 +46,7 @@
     <Compile Include="Domain\Location.cs" />
     <Compile Include="Domain\PoStatus.cs" />
     <Compile Include="Domain\PurchaseOrder.cs" />
+    <Compile Include="Domain\PurchaseOrderInformation.cs" />
     <Compile Include="Domain\PurchaseOrderLine.cs" />
     <Compile Include="Domain\PurchaseOrderTransaction.cs" />
     <Compile Include="Domain\RawMaterial.cs" />
