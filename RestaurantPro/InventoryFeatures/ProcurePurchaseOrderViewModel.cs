@@ -169,6 +169,8 @@ namespace RestaurantPro.InventoryFeatures
 
         private void OnProcureClick(ProcurementItem procurementItemFromView)
         {
+            if (Math.Abs(procurementItemFromView.ReceivedQuantity) < 0.001) return;
+
             if (ProcurementSummary == null)
                 ProcurementSummary = new BindingList<ProcurementItem>();
 
@@ -202,7 +204,8 @@ namespace RestaurantPro.InventoryFeatures
             foreach (var a in PendingItems)
             {
                 if (!isProcurementItemandPendingItemSame(a, procurementItemFromView)) continue;
-                a.ReceivedQuantityAdjustment = a.ReceivedQuantity;
+                if (!isExist)
+                    a.ReceivedQuantityAdjustment = a.ReceivedQuantity;
                 a.ReceivedQuantity = 0;
             }
         }     

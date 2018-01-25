@@ -117,7 +117,6 @@ namespace RestaurantPro.Infrastructure.Services
             return pds;
         }
 
-
         private void AddOrUpdateItemsToStock(IEnumerable<PurchaseOrderTransaction> newPurchaseOrderTransactions)
         {
             if (newPurchaseOrderTransactions == null) throw new ArgumentNullException("newPurchaseOrderTransactions");
