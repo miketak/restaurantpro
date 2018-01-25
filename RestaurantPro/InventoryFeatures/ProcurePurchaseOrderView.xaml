@@ -124,10 +124,10 @@
 				<DataGrid.Columns>
 					<DataGridTextColumn Binding="{Binding RawMaterial, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Raw Material" Width="*"/>
 					<DataGridTextColumn Binding="{Binding Supplier, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Supplier" Width="*"/>
-					<DataGridTextColumn Binding="{Binding OrderedQuantity, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Ordered Quantity" Width="*"/>
-					<DataGridTextColumn Binding="{Binding PendingQuantity, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Pending Quantity" Width="*"/>
-					<DataGridTextColumn Binding="{Binding TotalValue, StringFormat='{}{0:c}', UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Value" Width="*"/>
-					<DataGridTextColumn Binding="{Binding ReceivedQuantity, UpdateSourceTrigger=PropertyChanged}" Header="Received Quantity" Width="*"/>
+					<DataGridTextColumn Binding="{Binding OrderedQuantity, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Ordered Quantity" Width="Auto"/>
+					<DataGridTextColumn Binding="{Binding PendingQuantity, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Pending Quantity" Width="Auto"/>
+					<DataGridTextColumn Binding="{Binding TotalValue, StringFormat='{}{0:c}', UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Value" Width="Auto"/>
+					<DataGridTextColumn Binding="{Binding ReceivedQuantity, UpdateSourceTrigger=PropertyChanged}" Header="Received Quantity" Width="Auto"/>
 
 					<!--Procure Button Template-->
 					<DataGridTemplateColumn Width="80" MinWidth="80" MaxWidth="80">
@@ -220,11 +220,11 @@
 				<DataGrid.Columns>
 					<DataGridTextColumn Binding="{Binding RawMaterial, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Raw Material" Width="*"/>
 					<DataGridTextColumn Binding="{Binding Supplier, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Supplier" Width="*"/>
-					<DataGridTextColumn Binding="{Binding WorkCycle, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Work Cycle" Width="*"/>
-					<DataGridTextColumn Binding="{Binding PurchaseOrderNumber, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Purchase Order No." Width="*"/>
-					<DataGridTextColumn Binding="{Binding ReceivedQuantity, UpdateSourceTrigger=PropertyChanged}" Header="Received Quantity" Width="*"/>
-					<DataGridTextColumn Binding="{Binding DeliveredBy, UpdateSourceTrigger=PropertyChanged}" Header="Delivered By" Width="*"/>
-					<DataGridTextColumn Binding="{Binding DateReceived, UpdateSourceTrigger=PropertyChanged}" Header="Date Received" Width="*"/> <!-- will change to selector -->
+					<DataGridTextColumn Binding="{Binding WorkCycle, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Work Cycle" Width="Auto"/>
+					<DataGridTextColumn Binding="{Binding PurchaseOrderNumber, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Purchase Order No." Width="Auto"/>
+					<DataGridTextColumn Binding="{Binding ReceivedQuantity, UpdateSourceTrigger=PropertyChanged}" Header="Received Quantity" Width="Auto"/>
+					<DataGridTextColumn Binding="{Binding DeliveredBy, UpdateSourceTrigger=PropertyChanged}" Header="Delivered By" Width="Auto"/>
+					<DataGridTextColumn Binding="{Binding DateReceived, UpdateSourceTrigger=PropertyChanged}" Header="Date Received" Width="Auto"/> <!-- will change to selector -->
 				</DataGrid.Columns>
 			</DataGrid>
 

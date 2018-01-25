@@ -80,41 +80,38 @@ namespace RestaurantPro.Infrastructure.Services
             var purchaseOrders = poNumbers
                 .Select(poNumber => _unitOfWork.PurchaseOrders.GetPurchaseOrderByPurchaseOrderNumber(poNumber, true)).ToList();
 
-            var purchaseOrderInformationEntities = purchaseOrders
-                .Select(purchaseOrder => new PurchaseOrderInformation
-                {
-                    PurchaseOrderId = purchaseOrder.Id,
+            var purchaseOrderInformationEntities = new List<PurchaseOrderInformation>();
 
-                })
-                .ToList();
-
-
-            var pds = new List<PurchaseOrderInformation>
+            foreach (var purchaseOrder in purchaseOrders)
             {
-                new PurchaseOrderInformation
+                purchaseOrderInformationEntities.AddRange(purchaseOrder.PurchaseOrderLines
+                    .Select(line => new PurchaseOrderInformation
                 {
-                    RawMaterialId = 1,
-                    SupplierId = 1,
-                    PurchaseOrderId = 1,
-                    WorkCycleId = 1,
-                    OrderedQuantity = 20,
-                    PendingQuantity = 20,
-                    TotalValue = 100,
-                }
-                ,                
-                new PurchaseOrderInformation
-                {
-                    RawMaterialId = 2,
-                    SupplierId = 2,
-                    PurchaseOrderId = 1,
-                    WorkCycleId = 1,
-                    OrderedQuantity = 25,
-                    PendingQuantity = 25,
-                    TotalValue = 50
+                    RawMaterialId = line.RawMaterialId,
+                    SupplierId = line.SupplierId,
+                    PurchaseOrderId = line.PurchaseOrderId,
+                    WorkCycleId = purchaseOrder.WorkCycleId ?? 0,
+                    OrderedQuantity = line.Quantity,
+                    PendingQuantity = CalculatePurchaseOrderItemPendingQuantity(line),
+                    TotalValue = (decimal) line.UnitPrice * (decimal) line.Quantity
+                }));
+            }
 
-                }
-            };
-            return pds;
+            return purchaseOrderInformationEntities;
+        }
+
+        private double CalculatePurchaseOrderItemPendingQuantity(PurchaseOrderLine line)
+        {
+            var quantityReceivedAlready = _unitOfWork.PurchaseOrderTransactions.GetAll()
+                .Where(p => p.PurchaseOrderId == line.PurchaseOrderId &&
+                            p.RawMaterialId == line.RawMaterialId &&
+                            p.SupplierId == line.SupplierId)
+                .Select(p => p.QuantityReceived)
+                .Sum();
+
+            var pendingQuantity = line.Quantity - quantityReceivedAlready;
+
+            return pendingQuantity;
         }
 
         private void AddOrUpdateItemsToStock(IEnumerable<PurchaseOrderTransaction> newPurchaseOrderTransactions)
