@@ -11,17 +11,104 @@ namespace RestaurantPro.Infrastructure.UnitTests
     public class PurchaserOrderRepositoryTests
     {
         private readonly IUnitOfWork _unitOfWork;
-        private const string PurchaseOrderNumber = "100";
-        private const string PurchaseOrderNumber2 = "101";
-
-
+        private const string FirstTestPurchaseOrderNumber = "100";
+        private const string SecondTestPurchaseOrderNumber = "101";
+        private const int ExpectedLineCount = 6;
 
         public PurchaserOrderRepositoryTests()
         {
             _unitOfWork = new UnitOfWork(new RestProContext());
         }
 
-        private PurchaseOrder GetPurchaseOrder(string purchaseOrderNumber, bool isActive)
+        [TestMethod]
+        public void AddPurchaseOrderTestWithTrueAndFalseActiveFlag()
+        {
+            //With true active flag
+            AddPurchaseOrderWithLines(FirstTestPurchaseOrderNumber, true);
+
+            //Add with false active flag
+            AddPurchaseOrderWithLines(SecondTestPurchaseOrderNumber, false);
+
+            var firstPurchaseOrderInDb = _unitOfWork.PurchaseOrders.GetPurchaseOrderByPurchaseOrderNumber(FirstTestPurchaseOrderNumber, true);
+            Assert.AreEqual(FirstTestPurchaseOrderNumber, firstPurchaseOrderInDb.PurchaseOrderNumber);
+            Assert.AreEqual(ExpectedLineCount, firstPurchaseOrderInDb.PurchaseOrderLines.Count);
+
+            var secondPurchaseOrderInDb = _unitOfWork.PurchaseOrders.GetPurchaseOrderByPurchaseOrderNumber(SecondTestPurchaseOrderNumber, false);
+            Assert.AreEqual(SecondTestPurchaseOrderNumber, secondPurchaseOrderInDb.PurchaseOrderNumber);
+            Assert.AreEqual(ExpectedLineCount, secondPurchaseOrderInDb.PurchaseOrderLines.Count);
+
+            RemovePurchaseOrder(FirstTestPurchaseOrderNumber);
+            RemovePurchaseOrder(SecondTestPurchaseOrderNumber);
+        }
+
+        [TestMethod]
+        public void GetPurchaseOrderByPurchaseOrderNumberWithTrueActiveFlag()
+        {
+            AddPurchaseOrderWithLines(FirstTestPurchaseOrderNumber, true);
+            var purchaseOrder = _unitOfWork.PurchaseOrders.GetPurchaseOrderByPurchaseOrderNumber(FirstTestPurchaseOrderNumber, true);
+
+            Assert.AreEqual(FirstTestPurchaseOrderNumber, purchaseOrder.PurchaseOrderNumber);
+            Assert.AreEqual(ExpectedLineCount, purchaseOrder.PurchaseOrderLines.Count);
+
+            RemovePurchaseOrder(FirstTestPurchaseOrderNumber);
+        }
+        
+        [TestMethod]
+        public void GetPurchaseOrderByPurchaseOrderNumberWithTrueActiveFlagUsingFalseFlag()
+        {
+            AddPurchaseOrderWithLines(FirstTestPurchaseOrderNumber, true);
+            var purchaseOrder = _unitOfWork.PurchaseOrders.GetPurchaseOrderByPurchaseOrderNumber(FirstTestPurchaseOrderNumber, false);
+
+            Assert.IsNull(purchaseOrder);
+
+            RemovePurchaseOrder(FirstTestPurchaseOrderNumber);
+        }
+
+ 
+
+        [TestMethod]
+        public void GetPurchaseOrderByPurchaseOrderNumberWithTrueActiveFlagUsingTrueFlag()
+        {
+            AddPurchaseOrderWithLines(FirstTestPurchaseOrderNumber, true);
+            var purchaseOrder = _unitOfWork.PurchaseOrders.GetPurchaseOrderByPurchaseOrderNumber(FirstTestPurchaseOrderNumber, true);
+
+            Assert.IsNotNull(purchaseOrder);
+
+            RemovePurchaseOrder(FirstTestPurchaseOrderNumber);
+        }
+
+
+
+
+        [TestMethod]
+        public void GetPurchaseOrderByIdWithTrueActiveFlag()
+        {
+            AddPurchaseOrderWithLines(FirstTestPurchaseOrderNumber, true);
+            var purchaseOrderInDb = _unitOfWork.PurchaseOrders.SingleOrDefault(c => c.PurchaseOrderNumber == FirstTestPurchaseOrderNumber);
+
+            var purchaseOrder = _unitOfWork.PurchaseOrders.GetPurchaseOrderById(purchaseOrderInDb.Id, true);
+
+            Assert.AreEqual(FirstTestPurchaseOrderNumber, purchaseOrder.PurchaseOrderNumber);
+            Assert.AreEqual(ExpectedLineCount, purchaseOrder.PurchaseOrderLines.Count);
+
+            RemovePurchaseOrder(FirstTestPurchaseOrderNumber);
+        }
+
+        private void AddPurchaseOrderWithLines(string poNumber, bool isActive)
+        {
+            var purchaseOrder = GetPurchaseOrderWithLines(poNumber, isActive);
+            _unitOfWork.PurchaseOrders.AddPurchaseOrder(purchaseOrder);
+        }
+
+        private void RemovePurchaseOrder(string purchaseOrderNumber)
+        {
+            var purchaseOrder =
+                _unitOfWork.PurchaseOrders.SingleOrDefault(x => x.PurchaseOrderNumber == purchaseOrderNumber);
+            _unitOfWork.PurchaseOrders.Remove(purchaseOrder);
+            _unitOfWork.Complete();
+        }
+
+        private PurchaseOrder GetPurchaseOrderWithLines(string purchaseOrderNumber, bool isActive)
         {
             var wcs = _unitOfWork.WorkCycles.GetAll().ToArray();
             var supps = _unitOfWork.Suppliers.GetAll().ToArray();
@@ -59,98 +146,6 @@ namespace RestaurantPro.Infrastructure.UnitTests
             po.Lines = poLines;
 
             return po;
-        }
-
-        [TestMethod]
-        public void AddPurchaseOrderTestWithTrueAndFalseActiveFlag()
-        {
-            var checkIfInDatabase = _unitOfWork
-                .PurchaseOrders
-                .SingleOrDefault(x => x.PurchaseOrderNumber == PurchaseOrderNumber);
-
-            if (checkIfInDatabase != null)
-            {
-                Assert.IsNotNull(checkIfInDatabase);
-                return;
-            }
-
-            //With active flag
-            var purchaseOrder = GetPurchaseOrder(PurchaseOrderNumber, true);
-            _unitOfWork.PurchaseOrders.AddPurchaseOrder(purchaseOrder);
-
-            //Add with false active flag
-            purchaseOrder = GetPurchaseOrder(PurchaseOrderNumber2, false);
-            _unitOfWork.PurchaseOrders.AddPurchaseOrder(purchaseOrder);
-
-            Assert.AreEqual(1,1);
-        }
-
-        [TestMethod]
-        public void GetPurchaseOrderByPurchaseOrderNumberWithTrueActiveFlag()
-        {
-            var purchaseOrder = _unitOfWork.PurchaseOrders.GetPurchaseOrderByPurchaseOrderNumber(PurchaseOrderNumber, true);
-
-            const int expectedLineCount = 6;
-
-            Assert.AreEqual(PurchaseOrderNumber, purchaseOrder.PurchaseOrderNumber);
-
-            Assert.AreEqual(expectedLineCount, purchaseOrder.PurchaseOrderLines.Count);
-        }
-        
-        [TestMethod]
-        public void GetPurchaseOrderByPurchaseOrderNumberWithTrueActiveFlagUsingFalseFlag()
-        {
-            var purchaseOrder = _unitOfWork.PurchaseOrders.GetPurchaseOrderByPurchaseOrderNumber(PurchaseOrderNumber, false);
-
-            Assert.IsNull(purchaseOrder);
-        }
-
-        [TestMethod]
-        public void GetPurchaseOrderByPurchaseOrderNumberWithFalseActiveFlag()
-        {
-            var purchaseOrder = _unitOfWork.PurchaseOrders.GetPurchaseOrderByPurchaseOrderNumber(PurchaseOrderNumber2, false);
-
-            if (purchaseOrder == null)
-                throw new AssertFailedException("Wrong active bit behaviour");
-
-            const int expectedLineCount = 6;
-
-            Assert.AreEqual(PurchaseOrderNumber2, purchaseOrder.PurchaseOrderNumber);
-
-            Assert.AreEqual(expectedLineCount, purchaseOrder.PurchaseOrderLines.Count);
-        }
-
-        [TestMethod]
-        public void GetPurchaseOrderByIdWithTrueActiveFlag()
-        {
-            var purchaseOrderInDb =
-                _unitOfWork.PurchaseOrders.SingleOrDefault(c => c.PurchaseOrderNumber == PurchaseOrderNumber);
-
-            const int expectedLineCount = 6;
-
-            var purchaseOrder = _unitOfWork.PurchaseOrders.GetPurchaseOrderById(purchaseOrderInDb.Id, true);
-
-            Assert.AreEqual(PurchaseOrderNumber, purchaseOrder.PurchaseOrderNumber);
-
-            Assert.AreEqual(expectedLineCount, purchaseOrder.PurchaseOrderLines.Count);
-        }
-
-        [TestMethod]
-        public void GetPurchaseOrderByIdWithFalseActiveFlag()
-        {
-            var purchaseOrderInDb =
-                _unitOfWork.PurchaseOrders.SingleOrDefault(c => c.PurchaseOrderNumber == PurchaseOrderNumber2);
-
-            const int expectedLineCount = 6;
-
-            var purchaseOrder = _unitOfWork.PurchaseOrders.GetPurchaseOrderById(purchaseOrderInDb.Id, false);
-
-            if (purchaseOrder == null)
-                throw new AssertFailedException("Wrong active bit behaviour");
-
-            Assert.AreEqual(PurchaseOrderNumber2, purchaseOrder.PurchaseOrderNumber);
-
-            Assert.AreEqual(expectedLineCount, purchaseOrder.PurchaseOrderLines.Count);
         }
 
     }

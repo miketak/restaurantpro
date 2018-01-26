@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RestaurantPro.Core;
 using RestaurantPro.Core.Domain;
 using RestaurantPro.Core.Services;
+using RestaurantPro.Infrastructure.Migrations;
 using RestaurantPro.Infrastructure.Services;
 
 namespace RestaurantPro.Infrastructure.UnitTests
@@ -15,8 +16,12 @@ namespace RestaurantPro.Infrastructure.UnitTests
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRestProService _services;
-        private PurchaseOrder _purchaseOrder;
-        private User _user;
+
+        private string TestPurchaseOrderNumber = "100";
+        private string TestWorkCycleNumber = "Test Cycle 1";
+        private User _user = new User {Id = 1};
+        private int WorkCycleLineCount = 2;
+        private string TestLocationId = "Home Warehouse";
 
         public InventoryServiceTests()
         {
@@ -27,43 +32,71 @@ namespace RestaurantPro.Infrastructure.UnitTests
         [TestMethod]
         public void ConfirmWorkCycle()
         {
-            var user = new User {Id = 1};
-
-            var workCycleId = _unitOfWork.WorkCycles.GetWorkCycles().ToArray()[5].Id;
-            var workCycle = _unitOfWork.WorkCycles.GetWorkCycleById(workCycleId, true);
-            Trace.WriteLine(string.Format("InventoryServiceTestStarted\n" +
-                            "User with Id {0}\n" +
-                            "WorkCycleId = {1} " +
-                            "with {2} lines", user.Id, workCycle.Id, workCycle.WorkCycleLines.Count));
-                            
+            AddTestWorkCycle();
+            var workCycle = GetTestWorkCycle();
+                
             if (workCycle == null)
                 throw new AssertFailedException();
 
-            _services.InventoryService.ConfirmWorkCycle(workCycle.Id, user);
+            _services.InventoryService.ConfirmWorkCycle(workCycle.Id, _user);
+            var transactions = _unitOfWork.WorkCycleTransactions.GetAll().Where(p => p.WorkCycleId == workCycle.Id).ToArray();
+            var purchaseOrderId = _unitOfWork.PurchaseOrders.SingleOrDefault(x => x.WorkCycleId == workCycle.Id).Id;
+            var purchaseOrder = _unitOfWork.PurchaseOrders.GetPurchaseOrderById(purchaseOrderId, true);
 
-            var poId = _unitOfWork.PurchaseOrders.FirstOrDefault(x => x.WorkCycleId == workCycle.Id).Id; //problematic ...make workcycleId unique in db. Regards Mike 1/22/18:12:28
-            var po = _unitOfWork.PurchaseOrders.GetPurchaseOrderById(poId, true);
-            Trace.WriteLine(
-                string.Format("Successful with {0} lines in PurchaseOrder", po.PurchaseOrderLines.Count )
-                );
+            Assert.AreEqual(WorkCycleStatus.Active.ToString(), workCycle.StatusId);
+            Assert.AreEqual(WorkCycleLineCount, transactions.Length);
 
-            Assert.AreEqual(workCycle.WorkCycleLines.Count, po.PurchaseOrderLines.Count);
+            Assert.IsTrue(transactions[0].UsedQuantity < 0);
 
-            //_unitOfWork.PurchaseOrders.Remove(po);
-           // _unitOfWork.Complete();
+            Assert.AreEqual(workCycle.Id, purchaseOrder.WorkCycleId);
+            Assert.AreEqual(PurchaseOrderStatus.New.ToString(), purchaseOrder.StatusId);
+            Assert.AreEqual(workCycle.WorkCycleLines.Count, purchaseOrder.PurchaseOrderLines.Count);
+
+            RemoveTestWorkCycle();
+            _unitOfWork.PurchaseOrders.Remove(purchaseOrder);
+            _unitOfWork.Complete();
         }
 
         [TestMethod]
         public void ProcurePurchaseOrderTest()
         {
-            GeneratePurchaseOrder();
+            AddTestWorkCycle();
+            var workCycle = GetTestWorkCycle();
 
-            _user = new User {Id = 2};
+            if (workCycle == null)
+                throw new AssertFailedException();
 
-            if (_purchaseOrder == null) return;
-            var poTransaction = GetPurchaseOrderTransactions();
+            _services.InventoryService.ConfirmWorkCycle(workCycle.Id, _user);
+            var purchaseOrderId = _unitOfWork.PurchaseOrders.SingleOrDefault(x => x.WorkCycleId == workCycle.Id).Id;
+            var userTransactions = GetFakePurchaseOrderTransactions(purchaseOrderId).ToList();
+            var purchaseOrder = _unitOfWork.PurchaseOrders.GetPurchaseOrderById(purchaseOrderId, true);
 
-            _services.InventoryService.ProcurePurchaseOrder(_purchaseOrder, poTransaction, _user);
+            _services.InventoryService.ProcurePurchaseOrder(purchaseOrder, userTransactions, _user);
+            var purchaseOrderTransactionsInDb = _unitOfWork.PurchaseOrderTransactions
+                .GetAll().Where(p => p.PurchaseOrderId == purchaseOrder.Id).ToArray();
+            var wcTransactionsFromPurchaseOrder = _unitOfWork.WorkCycleTransactions
+                .GetAll().Where(p => p.TrackingNumber == purchaseOrderTransactionsInDb[0].TrackingNumber);
+
+            Assert.AreEqual("In Progress", purchaseOrder.StatusId);
+            Assert.AreEqual(userTransactions.ToArray()[0].QuantityReceived, purchaseOrderTransactionsInDb[0].QuantityReceived);
+            Assert.AreEqual(userTransactions.ToArray()[1].QuantityReceived, purchaseOrderTransactionsInDb[1].QuantityReceived);
+            Assert.AreEqual(wcTransactionsFromPurchaseOrder.ToArray()[0].UsedQuantity, purchaseOrderTransactionsInDb[0].QuantityReceived);
+            Assert.AreEqual(wcTransactionsFromPurchaseOrder.ToArray()[1].UsedQuantity, purchaseOrderTransactionsInDb[1].QuantityReceived);
+
+
+            var workCycleTransactionsNetDifference = _unitOfWork.WorkCycleTransactions.GetAll()
+                .Where(w => w.WorkCycleId == workCycle.Id && w.RawMaterialId == workCycle.WorkCycleLines.ToArray()[0].RawMaterialId)
+                .Select(p => p.UsedQuantity)
+                .Sum();
+
+            Assert.AreEqual(-30, workCycleTransactionsNetDifference);
+            Assert.AreEqual(TestLocationId, workCycle.WorkCycleLines.ToArray()[0].LocationId);
+            Assert.AreEqual(TestLocationId, workCycle.WorkCycleLines.ToArray()[1].LocationId);
+
+            RemoveTestWorkCycle();
+            _unitOfWork.PurchaseOrders.Remove(purchaseOrder);
+            _unitOfWork.Complete();
+
         }
 
         [TestMethod]
@@ -73,36 +106,85 @@ namespace RestaurantPro.Infrastructure.UnitTests
         }
 
 
-
-        private void GeneratePurchaseOrder()
+        private void AddTestWorkCycle()
         {
-            var poId = _unitOfWork.PurchaseOrders.GetAll().ToArray()[2].Id;
-
-            if (poId == 0)
-                throw new AssertFailedException("No purchase orders in database");
-
-            _purchaseOrder = _unitOfWork.PurchaseOrders.GetPurchaseOrderById(poId, true);
-            _purchaseOrder.Lines = new List<PurchaseOrderLine>(_purchaseOrder.PurchaseOrderLines);
-
+            var workCycleToInsert = new WorkCycle
+            {
+                Name = TestWorkCycleNumber,
+                DateBegin = new DateTime(2017, 09, 01),
+                DateEnd = new DateTime(2017, 09, 11),
+                Active = true,
+                UserId = 1,
+                StatusId = WorkCycleStatus.Draft.ToString(),
+                Lines = new List<WorkCycleLines>{
+                    new WorkCycleLines
+                    {
+                        RawMaterialId = 1,
+                        SupplierId = 1,
+                        UnitPrice = 50,
+                        PlannedQuantity = 45,
+                        UnitOfMeasure = "crates"
+                    },
+                    new WorkCycleLines
+                    {
+                        RawMaterialId = 2,
+                        SupplierId = 2,
+                        UnitPrice = 50,
+                        PlannedQuantity = 45,
+                        UnitOfMeasure = "crates"
+                    }
+                }
+            };
+            _unitOfWork.WorkCycles.AddWorkingCycle(workCycleToInsert);
         }
 
-        private IEnumerable<PurchaseOrderTransaction> GetPurchaseOrderTransactions()
+        private void RemoveTestWorkCycle()
         {
-            var lines = _purchaseOrder.Lines;
+            var workCycle = _unitOfWork.WorkCycles.SingleOrDefault(x => x.Name == TestWorkCycleNumber);
+            _unitOfWork.WorkCycles.Remove(workCycle);
+            _unitOfWork.Complete();
+        }
 
-            return lines.Select(line => new PurchaseOrderTransaction
+        private WorkCycle GetTestWorkCycle()
+        {
+            return _unitOfWork.WorkCycles.GetWorkCycleByWorkCycleName(TestWorkCycleNumber, true);
+        }
+
+        private IEnumerable<PurchaseOrderTransaction> GetFakePurchaseOrderTransactions(int purchaseOrderId)
+        {
+            var timeStamp = DateTime.Now;
+            var transactions = new List<PurchaseOrderTransaction>
+            {
+                new PurchaseOrderTransaction
                 {
-                    PurchaseOrderId = _purchaseOrder.Id,
-                    RawMaterialId = line.RawMaterialId,
-                    SupplierId = line.SupplierId,
-                    QuantityReceived = line.Quantity - 2,
-                    DateReceived = DateTime.MaxValue,
-                    LocationId = "Room A",
-                    DeliveredBy = "Johson Banner",
-                    ReceivedBy = _user.Id
-                })
-                .ToList();
+                    RawMaterialId = 1,
+                    SupplierId = 1,
+                    PurchaseOrderId = purchaseOrderId,
+                    QuantityReceived = 15,
+                    DeliveredBy = "Michael Johnson",
+                    DateReceived = timeStamp,
+                    TransactionDate = timeStamp,
+                    ReceivedBy = _user.Id,
+                    LocationId = TestLocationId
+                    
+                },
+                new PurchaseOrderTransaction
+                {
+                    RawMaterialId = 2,
+                    SupplierId = 2,
+                    PurchaseOrderId = purchaseOrderId,
+                    QuantityReceived = 15,
+                    DeliveredBy = "Michael Dwayne",
+                    DateReceived = timeStamp,
+                    TransactionDate = timeStamp,
+                    ReceivedBy = _user.Id,
+                    LocationId = TestLocationId
+                }
+            };
+            return transactions;
         }
+
+
         
     }
 }

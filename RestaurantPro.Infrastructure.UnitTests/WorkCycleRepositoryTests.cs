@@ -12,19 +12,6 @@ namespace RestaurantPro.Infrastructure.UnitTests
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly RestProContext _context;
-        private const string WorkCycleName = "CycleTestA";
-        private const string WorkCycleName2 = "CycleTestB";
-
-
-        private readonly WorkCycle testCycle1 = new WorkCycle
-        {
-            Name = "Cycle 600",
-            DateBegin = new DateTime(2017, 12, 10),
-            DateEnd = new DateTime(2017, 12, 15),
-            Active = true,
-            UserId = 1,
-            StatusId = WorkCycleStatus.Draft.ToString()
-        };
 
         public WorkCycleRepositoryTests()
         {
@@ -33,13 +20,12 @@ namespace RestaurantPro.Infrastructure.UnitTests
         }
 
         [TestMethod]
-        public void RetrieveWorkCycleByWorkCycleIdTest()
+        public void TestAddAndRemoveWorkCycle()
         {
             _unitOfWork.WorkCycles.Add(testCycle1);
             _unitOfWork.Complete();
-
-
             var workCycle = _unitOfWork.WorkCycles.SingleOrDefault(w => w.Name == "Cycle 600");
+
             Assert.AreEqual(testCycle1.Name, workCycle.Name);
 
             _unitOfWork.WorkCycles.Remove(workCycle);
@@ -47,11 +33,10 @@ namespace RestaurantPro.Infrastructure.UnitTests
         }
 
         [TestMethod]
-        public void DeactivateWorkCycleTest()
+        public void TestWorkCycleDeactivation()
         {
             _unitOfWork.WorkCycles.Add(testCycle1);
             _unitOfWork.Complete();
-
             var workCycleFromDb = _unitOfWork.WorkCycles.SingleOrDefault(cycle => cycle.Name == testCycle1.Name);
 
             _unitOfWork.WorkCycles.DeactivateWorkCycle(workCycleFromDb.Id);
@@ -63,12 +48,11 @@ namespace RestaurantPro.Infrastructure.UnitTests
         }
 
         [TestMethod]
-        public void UpdateWorkCycleNameByCycleNameTest()
+        public void TestWorkCycleFieldsUpdate()
         {
-            var expectedNewCycleName = "New Cycle Name";
             _unitOfWork.WorkCycles.Add(testCycle1);
             _unitOfWork.Complete();
-
+            const string expectedNewCycleName = "New Cycle Name";
             var testInsertedWorkCycle = _unitOfWork.WorkCycles.SingleOrDefault(cycle => cycle.Name == testCycle1.Name);
 
             testInsertedWorkCycle.Name = expectedNewCycleName;
@@ -82,43 +66,25 @@ namespace RestaurantPro.Infrastructure.UnitTests
         }
 
         [TestMethod]
-        public void UpdateWorkCycleTest()
+        public void TestAddWorkingCycleAndGetWorkCycleByName()
         {
-            var workCycleInDb = _unitOfWork.WorkCycles.SingleOrDefault(w => w.Name == testCycle1.Name);
+            const string WorkCycleName = "Cycle Test A";
+            var expectedLineCount = 5;
+            var workCycleFromTest = GetWorkCycleWithLines(WorkCycleName, true);
 
-            if (workCycleInDb == null)
-            {
-                _unitOfWork.WorkCycles.Add(testCycle1);
-                _unitOfWork.Complete();
-            }
 
-            const string searchName = "Lindador Cycle";
+            _unitOfWork.WorkCycles.AddWorkingCycle(workCycleFromTest);
+            var workCycleInDb = _unitOfWork.WorkCycles.GetWorkCycleByWorkCycleName(WorkCycleName, true);
+            var lineCountInDb = workCycleInDb.WorkCycleLines.Count;
 
-            if (workCycleInDb != null)
-            {
-                var newWorkCycle = new WorkCycle
-                {
-                    Id = workCycleInDb.Id,
-                    Name = searchName,
-                    DateBegin = new DateTime(2017, 10, 05),
-                    DateEnd = new DateTime(2018, 12, 15),
-                    Active = true,
-                    UserId = 2,
-                    StatusId = "Draft"
-                };
+            Assert.AreEqual(expectedLineCount, lineCountInDb);
 
-                _unitOfWork.WorkCycles.UpdateWorkCycle(newWorkCycle);
-
-                var workCycleToRemove = _unitOfWork.WorkCycles.SingleOrDefault(w => w.Id == workCycleInDb.Id);
-
-                Assert.AreEqual(newWorkCycle.Name, workCycleToRemove.Name);
-
-                _unitOfWork.WorkCycles.Remove(workCycleToRemove);
-            }
+            _unitOfWork.WorkCycles.Remove(workCycleInDb);
             _unitOfWork.Complete();
+
         }
 
-        private WorkCycle GetWorkCycle(string workCycleName, bool isActive)
+        private WorkCycle GetWorkCycleWithLines(string workCycleName, bool isActive)
         {
             var wcs = _unitOfWork.WorkCycles.GetAll().ToArray();
             var supps = _unitOfWork.Suppliers.GetAll().ToArray();
@@ -135,7 +101,7 @@ namespace RestaurantPro.Infrastructure.UnitTests
             if (statuses.Length == 0)
                 throw new AssertFailedException("No Statuses in Database");
             if (users.Length == 0)
-                throw new AssertFailedException("NO users in database");
+                throw new AssertFailedException("No users in database");
 
             var wc = new WorkCycle
             {
@@ -160,28 +126,16 @@ namespace RestaurantPro.Infrastructure.UnitTests
             return wc;
         }
 
-        [TestMethod]
-        public void AddWorkingCyleTests()
+        private readonly WorkCycle testCycle1 = new WorkCycle
         {
-            var checkIfInDatabase = _unitOfWork
-                .WorkCycles
-                .SingleOrDefault(x => x.Name == WorkCycleName);
+            Name = "Cycle 600",
+            DateBegin = new DateTime(2017, 12, 10),
+            DateEnd = new DateTime(2017, 12, 15),
+            Active = true,
+            UserId = 1,
+            StatusId = WorkCycleStatus.Draft.ToString()
+        };
 
-            if (checkIfInDatabase != null)
-            {
-                Assert.IsNotNull(checkIfInDatabase);
-                return;
-            }
 
-            //With active flag
-            var workCycleFromTest = GetWorkCycle(WorkCycleName, true);
-            _unitOfWork.WorkCycles.AddWorkingCycle(workCycleFromTest);
-
-            //Add with false active flag
-            workCycleFromTest = GetWorkCycle(WorkCycleName2, false);
-            _unitOfWork.WorkCycles.AddWorkingCycle(workCycleFromTest);
-
-            Assert.AreEqual(1, 1);
-        }
     }
 }
