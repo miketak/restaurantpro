@@ -8,6 +8,7 @@ using System.Windows;
 using MahApps.Metro.Controls.Dialogs;
 using RestaurantPro.Core;
 using RestaurantPro.Core.Domain;
+using RestaurantPro.Core.Services;
 using RestaurantPro.Models;
 
 namespace RestaurantPro.InventoryFeatures.WorkCycles
@@ -21,20 +22,23 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
         private bool _editMode;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IDialogCoordinator dialogCoordinator;
+        private readonly IRestProService _restProService;
 
         /// <summary>
         /// Constructor to initialize Events and Unit of Work
         /// </summary>
         /// <param name="unitOfWork"></param>
-        public AddEditWorkingCycleViewModel(IUnitOfWork unitOfWork, IDialogCoordinator instance)
+        public AddEditWorkingCycleViewModel(IUnitOfWork unitOfWork, IDialogCoordinator instance, IRestProService restProService)
         {
             _unitOfWork = unitOfWork;
             dialogCoordinator = instance;
+            _restProService = restProService;
 
             LogoutCommand = new RelayCommand(OnLogout);
             BackToWorkCycleListCommand = new RelayCommand(OnManageCyclesListClick);
             CancelCommand = new RelayCommand(OnManageCyclesListClick);
             SaveCommand = new RelayCommand(OnSave, CanSave);
+            ConfirmWorkCycleCommand = new RelayCommand(OnConfirmWorkCycle);
         }
 
         #region Initialization Methods
@@ -151,6 +155,8 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
 
         public RelayCommand SaveCommand { get; private set; }
 
+        public RelayCommand ConfirmWorkCycleCommand { get; private set; }
+
         #endregion
 
         #region Event Handling
@@ -203,6 +209,35 @@ namespace RestaurantPro.InventoryFeatures.WorkCycles
         private void OnListChanged(object sender, ListChangedEventArgs e)
         {
             WorkCycle.UpdateSubTotalSection();
+        }
+
+        private async void OnConfirmWorkCycle()
+        {
+            string errorMessage = null;
+            try
+            {
+                _restProService.InventoryService.ConfirmWorkCycle(WorkCycle.Id, new User {Id = CurrentUser.Id});
+            }
+            catch (ApplicationException e)
+            {
+                Console.WriteLine(e);
+                errorMessage = e.Message;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                errorMessage = e.Message;
+            }
+
+            if (errorMessage != null)
+            {
+                await dialogCoordinator.ShowMessageAsync(this, "Failure", errorMessage);
+                return;
+            }
+            
+            var controller = await dialogCoordinator.ShowMessageAsync(this, "Success", "Items Saved Successfully. You Rock!");
+            if (controller == MessageDialogResult.Affirmative)
+                Done(CurrentUser);
         }
 
         #endregion

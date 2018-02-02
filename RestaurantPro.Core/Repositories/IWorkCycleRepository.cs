@@ -11,6 +11,7 @@ namespace RestaurantPro.Core.Repositories
         void AddWorkingCycle(WorkCycle workCycle);
         WorkCycle GetWorkCycleByWorkCycleName(string workCycleName, bool isActive);
         WorkCycle GetWorkCycleById(int workCycleId, bool isActive);
+        bool CheckForActiveWorkCycles();
 
 
     }

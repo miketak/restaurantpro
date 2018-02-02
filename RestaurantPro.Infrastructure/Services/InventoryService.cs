@@ -29,15 +29,23 @@ namespace RestaurantPro.Infrastructure.Services
         {
             ValidateParameters(workCycleId, user);
 
+            if (IsOtherWorkCycleActive())
+                throw new ApplicationException("Pending Work Cycle Active");
+
             _user = user;
 
-            var fullWorkCycleFromDb = ActivateWorkCycle(workCycleId);
+            var activeWorkCycleFromDb = ActivateWorkCycle(workCycleId);
 
-            InventoryTransactionsService.AddWorkCycleTransactions(fullWorkCycleFromDb);
+            InventoryTransactionsService.AddWorkCycleTransactions(activeWorkCycleFromDb);
 
-            var purchaseOrderToDb = CreateNewPurchaseOrderForInsert(fullWorkCycleFromDb);
+            var purchaseOrderToDb = CreateNewPurchaseOrderForInsert(activeWorkCycleFromDb);
 
             _unitOfWork.PurchaseOrders.AddPurchaseOrder(purchaseOrderToDb);
+        }
+
+        private bool IsOtherWorkCycleActive()
+        {
+            return _unitOfWork.WorkCycles.CheckForActiveWorkCycles();
         }
 
         /// <summary>

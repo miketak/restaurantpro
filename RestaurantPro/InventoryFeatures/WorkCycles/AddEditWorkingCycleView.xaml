@@ -246,16 +246,25 @@
 				<ColumnDefinition/>
 				<ColumnDefinition Width="180"/>
 				<ColumnDefinition Width="180"/>
+				<ColumnDefinition Width="180"/>
 			</Grid.ColumnDefinitions>
 
-			<!--Save Command-->
+            <!--Confirm Work Cycle Command-->
+		    <Button Content="Confirm Work Cycle"
+		            Command="{Binding ConfirmWorkCycleCommand}"
+		            Style="{StaticResource AccentedSquareButtonStyle}" 
+		            Foreground="{DynamicResource MainForeground}" Background="White" BorderBrush="Orange" HorizontalAlignment="Right"
+		            VerticalAlignment="Top"
+		            Width="150" Height="35" Grid.Column="1" Margin="0"/>
+
+            <!--Save Command-->
 			<Button Content="Save"
 					Command="{Binding SaveCommand}"
 					Style="{StaticResource AccentedSquareButtonStyle}" 
 					Foreground="{DynamicResource MainForeground}" Background="White" BorderBrush="Orange" HorizontalAlignment="Right" 
 					Visibility="{Binding EditMode, Converter={StaticResource VisConverter}}"
 					VerticalAlignment="Top"
-					Width="150" Height="35" Grid.Column="1" Margin="0"/>
+					Width="150" Height="35" Grid.Column="2" Margin="0"/>
 			
 			<!--Add Command--> 
 			<Button Content="Add"
@@ -263,14 +272,14 @@
 					Style="{StaticResource AccentedSquareButtonStyle}" 
 					Foreground="{DynamicResource MainForeground}" Background="White" BorderBrush="Orange" HorizontalAlignment="Right" 
 					Visibility="{Binding EditMode, Converter={StaticResource NegVisConverter}}"
-					VerticalAlignment="Top" Height="35" Width="150" Grid.Column="1" Margin="0"/>
+					VerticalAlignment="Top" Height="35" Width="150" Grid.Column="2" Margin="0"/>
 			
 			<!--Cancel Command-->
 			<Button Content="Cancel"
 					Command="{Binding CancelCommand}"
 					Style="{StaticResource AccentedSquareButtonStyle}" 
 					Foreground="{DynamicResource MainForeground}" Background="White" BorderBrush="Orange" HorizontalAlignment="Right" 
-					Grid.Column="2"
+					Grid.Column="3"
 					VerticalAlignment="Top"
 					Width="150" Height="35"
 					Margin="0"/>

@@ -46,7 +46,7 @@ namespace RestaurantPro
         /// <summary>
         /// Constructor to subscription of events for overall program navigation.
         /// </summary>
-        public MainWindowViewModel(IUnitOfWork unitOfWork, IInventoryService inventoryService)
+        public MainWindowViewModel(IUnitOfWork unitOfWork, IInventoryService inventoryService, IRestProService restProService)
         {
             NavCommand = new RelayCommand<string>(OnNav);
 
@@ -55,7 +55,7 @@ namespace RestaurantPro
             _homeDashboardViewModel = new HomeDashboardViewModel();
             _inventoryDashboardViewModel = new InventoryDashboardViewModel();
             _workCycleListViewModel = new WorkCycleListViewModel(unitOfWork, DialogCoordinator.Instance);
-            _addEditWorkingCycleViewModel = new AddEditWorkingCycleViewModel(unitOfWork, DialogCoordinator.Instance);
+            _addEditWorkingCycleViewModel = new AddEditWorkingCycleViewModel(unitOfWork, DialogCoordinator.Instance, restProService);
             _purchaseOrderListViewModel = new PurchaseOrderListViewModel(unitOfWork, DialogCoordinator.Instance);
             _addEditPurchaseOrderListViewModel = new AddEditPurchaseOrderViewModel(unitOfWork, DialogCoordinator.Instance);
             _supplierListViewModel = new SupplierListViewModel(unitOfWork, DialogCoordinator.Instance);
