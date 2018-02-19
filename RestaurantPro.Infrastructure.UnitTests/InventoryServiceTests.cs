@@ -220,6 +220,8 @@ namespace RestaurantPro.Infrastructure.UnitTests
             RestoreWorkCycleActiveState();
         }
 
+        #region Helper Methods
+
         private void CleanupDatabase()
         {
             var testWorkCycle = _unitOfWork.WorkCycles.GetWorkCycleByWorkCycleName(_testWorkCycleNumber, true);
@@ -347,6 +349,8 @@ namespace RestaurantPro.Infrastructure.UnitTests
 
             _unitOfWork.Complete();
         }
+
+        #endregion
 
         private int _activeWorkCyleId;
         private readonly string _testPurchaseOrderNumber = "100";

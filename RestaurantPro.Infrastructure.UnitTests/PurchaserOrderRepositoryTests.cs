@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using RestaurantPro.Core;
 using RestaurantPro.Core.Domain;
 
 namespace RestaurantPro.Infrastructure.UnitTests
 {
-    [TestClass]
+    [TestFixture]
     public class PurchaserOrderRepositoryTests
     {
         private readonly IUnitOfWork _unitOfWork;
-        private const string FirstTestPurchaseOrderNumber = "100";
-        private const string SecondTestPurchaseOrderNumber = "101";
+        private readonly string _firstTestPurchaseOrderNumber = "100";
         private const int ExpectedLineCount = 6;
 
         public PurchaserOrderRepositoryTests()
@@ -20,79 +19,53 @@ namespace RestaurantPro.Infrastructure.UnitTests
             _unitOfWork = new UnitOfWork(new RestProContext());
         }
 
-        [TestMethod]
-        public void AddPurchaseOrderTestWithTrueAndFalseActiveFlag()
+        [Test]
+        public void GetPurchaseOrderByPurchaseOrderNumber_WhenCalledWithTrueFlag_ReturnsTrueActiveBitPurchaseOrder()
         {
-            //With true active flag
-            AddPurchaseOrderWithLines(FirstTestPurchaseOrderNumber, true);
+            AddPurchaseOrderWithLines(_firstTestPurchaseOrderNumber, true);
 
-            //Add with false active flag
-            AddPurchaseOrderWithLines(SecondTestPurchaseOrderNumber, false);
+            var purchaseOrder = _unitOfWork.PurchaseOrders.GetPurchaseOrderByPurchaseOrderNumber(_firstTestPurchaseOrderNumber, true);
 
-            var firstPurchaseOrderInDb = _unitOfWork.PurchaseOrders.GetPurchaseOrderByPurchaseOrderNumber(FirstTestPurchaseOrderNumber, true);
-            Assert.AreEqual(FirstTestPurchaseOrderNumber, firstPurchaseOrderInDb.PurchaseOrderNumber);
-            Assert.AreEqual(ExpectedLineCount, firstPurchaseOrderInDb.PurchaseOrderLines.Count);
-
-            var secondPurchaseOrderInDb = _unitOfWork.PurchaseOrders.GetPurchaseOrderByPurchaseOrderNumber(SecondTestPurchaseOrderNumber, false);
-            Assert.AreEqual(SecondTestPurchaseOrderNumber, secondPurchaseOrderInDb.PurchaseOrderNumber);
-            Assert.AreEqual(ExpectedLineCount, secondPurchaseOrderInDb.PurchaseOrderLines.Count);
-
-            RemovePurchaseOrder(FirstTestPurchaseOrderNumber);
-            RemovePurchaseOrder(SecondTestPurchaseOrderNumber);
-        }
-
-        [TestMethod]
-        public void GetPurchaseOrderByPurchaseOrderNumberWithTrueActiveFlag()
+            Assert.That(purchaseOrder.PurchaseOrderNumber, Is.EqualTo(_firstTestPurchaseOrderNumber));
+        }        
+        
+        [Test]
+        public void GetPurchaseOrderByPurchaseOrderNumber_WhenCalled_ReturnsPurchaseOrderWithLines()
         {
-            AddPurchaseOrderWithLines(FirstTestPurchaseOrderNumber, true);
-            var purchaseOrder = _unitOfWork.PurchaseOrders.GetPurchaseOrderByPurchaseOrderNumber(FirstTestPurchaseOrderNumber, true);
+            AddPurchaseOrderWithLines(_firstTestPurchaseOrderNumber, true);
 
-            Assert.AreEqual(FirstTestPurchaseOrderNumber, purchaseOrder.PurchaseOrderNumber);
-            Assert.AreEqual(ExpectedLineCount, purchaseOrder.PurchaseOrderLines.Count);
+            var purchaseOrder = _unitOfWork.PurchaseOrders.GetPurchaseOrderByPurchaseOrderNumber(_firstTestPurchaseOrderNumber, true);
 
-            RemovePurchaseOrder(FirstTestPurchaseOrderNumber);
+            Assert.That(purchaseOrder.PurchaseOrderLines.Count, Is.EqualTo(ExpectedLineCount));
         }
         
-        [TestMethod]
-        public void GetPurchaseOrderByPurchaseOrderNumberWithTrueActiveFlagUsingFalseFlag()
+        [Test]
+        public void GetPurchaseOrderByPurchaseOrderNumber_WhenCalledWithFalseFlag_ReturnsNoPurchaseOrderWithTrueFlag()
         {
-            AddPurchaseOrderWithLines(FirstTestPurchaseOrderNumber, true);
-            var purchaseOrder = _unitOfWork.PurchaseOrders.GetPurchaseOrderByPurchaseOrderNumber(FirstTestPurchaseOrderNumber, false);
+            AddPurchaseOrderWithLines(_firstTestPurchaseOrderNumber, true);
+
+            var purchaseOrder = _unitOfWork.PurchaseOrders.GetPurchaseOrderByPurchaseOrderNumber(_firstTestPurchaseOrderNumber, false);
 
             Assert.IsNull(purchaseOrder);
-
-            RemovePurchaseOrder(FirstTestPurchaseOrderNumber);
-        }
-
- 
-
-        [TestMethod]
-        public void GetPurchaseOrderByPurchaseOrderNumberWithTrueActiveFlagUsingTrueFlag()
+        }        
+        
+        [Test]
+        public void GetPurchaseOrderByPurchaseOrderNumber_WhenCalledWithFalseFlag_ReturnsFalseActiveBitPurchaseOrder()
         {
-            AddPurchaseOrderWithLines(FirstTestPurchaseOrderNumber, true);
-            var purchaseOrder = _unitOfWork.PurchaseOrders.GetPurchaseOrderByPurchaseOrderNumber(FirstTestPurchaseOrderNumber, true);
+            AddPurchaseOrderWithLines(_firstTestPurchaseOrderNumber, false);
+
+            var purchaseOrder = _unitOfWork.PurchaseOrders.GetPurchaseOrderByPurchaseOrderNumber(_firstTestPurchaseOrderNumber, false);
 
             Assert.IsNotNull(purchaseOrder);
-
-            RemovePurchaseOrder(FirstTestPurchaseOrderNumber);
         }
 
-
-
-
-        [TestMethod]
-        public void GetPurchaseOrderByIdWithTrueActiveFlag()
+        [TearDown]
+        public void TearDown()
         {
-            AddPurchaseOrderWithLines(FirstTestPurchaseOrderNumber, true);
-            var purchaseOrderInDb = _unitOfWork.PurchaseOrders.SingleOrDefault(c => c.PurchaseOrderNumber == FirstTestPurchaseOrderNumber);
-
-            var purchaseOrder = _unitOfWork.PurchaseOrders.GetPurchaseOrderById(purchaseOrderInDb.Id, true);
-
-            Assert.AreEqual(FirstTestPurchaseOrderNumber, purchaseOrder.PurchaseOrderNumber);
-            Assert.AreEqual(ExpectedLineCount, purchaseOrder.PurchaseOrderLines.Count);
-
-            RemovePurchaseOrder(FirstTestPurchaseOrderNumber);
+            RemovePurchaseOrder(_firstTestPurchaseOrderNumber);
         }
+
+        #region Helper Methods
 
         private void AddPurchaseOrderWithLines(string poNumber, bool isActive)
         {
@@ -116,13 +89,13 @@ namespace RestaurantPro.Infrastructure.UnitTests
             var statuses = _unitOfWork.Statuses.GetAll().ToArray();
 
             if (supps.Length == 0)
-                throw new AssertFailedException("No suppliers in Database");
+                throw new AssertionException("No suppliers in Database");
             if (wcs.Length == 0)
-                throw new AssertFailedException("No Working Cycles in Database");
+                throw new AssertionException("No Working Cycles in Database");
             if (rms.Length == 0)
-                throw new AssertFailedException("No Raw Materials in Database");
+                throw new AssertionException("No Raw Materials in Database");
             if (statuses.Length == 0)
-                throw new AssertFailedException("No Statuses in Database");
+                throw new AssertionException("No Statuses in Database");
 
             var po = new PurchaseOrder
             {
@@ -147,6 +120,10 @@ namespace RestaurantPro.Infrastructure.UnitTests
 
             return po;
         }
+
+        #endregion
+
+       
 
     }
 }
