@@ -122,7 +122,8 @@
 				RowBackground="#00000000"
 				MaxHeight="550" Grid.Row="2">
 				<DataGrid.Columns>
-					<DataGridTextColumn Binding="{Binding RawMaterial, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Raw Material" Width="*"/>
+					<DataGridTextColumn Binding="{Binding PurchaseOrderNumber, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Purchase Order Number" Width="Auto"/>
+					<DataGridTextColumn Binding="{Binding RawMaterial, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Raw Material" Width="Auto"/>
 					<DataGridTextColumn Binding="{Binding Supplier, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Supplier" Width="*"/>
 					<DataGridTextColumn Binding="{Binding OrderedQuantity, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Ordered Quantity" Width="Auto"/>
 					<DataGridTextColumn Binding="{Binding PendingQuantity, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Header="Pending Quantity" Width="Auto"/>
