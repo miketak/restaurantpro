@@ -45,7 +45,7 @@ namespace RestaurantPro.Infrastructure.Services
 
         private bool IsOtherWorkCycleActive()
         {
-            return _unitOfWork.WorkCycles.CheckForActiveWorkCycles();
+            return _unitOfWork.WorkCycles.CheckForActiveStatusWorkCycles();
         }
 
         /// <summary>

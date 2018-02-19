@@ -116,9 +116,9 @@ namespace RestaurantPro.Infrastructure.Repositories
                 .SingleOrDefault(c => c.Id == workCycleId);
         }
 
-        public bool CheckForActiveWorkCycles()
+        public bool CheckForActiveStatusWorkCycles()
         {
-            return _context.WorkCycles.Any(x => x.Active);
+            return _context.WorkCycles.Any(x => x.StatusId == WorkCycleStatus.Active.ToString());
         }
 
 
