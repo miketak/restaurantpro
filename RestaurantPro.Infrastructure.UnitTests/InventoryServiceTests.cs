@@ -212,24 +212,46 @@ namespace RestaurantPro.Infrastructure.UnitTests
             var pois = _services.InventoryService.GetPurchaseOrderInformation();
         }
 
+        /// <summary>
+        /// Order Matters
+        /// </summary>
         [TearDown]
         public void TearDown()
         {
-            CleanupDatabase();
+            RemoveTestPurchaseOrders();
+
+            RemoveTestWorkCycle();
 
             RestoreWorkCycleActiveState();
         }
 
         #region Helper Methods
 
-        private void CleanupDatabase()
+        private void RemoveTestWorkCycle()
         {
-            var testWorkCycle = _unitOfWork.WorkCycles.GetWorkCycleByWorkCycleName(_testWorkCycleNumber, true);
+            var testWorkCycle = _unitOfWork.WorkCycles.SingleOrDefault(x => x.Name == _testWorkCycleNumber);
 
             if (testWorkCycle == null)
                 return;
 
             _unitOfWork.WorkCycles.Remove(testWorkCycle);
+
+            _unitOfWork.Complete();
+        }
+
+        private void RemoveTestPurchaseOrders()
+        {
+            var testWorkCycle = _unitOfWork.WorkCycles.SingleOrDefault(x => x.Name == _testWorkCycleNumber);
+
+            if (testWorkCycle == null)
+                return;
+
+            var purchaseOrder = _unitOfWork.PurchaseOrders.SingleOrDefault(x => x.WorkCycleId == testWorkCycle.Id);
+
+            if (purchaseOrder == null)
+                return;
+
+            _unitOfWork.PurchaseOrders.Remove(purchaseOrder);
 
             _unitOfWork.Complete();
         }

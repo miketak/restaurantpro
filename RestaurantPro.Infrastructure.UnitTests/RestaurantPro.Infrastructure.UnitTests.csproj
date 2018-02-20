@@ -66,6 +66,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="InventoryServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PurchaserOrderRepositoryTests.cs" />

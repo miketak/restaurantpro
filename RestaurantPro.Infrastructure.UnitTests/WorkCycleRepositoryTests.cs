@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using RestaurantPro.Core;
 using RestaurantPro.Core.Domain;
 
 namespace RestaurantPro.Infrastructure.UnitTests
 {
-    [TestClass]
+    [TestFixture]
     public class WorkCycleRepositoryTests
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -19,70 +19,81 @@ namespace RestaurantPro.Infrastructure.UnitTests
             _unitOfWork = new UnitOfWork(_context);
         }
 
-        [TestMethod]
-        public void TestAddAndRemoveWorkCycle()
+
+        [Test]
+        public void DeactivateWorkCycle_WhenCalled_SetsActiveBitToFalse()
         {
-            _unitOfWork.WorkCycles.Add(testCycle1);
-            _unitOfWork.Complete();
-            var workCycle = _unitOfWork.WorkCycles.SingleOrDefault(w => w.Name == "Cycle 600");
-
-            Assert.AreEqual(testCycle1.Name, workCycle.Name);
-
-            _unitOfWork.WorkCycles.Remove(workCycle);
-            _unitOfWork.Complete();
-        }
-
-        [TestMethod]
-        public void TestWorkCycleDeactivation()
-        {
-            _unitOfWork.WorkCycles.Add(testCycle1);
-            _unitOfWork.Complete();
-            var workCycleFromDb = _unitOfWork.WorkCycles.SingleOrDefault(cycle => cycle.Name == testCycle1.Name);
+            var workCycleFromDb = AddAndGetTestWorkCycle();
 
             _unitOfWork.WorkCycles.DeactivateWorkCycle(workCycleFromDb.Id);
 
             Assert.IsFalse(workCycleFromDb.Active);
-
-            _unitOfWork.WorkCycles.Remove(workCycleFromDb);
-            _unitOfWork.Complete();
         }
 
-        [TestMethod]
-        public void TestWorkCycleFieldsUpdate()
-        {
-            _unitOfWork.WorkCycles.Add(testCycle1);
-            _unitOfWork.Complete();
-            const string expectedNewCycleName = "New Cycle Name";
-            var testInsertedWorkCycle = _unitOfWork.WorkCycles.SingleOrDefault(cycle => cycle.Name == testCycle1.Name);
-
-            testInsertedWorkCycle.Name = expectedNewCycleName;
-            testInsertedWorkCycle.DateEnd = new DateTime(2017, 12, 25);
-            _unitOfWork.Complete();
-
-            Assert.AreEqual(expectedNewCycleName, testInsertedWorkCycle.Name);
-
-            _unitOfWork.WorkCycles.Remove(testInsertedWorkCycle);
-            _unitOfWork.Complete();
-        }
-
-        [TestMethod]
-        public void TestAddWorkingCycleAndGetWorkCycleByName()
+        [Test]
+        public void AddWorkingCycle_WhenCalled_CorrectlyAddsWorkCycleWithLines()
         {
             const string WorkCycleName = "Cycle Test A";
-            var expectedLineCount = 5;
-            var workCycleFromTest = GetWorkCycleWithLines(WorkCycleName, true);
+            var workCycleToDb = GetWorkCycleWithLines(WorkCycleName, true);
 
 
-            _unitOfWork.WorkCycles.AddWorkingCycle(workCycleFromTest);
+            _unitOfWork.WorkCycles.AddWorkingCycle(workCycleToDb);
+
             var workCycleInDb = _unitOfWork.WorkCycles.GetWorkCycleByWorkCycleName(WorkCycleName, true);
-            var lineCountInDb = workCycleInDb.WorkCycleLines.Count;
 
-            Assert.AreEqual(expectedLineCount, lineCountInDb);
+            Assert.That(workCycleInDb.WorkCycleLines.Count, Is.EqualTo(workCycleToDb.Lines.Count()));
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            RemoveTestWorkCycle();
+            RemoveTestWorkCycle2();
+        }
+
+        #region Helper Methods
+
+        private WorkCycle AddAndGetTestWorkCycle()
+        {
+            var cycleInDb = _unitOfWork.WorkCycles.SingleOrDefault(cycle => cycle.Name == testCycle1.Name);
+
+            if (cycleInDb != null)
+            {
+                _unitOfWork.WorkCycles.Remove(cycleInDb);
+                _unitOfWork.Complete();
+            }
+
+            _unitOfWork.WorkCycles.Add(testCycle1);
+
+            _unitOfWork.Complete();
+
+            return _unitOfWork.WorkCycles.SingleOrDefault(cycle => cycle.Name == testCycle1.Name);
+        }
+
+        private void RemoveTestWorkCycle()
+        {
+            var workCycleInDb = _unitOfWork.WorkCycles.GetWorkCycleByWorkCycleName(testCycle1.Name, true) ??
+                                _unitOfWork.WorkCycles.GetWorkCycleByWorkCycleName(testCycle1.Name, false); 
+
+            if (workCycleInDb == null)
+                return;
 
             _unitOfWork.WorkCycles.Remove(workCycleInDb);
             _unitOfWork.Complete();
 
         }
+
+        private void RemoveTestWorkCycle2()
+        {
+            var workCycleInDb2 = _unitOfWork.WorkCycles.GetWorkCycleByWorkCycleName("Cycle Test A", true);
+
+            if (workCycleInDb2 == null)
+                return;
+
+            _unitOfWork.WorkCycles.Remove(workCycleInDb2);
+            _unitOfWork.Complete();
+        }
+
 
         private WorkCycle GetWorkCycleWithLines(string workCycleName, bool isActive)
         {
@@ -93,15 +104,15 @@ namespace RestaurantPro.Infrastructure.UnitTests
             var users = _unitOfWork.Users.GetAll().ToArray();
 
             if (supps.Length == 0)
-                throw new AssertFailedException("No suppliers in Database");
+                throw new AssertionException("No suppliers in Database");
             if (wcs.Length == 0)
-                throw new AssertFailedException("No Working Cycles in Database");
+                throw new AssertionException("No Working Cycles in Database");
             if (rms.Length == 0)
-                throw new AssertFailedException("No Raw Materials in Database");
+                throw new AssertionException("No Raw Materials in Database");
             if (statuses.Length == 0)
-                throw new AssertFailedException("No Statuses in Database");
+                throw new AssertionException("No Statuses in Database");
             if (users.Length == 0)
-                throw new AssertFailedException("No users in database");
+                throw new AssertionException("No users in database");
 
             var wc = new WorkCycle
             {
@@ -136,6 +147,8 @@ namespace RestaurantPro.Infrastructure.UnitTests
             StatusId = WorkCycleStatus.Draft.ToString()
         };
 
+        #endregion
 
+        
     }
 }

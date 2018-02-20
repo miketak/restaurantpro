@@ -1,89 +1,53 @@
 ﻿using System;
 using System.Security;
 using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using RestaurantPro.Core.Services;
 using RestaurantPro.Infrastructure.Repositories;
 using RestaurantPro.Infrastructure.Services;
 
 namespace RestaurantPro.Infrastructure.UnitTests
 {
-    [TestClass]
+    [TestFixture]
     public class UserAuthenticationServiceTests
     {
         private readonly IUserAuthenticationService _userAuthenticationService;
-        private const string FailedAuthenticationMessage = "Authentication Failed!";
 
         public UserAuthenticationServiceTests()
         {
             _userAuthenticationService = new UserAuthenticationService(new UserRepository(new RestProContext()));
         }
 
-        [TestMethod]
-        public async Task AuthenticateUserWithCorrectNameCorrectPassword()
+        [Test]
+        public async Task AuthenticateUser_WithCorrectUsernameAndPassword_ReturnsUser()
         {
-            //Arrange
-            string expectedUsername = "rkpadi";
+            string username = "rkpadi";
             string password = "password";
 
-            //Act
-            var user = await _userAuthenticationService.AuthenticateUser(expectedUsername, 
-                ConvertToSecureString(password));
+            var user = await _userAuthenticationService.AuthenticateUser(username, password.ToSecureString());
 
-            //Assert
-            Assert.AreEqual(expectedUsername, user.Username);
+            Assert.That(user.Username, Is.EqualTo(username));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ApplicationException), FailedAuthenticationMessage)]
-        public async Task AuthenticateUserWithCorrectNameWrongPassword()
+        [Test]
+        public void AuthenticateUser_WithCorrectUsernameAndWrongPassword_ThrowsApplicationException()
         {
-            //Arrange
-            string expectedUsername = "rkpadi";
-            string password = "pass";
-
-            //Act
-            var user = await _userAuthenticationService.AuthenticateUser(expectedUsername,
-                ConvertToSecureString(password));
+            Assert.That(() => _userAuthenticationService.AuthenticateUser("rkpadi",
+                "pass".ToSecureString()), Throws.Exception.TypeOf<ApplicationException>());
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ApplicationException), FailedAuthenticationMessage)]
-        public async Task AuthenticateUserWithWrongNameCorrectPassword()
+        [Test]
+        public void AuthenticateUser_WithWrongUsernameAndCorrectPassword_ThrowsApplicationException()
         {
-            //Arrange
-            string expectedUsername = "rkgoat";
-            string password = "password";
-
-            //Act
-            var user = await _userAuthenticationService.AuthenticateUser(expectedUsername,
-                ConvertToSecureString(password));
+            Assert.That(() => _userAuthenticationService.AuthenticateUser("rkgoat",
+                "password".ToSecureString()), Throws.Exception.TypeOf<ApplicationException>());
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ApplicationException), FailedAuthenticationMessage)]
-        public async Task AuthenticateUserWithWrongNameWrongPassword()
+        [Test]
+        public void AuthenticateUser_WithWrongUsernameAndWrongPassword_ThrowsApplicationException()
         {
-            //Arrange
-            string expectedUsername = "zigi";
-            string password = "pass";
-
-            //Act
-            var user = await _userAuthenticationService.AuthenticateUser(expectedUsername,
-                ConvertToSecureString(password));
-        }
-
-        [Ignore]
-        private SecureString ConvertToSecureString(string rawPassword)
-        {
-            //shall leave soon
-            var encodedPassword = new SecureString();
-
-            foreach (char c in rawPassword)
-                encodedPassword.AppendChar(c);
-
-            return encodedPassword;
-        }
-        
+            Assert.That(() => _userAuthenticationService.AuthenticateUser("zigi",
+                "pass".ToSecureString()), Throws.Exception.TypeOf<ApplicationException>());
+        }  
     }
 }

@@ -1,10 +1,12 @@
 ﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using RestaurantPro.Core;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace RestaurantPro.Infrastructure.UnitTests
 {
-    [TestClass]
+    [TestFixture]
     public class StatusRepositoryTests
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -14,17 +16,6 @@ namespace RestaurantPro.Infrastructure.UnitTests
         {
             _context = new RestProContext();
             _unitOfWork = new UnitOfWork(_context);
-        }
-
-        [TestMethod]
-        public void RetrieveAllStatuses()
-        {
-            var expectedNumber = 6;
-            
-            var count = _unitOfWork.Statuses.GetAll().Count();
-
-            Assert.AreEqual(expectedNumber, count);
-            
         }
     }
 }
