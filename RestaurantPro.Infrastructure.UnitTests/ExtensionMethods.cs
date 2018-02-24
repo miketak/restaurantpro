@@ -1,4 +1,5 @@
 ﻿using System.Security;
+using RestaurantPro.Core.Domain;
 
 namespace RestaurantPro.Infrastructure.UnitTests
 {
