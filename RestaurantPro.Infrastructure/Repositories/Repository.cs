@@ -36,8 +36,13 @@ namespace RestaurantPro.Infrastructure.Repositories
         public TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate)
         {
             return Context.Set<TEntity>().SingleOrDefault(predicate);
-        }        
-        
+        }
+
+        public TEntity LastOrDefualt(Expression<Func<TEntity, bool>> predicate)
+        {
+            return Context.Set<TEntity>().LastOrDefault(predicate);
+        }
+
         public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> predicate)
         {
             return Context.Set<TEntity>().FirstOrDefault(predicate);

@@ -220,12 +220,40 @@ namespace RestaurantPro.Infrastructure.UnitTests
         {
             RemoveTestPurchaseOrders();
 
+            RemoveInventoryAndInventoryTransactions(1);
+            RemoveInventoryAndInventoryTransactions(2);
+
             RemoveTestWorkCycle();
 
             RestoreWorkCycleActiveState();
         }
 
+
         #region Helper Methods
+
+        private void RemoveInventoryAndInventoryTransactions(int rawMaterialId)
+        {
+            var inventoryItem = _unitOfWork.Inventory.SingleOrDefault(x => x.RawMaterialId == rawMaterialId);
+
+            if (inventoryItem == null) return;
+
+            var inventoryTransactions =
+                _unitOfWork.InventoryTransactionRepository.GetAll().Where(x => x.InventoryId == inventoryItem.Id &&
+                                                                                x.CreatedBy == _user.Id &&
+                                                                                Math.Abs(x.Quantity - 15) < 0.001).ToList();
+
+            if (!inventoryTransactions.Any()) return;
+
+            foreach( var a in inventoryTransactions)
+                _unitOfWork.InventoryTransactionRepository.Remove(a);
+
+            if (Math.Abs(inventoryItem.InitialQuantity - 15) < 0.001)
+                _unitOfWork.Inventory.Remove(inventoryItem);
+            else
+                inventoryItem.InitialQuantity -= _plannedQuantity;
+
+            _unitOfWork.Complete();
+        }
 
         private void RemoveTestWorkCycle()
         {
@@ -287,7 +315,7 @@ namespace RestaurantPro.Infrastructure.UnitTests
                         RawMaterialId = 1,
                         SupplierId = 1,
                         UnitPrice = 50,
-                        PlannedQuantity = 45,
+                        PlannedQuantity = _plannedQuantity,
                         UnitOfMeasure = "crates"
                     },
                     new WorkCycleLines
@@ -295,7 +323,7 @@ namespace RestaurantPro.Infrastructure.UnitTests
                         RawMaterialId = 2,
                         SupplierId = 2,
                         UnitPrice = 50,
-                        PlannedQuantity = 45,
+                        PlannedQuantity = _plannedQuantity,
                         UnitOfMeasure = "crates"
                     }
                 }
@@ -379,5 +407,6 @@ namespace RestaurantPro.Infrastructure.UnitTests
         private readonly string _testWorkCycleNumber = "Test Cycle 1";
         private readonly User _user = new User { Id = 1 };
         private readonly string _testLocationId = "Home Warehouse";
+        private readonly int _plannedQuantity = 45;
     }
 }
