@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
-using MahApps.Metro.Controls.Dialogs;
+﻿using MahApps.Metro.Controls.Dialogs;
 using RestaurantPro.Core;
 using RestaurantPro.Core.Services;
 using RestaurantPro.HomeDashboard;
@@ -50,7 +43,6 @@ namespace RestaurantPro
         {
             NavCommand = new RelayCommand<string>(OnNav);
 
-            //View Model Initializations
             _loginViewModel = new LoginViewModel(unitOfWork, DialogCoordinator.Instance);
             _homeDashboardViewModel = new HomeDashboardViewModel();
             _inventoryDashboardViewModel = new InventoryDashboardViewModel();
@@ -65,71 +57,9 @@ namespace RestaurantPro
             _inventorySettingViewModel = new InventorySettingViewModel(unitOfWork, DialogCoordinator.Instance);
             _procurePurchaseOrderViewModel = new ProcurePurchaseOrderViewModel(unitOfWork, DialogCoordinator.Instance, inventoryService);
 
-            //Set Login context
             SetLoginContext();
 
-            //Event Subscriptions
-            _loginViewModel.LoginRequested += NavToHomeDashboard;
-
-            _homeDashboardViewModel.LogoutRequested += NavToLoginView;
-            _homeDashboardViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
-            _inventoryDashboardViewModel.HomeDashboardRequested += NavToHomeDashboard;
-
-            _inventoryDashboardViewModel.LogoutRequested += NavToLoginView;
-            _inventoryDashboardViewModel.ManageWorkCyclesRequsted += NavToManageWorkCycles;
-            _inventoryDashboardViewModel.PurchaseOrdersListsViewRequested += NavToPurchaseOrdersListView;
-            _inventoryDashboardViewModel.SupplierListViewRequested += NavToSupplierListView;
-            _inventoryDashboardViewModel.RawMaterialListViewRequested += NavToRawMaterialsListView;
-            _inventoryDashboardViewModel.RawMaterialCategoryListViewRequested += NavToRawMaterialCategoryListView;
-            _inventoryDashboardViewModel.LocationListViewRequested += NavToLocationListView;
-            _inventoryDashboardViewModel.InventorySettingViewRequested += NavToInventorySettingView;
-            _inventoryDashboardViewModel.ProcurePurchaseOrderViewRequested += NavToProcurePurchaseOrderView;
-
-            _workCycleListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
-            _workCycleListViewModel.LogoutRequested += NavToLoginView;
-            _workCycleListViewModel.HomeViewRequested += NavToHomeDashboard;
-            _workCycleListViewModel.AddWorkCycleRequested += NavToAddWorkCycleView;
-            _workCycleListViewModel.EditWorkCycleRequested += NavToEditWorkCycleView;
-
-            _addEditWorkingCycleViewModel.LogoutRequested += NavToLoginView;
-            _addEditWorkingCycleViewModel.ManageWorkCyclesRequsted += NavToManageWorkCycles;
-            _addEditWorkingCycleViewModel.Done += NavToManageWorkCycles;
-
-            _purchaseOrderListViewModel.LogoutRequested += NavToLoginView;
-            _purchaseOrderListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
-            _purchaseOrderListViewModel.HomeViewRequested += NavToHomeDashboard;
-            _purchaseOrderListViewModel.AddPurchaseOrderRequested += NavToAddPurchaseOrder;
-            _purchaseOrderListViewModel.EditPurchaseOrderRequested += NavToEditPurchaseOrder;
-
-            _addEditPurchaseOrderListViewModel.LogoutRequested += NavToLoginView;
-            _addEditPurchaseOrderListViewModel.HomeViewRequested += NavToHomeDashboard;
-            _addEditPurchaseOrderListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
-            _addEditPurchaseOrderListViewModel.PurchaseOrderListRequested += NavToPurchaseOrdersListView;
-            _addEditPurchaseOrderListViewModel.Done += NavToPurchaseOrdersListView;
-
-            _supplierListViewModel.LogoutRequested += NavToLoginView;
-            _supplierListViewModel.HomeViewRequested += NavToHomeDashboard;
-            _supplierListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
-
-            _rawMaterialListViewModel.LogoutRequested += NavToLoginView;
-            _rawMaterialListViewModel.HomeViewRequested += NavToHomeDashboard;
-            _rawMaterialListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
-
-            _rawMaterialCategoryListViewModel.LogoutRequested += NavToLoginView;
-            _rawMaterialCategoryListViewModel.HomeViewRequested += NavToHomeDashboard;
-            _rawMaterialCategoryListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;           
-            
-            _locationListViewModel.LogoutRequested += NavToLoginView;
-            _locationListViewModel.HomeViewRequested += NavToHomeDashboard;
-            _locationListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;            
-            
-            _inventorySettingViewModel.LogoutRequested += NavToLoginView;
-            _inventorySettingViewModel.HomeViewRequested += NavToHomeDashboard;
-            _inventorySettingViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
-
-            _procurePurchaseOrderViewModel.LogoutRequested += NavToLoginView;
-            _procurePurchaseOrderViewModel.HomeViewRequested += NavToHomeDashboard;
-            _procurePurchaseOrderViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
+            ResolveEventSubscriptions();
         }
 
         /// <summary>
@@ -170,6 +100,124 @@ namespace RestaurantPro
         /// Command Relay
         /// </summary>
         public RelayCommand<string> NavCommand { get; private set; }
+
+        #region Event Subscriptions
+
+        private void ResolveEventSubscriptions()
+        {
+            _loginViewModel.LoginRequested += NavToHomeDashboard;
+            ResolveHomeDashboardView();
+            ResolveInventoryDashboardView();
+            ResolveWorkCycleListVIew();
+            ResolveAddEditWorkCycleView();
+            ResolvePurchaseOrderListView();
+            ResolveAddEditPurchaseOrderListView();
+            ResolveSupplierListView();
+            ResolveRawMaterialListView();
+            ResolveRawMaterialCategoryListView();
+            ResolveLocationListView();
+            ResolveInventorySettingListView();
+            ResolvePurchaseOrderView();
+        }
+
+        private void ResolvePurchaseOrderView()
+        {
+            _procurePurchaseOrderViewModel.LogoutRequested += NavToLoginView;
+            _procurePurchaseOrderViewModel.HomeViewRequested += NavToHomeDashboard;
+            _procurePurchaseOrderViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
+        }
+
+        private void ResolveInventorySettingListView()
+        {
+            _inventorySettingViewModel.LogoutRequested += NavToLoginView;
+            _inventorySettingViewModel.HomeViewRequested += NavToHomeDashboard;
+            _inventorySettingViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
+        }
+
+        private void ResolveLocationListView()
+        {
+            _locationListViewModel.LogoutRequested += NavToLoginView;
+            _locationListViewModel.HomeViewRequested += NavToHomeDashboard;
+            _locationListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
+        }
+
+        private void ResolveRawMaterialCategoryListView()
+        {
+            _rawMaterialCategoryListViewModel.LogoutRequested += NavToLoginView;
+            _rawMaterialCategoryListViewModel.HomeViewRequested += NavToHomeDashboard;
+            _rawMaterialCategoryListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
+        }
+
+        private void ResolveRawMaterialListView()
+        {
+            _rawMaterialListViewModel.LogoutRequested += NavToLoginView;
+            _rawMaterialListViewModel.HomeViewRequested += NavToHomeDashboard;
+            _rawMaterialListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
+        }
+
+        private void ResolveSupplierListView()
+        {
+            _supplierListViewModel.LogoutRequested += NavToLoginView;
+            _supplierListViewModel.HomeViewRequested += NavToHomeDashboard;
+            _supplierListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
+        }
+
+        private void ResolveAddEditPurchaseOrderListView()
+        {
+            _addEditPurchaseOrderListViewModel.LogoutRequested += NavToLoginView;
+            _addEditPurchaseOrderListViewModel.HomeViewRequested += NavToHomeDashboard;
+            _addEditPurchaseOrderListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
+            _addEditPurchaseOrderListViewModel.PurchaseOrderListRequested += NavToPurchaseOrdersListView;
+            _addEditPurchaseOrderListViewModel.Done += NavToPurchaseOrdersListView;
+        }
+
+        private void ResolvePurchaseOrderListView()
+        {
+            _purchaseOrderListViewModel.LogoutRequested += NavToLoginView;
+            _purchaseOrderListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
+            _purchaseOrderListViewModel.HomeViewRequested += NavToHomeDashboard;
+            _purchaseOrderListViewModel.AddPurchaseOrderRequested += NavToAddPurchaseOrder;
+            _purchaseOrderListViewModel.EditPurchaseOrderRequested += NavToEditPurchaseOrder;
+        }
+
+        private void ResolveAddEditWorkCycleView()
+        {
+            _addEditWorkingCycleViewModel.LogoutRequested += NavToLoginView;
+            _addEditWorkingCycleViewModel.ManageWorkCyclesRequsted += NavToManageWorkCycles;
+            _addEditWorkingCycleViewModel.Done += NavToManageWorkCycles;
+        }
+
+        private void ResolveWorkCycleListVIew()
+        {
+            _workCycleListViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
+            _workCycleListViewModel.LogoutRequested += NavToLoginView;
+            _workCycleListViewModel.HomeViewRequested += NavToHomeDashboard;
+            _workCycleListViewModel.AddWorkCycleRequested += NavToAddWorkCycleView;
+            _workCycleListViewModel.EditWorkCycleRequested += NavToEditWorkCycleView;
+        }
+
+        private void ResolveInventoryDashboardView()
+        {
+            _inventoryDashboardViewModel.LogoutRequested += NavToLoginView;
+            _inventoryDashboardViewModel.ManageWorkCyclesRequsted += NavToManageWorkCycles;
+            _inventoryDashboardViewModel.PurchaseOrdersListsViewRequested += NavToPurchaseOrdersListView;
+            _inventoryDashboardViewModel.SupplierListViewRequested += NavToSupplierListView;
+            _inventoryDashboardViewModel.RawMaterialListViewRequested += NavToRawMaterialsListView;
+            _inventoryDashboardViewModel.RawMaterialCategoryListViewRequested += NavToRawMaterialCategoryListView;
+            _inventoryDashboardViewModel.LocationListViewRequested += NavToLocationListView;
+            _inventoryDashboardViewModel.InventorySettingViewRequested += NavToInventorySettingView;
+            _inventoryDashboardViewModel.ProcurePurchaseOrderViewRequested += NavToProcurePurchaseOrderView;
+        }
+
+        private void ResolveHomeDashboardView()
+        {
+            _homeDashboardViewModel.LogoutRequested += NavToLoginView;
+            _homeDashboardViewModel.InventoryDashboardRequested += NavigateToInventoryDashboard;
+            _inventoryDashboardViewModel.HomeDashboardRequested += NavToHomeDashboard;
+        }
+
+
+        #endregion
 
         #region Navigation Event Implementations
 

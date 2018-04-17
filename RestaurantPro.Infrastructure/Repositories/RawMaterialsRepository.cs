@@ -26,7 +26,8 @@ namespace RestaurantPro.Infrastructure.Repositories
         {
             return _context
                 .RawMaterials.Where(x => x.Active)
-                .SingleOrDefault(raw => raw.Name.ToLower() == rawMaterialName.ToLower());
+                .SingleOrDefault(raw => string.Equals(raw.Name.ToLower(), rawMaterialName.ToLower(),
+                    StringComparison.CurrentCulture));
         }
 
         public void AddOrUpdateRawMaterials(List<RawMaterial> rawMaterials)

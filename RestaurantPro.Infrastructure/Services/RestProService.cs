@@ -17,7 +17,6 @@ namespace RestaurantPro.Infrastructure.Services
         }
 
         public IInventoryService InventoryService { get; private set; }
-
-        
+ 
     }
 }
